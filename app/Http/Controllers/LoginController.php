@@ -9,6 +9,6 @@ class LoginController extends Controller
 {
     public function index():Response
     {
-        return response()->view('login-index');
+        return response()->view('auth.login-view');
     }
 }

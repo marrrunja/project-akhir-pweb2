@@ -9,6 +9,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoginControllerTest extends TestCase
 {
+    private LoginService $loginService;
+    protected function setUp():void{
+        parent::setUp();
+        $this->loginService = $this->app->make(LoginService::class);
+    }
     public function testSingleton(): void
     {
         $login1 = $this->app->make(LoginService::class);
