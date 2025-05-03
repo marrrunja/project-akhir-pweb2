@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
+    
     private UserService $userService;
 
     public function __construct(UserService $userService){
@@ -26,7 +27,6 @@ class RegisterController extends Controller
             'desa' => ['required'],
             'alamat' => ['required', 'max:255']
         ]);
-
         if($validatedData){
             $error = null;
             $username = $request->username;
