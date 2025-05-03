@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //heheehe
         Schema::create('pembelis', function (Blueprint $table) {
             $table->id();
             $table->string("username",50)->unique();
