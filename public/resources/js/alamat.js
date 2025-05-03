@@ -5,22 +5,30 @@ const desa = document.getElementById("desa");
 async function getDataKota(){
     const data = await fetch(APIURL);
     const json = await data.json();
-    json.map((item) => {
-        let option = `<option value="${item.id}" data-id=${item.id}>${item.name}</option>`
+    let sum = 0;
+    json.map(async (item) => {
+        // const APIDESA = 'https://www.emsifa.com/api-wilayah-indonesia/api/villages/'+item.id+'.json'; 
+        // const gg = await fetch(APIDESA);
+        // const ggbgt = await gg.json();
+        // sum += ggbgt.length;
+        // console.log(ggbgt);
+        let option = `<option value="${item.name}" data-id=${item.id}>${item.name}</option>`;
         kecamatan.innerHTML += option;
+        //console.log(sum);
     });
 }
 
-async function getDataKecamatanById(e){
-    console.log(e.target);
+async function getDataKecamatanById(){
     desa.innerHTML = `<option value="">Pilih Desa</option>`;
-    const APIDESA = 'https://www.emsifa.com/api-wilayah-indonesia/api/villages/'+kecamatan.value+'.json'; 
+    let selectedOption = kecamatan.options[kecamatan.selectedIndex];
+    let id = selectedOption.dataset.id;
+    const APIDESA = 'https://www.emsifa.com/api-wilayah-indonesia/api/villages/'+id+'.json'; 
     const data = await fetch(APIDESA);
     const json = await data.json();
     json.map((item) => {
-        let option = `<option value="${item.name}">${item.name}</option>`;
+        let option = `<option value="${item.id}">${item.name}</option>`;
         desa.innerHTML += option;
-    })
+    });
 }
 kecamatan.addEventListener("change",getDataKecamatanById);
 getDataKota();

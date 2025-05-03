@@ -1,11 +1,21 @@
 @extends('layout.layout')
-@section('title', 'Halaman Login')
+@section('title', 'Halaman Register')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('resources/css/style.css') }}">  
 @endpush
+
 @section('body')
 <div class="login-container">
+    @error('username')
+    {{ $message }}
+    @enderror
+    @error('desa')
+    {{ $message }}
+    @enderror
+    @error('jalan')
+    {{ $message }}
+    @enderror
     <h2 style="text-align: center;">Halaman Register</h2>
     <form method="POST" action="{{ route('register-proses') }}">
         @csrf
@@ -19,7 +29,7 @@
         </select>
         <input type="text" name="alamat" placeholder="Masukkan jalan/alamat spesifik">
         <button role="button" type="submit">Register</button>
-        <button><a href="home.html" role="button" style="text-decoration: none;">Kembali</a></button>
+        <button><a href="/" role="button" style="text-decoration: none;">Kembali</a></button>
     </form>
 </div>
 @endsection

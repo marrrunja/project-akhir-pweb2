@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+
 
 class RegisterControllerTest extends TestCase
 {
@@ -16,8 +19,18 @@ class RegisterControllerTest extends TestCase
     }
     public function testRegisterSubmit():void
     {
-        $this->post('/register/index')
-            ->assertStatus(200)
-            ->assertSeeText("Berhasil");
+
+        $response = $this->withoutMiddleware(VerifyCsrfToken::class)
+                 ->post('/register/index', [
+                     'username' => '',
+                     'password' => '',
+                     'kecamatan' => '',
+                     'desa' => '',
+                     'alamat' => ''
+                 ]);
+
+            $response->assertStatus(302); // redirect karena validasi gagal
+            $response->assertSessionHasErrors(['desa']); // validasi error pada 'desa'
+
     }
 }
