@@ -41,7 +41,6 @@ class LoginServiceTest extends TestCase
         $error = null;
         self::assertTrue($this->loginService->login('Muammar', '123', $error));
         self::assertEquals(null, $error);
-
     }
     
 }

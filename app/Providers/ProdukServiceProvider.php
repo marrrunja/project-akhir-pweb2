@@ -2,21 +2,21 @@
 
 namespace App\Providers;
 
-use App\Services\LoginService;
+use App\Services\Produk\ProdukService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 
-class LoginServiceProvider extends ServiceProvider implements DeferrableProvider
+class ProdukServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     public function register(): void
     {
-        $this->app->singleton(LoginService::class, function ($app) {
-            return new LoginService();
-        });        
+        $this->app->singleton(ProdukService::class, function ($app) {
+            return new ProdukService();
+        }); 
     }
     public function provides(): array
     {
-        return [LoginService::class];
+        return [ProdukService::class];
     }
 
     /**

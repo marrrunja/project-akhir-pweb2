@@ -11,8 +11,8 @@ class RegisterController extends Controller
 {
     
     private UserService $userService;
-
-    public function __construct(UserService $userService){
+    public function __construct(UserService $userService)
+    {
         $this->userService = $userService;
     }
 
@@ -33,14 +33,11 @@ class RegisterController extends Controller
             $password = Hash::make($request->password);
             $desa = $request->desa;
             $jalan = $request->alamat;
-            if($this->userService->register($username, $password, $desa, $jalan, $error)){
+            if($this->userService->register($username, $password, $desa, $jalan, $error))
                 return response("Berhasil register");
-            }else{
+            else
                 return response($error);
-            }
         }
         return response("Gagal");
-        
-        
     }
 }

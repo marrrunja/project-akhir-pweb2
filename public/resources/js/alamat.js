@@ -7,14 +7,8 @@ async function getDataKota(){
     const json = await data.json();
     let sum = 0;
     json.map(async (item) => {
-        // const APIDESA = 'https://www.emsifa.com/api-wilayah-indonesia/api/villages/'+item.id+'.json'; 
-        // const gg = await fetch(APIDESA);
-        // const ggbgt = await gg.json();
-        // sum += ggbgt.length;
-        // console.log(ggbgt);
         let option = `<option value="${item.name}" data-id=${item.id}>${item.name}</option>`;
         kecamatan.innerHTML += option;
-        //console.log(sum);
     });
 }
 
@@ -30,5 +24,6 @@ async function getDataKecamatanById(){
         desa.innerHTML += option;
     });
 }
+
 kecamatan.addEventListener("change",getDataKecamatanById);
 getDataKota();

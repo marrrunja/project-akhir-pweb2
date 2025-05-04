@@ -5,12 +5,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Middleware\SessionHasMiddleware;
-use App\Http\Controllers\ImportWilayahController;
+use App\Http\Controllers\Produk\ProdukController;
 
 
 Route::get('/', [UserController::class, 'index']);
-
 Route::get('/login/index',[LoginController::class, 'index'])->middleware(SessionHasMiddleware::class);
 Route::post('/login/index/post', [LoginController::class, 'doLogin']);
-Route::get('/register/index',[RegisterController::class, 'index']);
+Route::get('/register/index',[RegisterController::class, 'index'])->middleware(SessionHasMiddleware::class);
 Route::post('/register/index',[RegisterController::class, 'doRegister'])->name('register-proses');
+
+Route::get('/produk/index',[ProdukController::class, 'index']);
