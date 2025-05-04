@@ -14,7 +14,7 @@
         <div class="card" style="width: 18rem;">
         <img src="{{ asset('storage/images/' . $produk->foto) }}" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">{{ $produk->name }}</h5>
+                <h5 class="card-title">{{ $produk->nama }}</h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary">{{ $produk->kategori->kategori }}</h6>
                 <p class="card-text">{{ $produk->detail }}</p>
                 <ul>
@@ -31,6 +31,7 @@
         </div>
         @endforeach
     </div>
+    <a href="{{ URL::previous() }}">Kembali ke halaman utama</a>
 </div>
 @endsection
 

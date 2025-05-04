@@ -9,9 +9,17 @@ use App\Http\Controllers\Produk\ProdukController;
 
 
 Route::get('/', [UserController::class, 'index']);
-Route::get('/login/index',[LoginController::class, 'index'])->middleware(SessionHasMiddleware::class);
-Route::post('/login/index/post', [LoginController::class, 'doLogin']);
-Route::get('/register/index',[RegisterController::class, 'index'])->middleware(SessionHasMiddleware::class);
-Route::post('/register/index',[RegisterController::class, 'doRegister'])->name('register-proses');
 
-Route::get('/produk/index',[ProdukController::class, 'index']);
+Route::controller(LoginController::class)->prefix('/login')->group(function(){
+    Route::get('/index', 'index');
+    Route::post('/index/post', 'doLogin');
+});
+
+Route::controller(RegisterController::class)->prefix('/register')->group(function(){
+    Route::get('/index', 'index');
+    Route::post('/index', 'doRegister');
+});
+
+Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
+    Route::get('/index', 'index');
+});

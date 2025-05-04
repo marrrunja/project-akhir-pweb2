@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
-    protected $with = ['kategori'];
+    protected $with = ['kategori', 'variant'];
+
     public function variant():HasMany
     {
         return $this->hasMany(ProdukVariant::class, 'produk_id', 'id');
@@ -18,5 +19,5 @@ class Product extends Model
     public function kategori():BelongsTo
     {
         return $this->belongsTo(Kategori::class);
-    }    
+    }  
 }
