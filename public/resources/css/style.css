@@ -14,7 +14,7 @@ body {
     width: 360px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
+    
 }
 .login-container h2 {
     margin-bottom: 20px;
@@ -33,7 +33,7 @@ select {
     border: 1px solid #ccc;
     border-radius: 5px;
 }   
-a,button {
+button {
     padding: 10px;
     background-color: #e0806f;
     color: white;
@@ -42,10 +42,32 @@ a,button {
     cursor: pointer;
     font-size: 16px;
 }
-a:hover,button:hover {
+button:hover {
     background-color: #d76a57;
 }
 .error {
     color: red;
     margin-bottom: 10px;
+}
+.nav-tab .nav-link:hover{
+    border: none;
+    font-weight: bold;
+    color: black;
+}
+.nav-tabs .nav-link.active {
+    border: none;
+    border-bottom: 2px solid #d76a57;
+    font-weight: bold;
+    color: black;
+}
+
+.nav-tabs .nav-link {
+    
+    color: gray;
+}
+.login-container {
+    margin-top: 20px;
+}
+a {
+    color:black;
 }
