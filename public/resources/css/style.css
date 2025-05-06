@@ -14,7 +14,18 @@ body {
     width: 360px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    
+
+}
+.register-wrapper{
+  width:300px;
+}
+.register-container {
+   background: #fff;
+    border-radius: 10px;
+    width: 500px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
 }
 .login-container h2 {
     margin-bottom: 20px;
@@ -26,13 +37,25 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
 select {
     width: 94%;
-    padding: 10px;
+    padding-right: 20px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-}   
+
+    appearance: none;        /* Hilangkan panah default (modern browser) */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 40px;     /* Jarak dari sisi kanan */
+  background: white url('data:image/svg+xml;utf8,<svg fill="black" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+  background-size: 16px;
+}
+
 button {
     padding: 10px;
     background-color: #e0806f;
@@ -49,10 +72,10 @@ button:hover {
     color: red;
     margin-bottom: 10px;
 }
+
 .nav-tab .nav-link:hover{
-    border: none;
-    font-weight: bold;
-    color: black;
+    border-bottom: 2px solid rgba(215,106,87,.4);
+    transition: all .3s;
 }
 .nav-tabs .nav-link.active {
     border: none;
@@ -62,7 +85,6 @@ button:hover {
 }
 
 .nav-tabs .nav-link {
-    
     color: gray;
 }
 .login-container {

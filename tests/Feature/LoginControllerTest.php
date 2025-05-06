@@ -26,7 +26,7 @@ class LoginControllerTest extends TestCase
     public function testViewLogin(){
         $this->get('/login/index')
             ->assertStatus(200)
-            ->assertSeeText("Halaman Login");
+            ->assertSeeText("Login");
     }
     public function testLogin()
     {

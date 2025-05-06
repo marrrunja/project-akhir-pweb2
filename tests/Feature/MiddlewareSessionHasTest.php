@@ -11,11 +11,17 @@ class MiddlewareSessionHasTest extends TestCase
     public function testRedirectLogin(): void
     {
         $response = $this->withSession(['username' => 'Muammmar'])->get('/login/index');
-        $response->assertRedirect('/');
+        $response->assertRedirect('/produk/index');
     }
     public function testRedirectRegister(): void
     {
         $response = $this->withSession(['username' => 'Muammmar'])->get('/register/index');
-        $response->assertRedirect('/');
+        $response->assertRedirect('/produk/index');
+    }
+    public function testWithMiddleware():void
+    {
+        $this->get('/produk/index')
+            ->assertStatus(302)
+            ->assertRedirect('/login/index');
     }
 }

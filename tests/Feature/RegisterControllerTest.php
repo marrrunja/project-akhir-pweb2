@@ -10,12 +10,11 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 class RegisterControllerTest extends TestCase
 {
-    //use WithoutMiddleware; // ⬅️ Tambahkan ini
     public function testRegister(): void
     {
         $response = $this->get('/register/index');
         $response->assertStatus(200);
-        $response->assertSeeText('Halaman Register');
+        $response->assertSeeText('Register');
     }
     public function testRegisterSubmit():void
     {

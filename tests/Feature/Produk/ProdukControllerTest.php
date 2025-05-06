@@ -13,7 +13,7 @@ class ProdukControllerTest extends TestCase
      */
     public function testRedirectWithoutSession(): void
     {
-        $response = $this->get('/produk/index');
+        $response = $this->withSession(['username' => 'Muammar'])->get('/produk/index');
         $response->assertStatus(200);
         $response->assertSeeText("Makanan");
     }

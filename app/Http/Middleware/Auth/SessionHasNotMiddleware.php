@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Auth;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
-class SessionHasMiddleware
+class SessionHasNotMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class SessionHasMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Session::has('username')){
-            return redirect('/');
+        if(!Session::has('username')){
+            return redirect('/login/index');
         }
         return $next($request);
     }

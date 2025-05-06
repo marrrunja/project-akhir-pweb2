@@ -4,14 +4,14 @@
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-<link rel="stylesheet" href="{{ asset('resources/css/style.css') }}">  
+<link rel="stylesheet" href="{{ asset('resources/css/style.css') }}">
 @endpush
+
 @section('body')
     <div class="login-container">
-
     <!-- Bagian Tab -->
     <div class="d-flex justify-content-center">
-        <div style="width: 300px;">
+        <div class="register-wrapper">
             <ul class="nav nav-tabs justify-content-evenly mb-3">
                 <li class="nav-item">
                     <a class="nav-link active" href="{{ url('/register/index') }}">Sign Up</a>
@@ -61,7 +61,6 @@
                 <div class="d-flex justify-content-center">
                     <button class="w-50" type="submit">Register</button>
                 </div>
-                <p class="mt-2 text-center">Sudah punya akun? <a href="/login">Log In</a></p>
             </form>
         </div>
     </div>

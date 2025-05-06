@@ -32,4 +32,9 @@ class LoginController extends Controller
         }
         return redirect()->back()->with('status', $error);
     }
+    public function logout(Request $request):RedirectResponse
+    {
+        $request->session()->invalidate();
+        return redirect('/login/index'); 
+    }
 }

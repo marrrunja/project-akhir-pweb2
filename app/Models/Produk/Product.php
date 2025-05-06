@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
-    protected $with = ['kategori', 'variant'];
+    protected $with = ['kategori'];
 
     public function variant():HasMany
     {
