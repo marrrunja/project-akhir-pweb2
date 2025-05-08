@@ -26,7 +26,13 @@
                     @endforeach
                 </ul>
                 <a href="#" class="btn btn-primary mb-2">Beli Produk</a>    
-                <a href="#" class="btn btn-success">Masukkan ke keranjang</a>
+                <form action="{{ route('cart.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="variant_id" value="{{ $variant->id }}">
+                    <input type="number" name="qty" value="1" min="1">
+                    <button type="submit">Tambahkan ke Keranjang</button>
+                </form>
+
             </div>
         </div>
         @endforeach

@@ -24,10 +24,12 @@ class LoginController extends Controller
             'password' => ['required']
         ]);
         $error = null;
+        $id = null;
         $username = $request->username;
         $password = $request->password;
-        if($this->loginService->login($username, $password, $error)){
+        if($this->loginService->login($username, $password, $id, $error)){
             $request->session()->put('username', $username);
+            $request->session()->put('user_id', $id);
             return redirect('/')->with('status', "Login Berhasil");
         }
         return redirect()->back()->with('status', $error);

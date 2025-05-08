@@ -59,7 +59,9 @@ class LoginControllerTest extends TestCase
             'password' => '123'
         ])
             ->assertRedirect('/')
-            ->assertSessionHas('status', 'Login Berhasil');
+            ->assertSessionHas('status', 'Login Berhasil')
+            ->assertSessionHas('user_id', 2)
+            ->assertSessionHas('username', 'Muammar');
 
     }
     

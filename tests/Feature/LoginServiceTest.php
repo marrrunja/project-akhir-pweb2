@@ -27,19 +27,22 @@ class LoginServiceTest extends TestCase
     public function testLoginFailedWithNoUser():void
     {
         $error = null;
-        self::assertFalse($this->loginService->login('apaaja', 'nofound', $error));
+        $id = null;
+        self::assertFalse($this->loginService->login('apaaja', 'nofound',$id, $error));
         self::assertEquals('Username tidak valid', $error);
     }
     public function testLoginFailedWithWrongPassword():void
     {
         $error = null;
-        self::assertFalse($this->loginService->login('Muammar', 'nofound', $error));
+        $id = null;
+        self::assertFalse($this->loginService->login('Muammar', 'nofound',$id, $error));
         self::assertEquals('Password salah', $error);
     }
     public function testLoginSuccess():void
     {
         $error = null;
-        self::assertTrue($this->loginService->login('Muammar', '123', $error));
+        $id = null;
+        self::assertTrue($this->loginService->login('Muammar', '123',$id, $error));
         self::assertEquals(null, $error);
     }
     
