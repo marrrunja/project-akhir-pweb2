@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    @include('layout.navbar')
     @yield('body')
     @stack('scripts')
 </body>

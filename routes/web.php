@@ -15,11 +15,11 @@ Route::get('/', [UserController::class, 'index']);
 Route::controller(LoginController::class)->prefix('/login')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasMiddleware::class);
     Route::post('/index/post', 'doLogin');
-    Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
-    Route::post('/cart/delete/{id}', [CartController::class, 'destroy'])->name('cart.delete');
 });
+Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
+Route::get('/cart', [CartController::class, 'cart'])->name('cart.index');
+Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/delete/{id}', [CartController::class, 'destroy'])->name('cart.delete');
 
 Route::controller(RegisterController::class)->prefix('/register')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasMiddleware::class);
