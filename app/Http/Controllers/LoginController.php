@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 class LoginController extends Controller
 {
     private LoginService $loginService;
+    
     public function __construct(LoginService $loginService)
     {
         $this->loginService = $loginService;

@@ -5,7 +5,6 @@ const desa = document.getElementById("desa");
 async function getDataKota(){
     const data = await fetch(APIURL);
     const json = await data.json();
-    let sum = 0;
     json.map(async (item) => {
         let option = `<option value="${item.name}" data-id=${item.id}>${item.name}</option>`;
         kecamatan.innerHTML += option;

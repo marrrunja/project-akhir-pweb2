@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-
     private UserService $userService;
     public function __construct(UserService $userService)
     {

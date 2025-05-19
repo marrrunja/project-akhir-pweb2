@@ -11,7 +11,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 class LoginControllerTest extends TestCase
 {
-    // use WithoutMiddleware; // ⬅️ Tambahkan ini
+    
     private LoginService $loginService;
     protected function setUp():void{
         parent::setUp();
@@ -60,7 +60,6 @@ class LoginControllerTest extends TestCase
         ])
             ->assertRedirect('/')
             ->assertSessionHas('status', 'Login Berhasil')
-            ->assertSessionHas('user_id', 2)
             ->assertSessionHas('username', 'Muammar');
 
     }

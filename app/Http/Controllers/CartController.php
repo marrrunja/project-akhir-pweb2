@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Services\Cart\CartService;
-
 class CartController extends Controller
 {
     private CartService $cartService;
@@ -22,9 +22,14 @@ class CartController extends Controller
         $variantId = $request->variantId;
         $qty = $request->qty;
         $error = null;
-
+        
        if($this->cartService->addToCart($userId, $variantId, $qty, $error)){
-          //tambahin add to cart here
+        Cart::insert([
+            'pembeli_id' => $userId,
+            'variant_id' => $variantId,
+            'qrt' =>  $qty
+        ]);
+        return redirect('/')->with('status', 'Berhasil menambah ke keranjang');
        }
        return redirect('');
 

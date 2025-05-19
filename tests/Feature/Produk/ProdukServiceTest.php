@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ProdukServiceTest extends TestCase
 {
     private ProdukService $produkService;
+    
     protected function setUp():void{
         parent::setUp();
         $this->produkService = $this->app->make(ProdukService::class);

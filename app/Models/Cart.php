@@ -12,6 +12,7 @@ class Cart extends Model
     use HasFactory;
 
     protected $fillable = ['pembeli_id', 'variant_id', 'qty'];
+    protected $with = ['variant', 'pembeli'];
 
     public function variant()
     {
