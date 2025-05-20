@@ -8,7 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\Produk\ProdukController;
 use App\Http\Middleware\Auth\SessionHasMiddleware;
 use App\Http\Middleware\Auth\SessionHasNotMiddleware;
-
+use Illuminate\Support\Carbon;
 
 Route::get('/', [UserController::class, 'index']);
 
@@ -33,4 +33,8 @@ Route::controller(RegisterController::class)->prefix('/register')->group(functio
 
 Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
+});
+
+Route::get('/tanggal',function(){
+    echo now();
 });

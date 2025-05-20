@@ -19,4 +19,8 @@ class ProdukVariant extends Model
     {
         return $this->hasMany(Stok::class, 'variant_id');
     }
+    public function orderItem():HasMany
+    {
+        return $this->hasMany(OrderItem::class, 'variant_id', 'id');
+    }
 }

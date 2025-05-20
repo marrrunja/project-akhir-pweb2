@@ -5,11 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Services\Cart\CartService;
-<<<<<<< HEAD
-=======
 use App\Models\Produk\ProdukVariant;
-
->>>>>>> a758bb279a1212d68fa4f2136208918ae1de4ab0
 class CartController extends Controller
 {
     public function cart(Request $request)
@@ -42,23 +38,10 @@ class CartController extends Controller
         $variantId = $request->variant_id;
         $qty = $request->qty;
         $error = null;
-<<<<<<< HEAD
-        
-       if($this->cartService->addToCart($userId, $variantId, $qty, $error)){
-        Cart::insert([
-            'pembeli_id' => $userId,
-            'variant_id' => $variantId,
-            'qrt' =>  $qty
-        ]);
-        return redirect('/')->with('status', 'Berhasil menambah ke keranjang');
-       }
-       return redirect('');
-=======
 
         // Cek stok produk variant
         $variant = ProdukVariant::with('stok')->find($variantId);
         $stokTersedia = $variant->stok ? $variant->stok->count() : 0;
->>>>>>> a758bb279a1212d68fa4f2136208918ae1de4ab0
 
         if ($stokTersedia < $qty) {
             return redirect()->back()->withErrors('Stok tidak mencukupi.');
