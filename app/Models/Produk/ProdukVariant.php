@@ -5,6 +5,7 @@ namespace App\Models\Produk;
 use App\Models\Produk\Stok;
 use App\Models\Produk\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -15,9 +16,9 @@ class ProdukVariant extends Model
     {
         return $this->belongsTo(Product::class);   
     }
-    public function stok():HasMany
+    public function stok():HasOne
     {
-        return $this->hasMany(Stok::class, 'variant_id');
+        return $this->hasOne(Stok::class, 'variant_id', 'id');
     }
     public function orderItem():HasMany
     {

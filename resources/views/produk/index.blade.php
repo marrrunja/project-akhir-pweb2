@@ -15,9 +15,20 @@
 </style>
 @endpush
 
+@section('meta')
+<meta name="_token" content="{{ csrf_token() }}">
+@endsection
+
 @section('body')
 <div class="container py-4">
     <h1 class="mb-4">Halaman Produk</h1>
+    <div class="mb-3 mt-3">
+        <form action="/login/logout" method="post">
+            @csrf
+            <button class="btn btn-danger" type="submit">Logout</button>
+        </form>
+
+    </div>
 
     <div class="d-flex gap-2 mb-4">
         <button class="btn category-btn active">All</button>
@@ -27,19 +38,25 @@
     </div>
 
     <div class="row g-3">
+        @if(Session::has('status'))
+            <div class="alert alert-primary" role="alert">
+                {{ Session::get('status') }}
+            </div>
+        @endif
         @foreach($products as $produk)
         <div class="col-md-3">
             <div class="card product-card h-100">
                 <img src="{{ asset('storage/images/' . $produk->foto) }}" class="card-img-top" alt="...">
                 <div class="card-body text-center">
-                    <h5 class="card-title">{{ $produk->nama }}</h5>
+                    <h5 class="card-title"><a href="{{ route('produk.variant') }}?id={{ $produk->id }}">{{ $produk->nama }}</a></h5>
                     <p class="text-muted">{{ $produk->kategori->kategori }}</p>
                     <ul class="list-unstyled">
                         @foreach($produk->variant as $variant)
-                        <li>{{ $variant->variant }} - Rp{{ number_format($variant->harga ?? 0, 0, ',', '.') }} - Stok: {{ $variant->stok ? $variant->stok->count() : 0 }}</li>
+                        <li>{{ $variant->variant }} - Rp{{ number_format($variant->harga ?? 0, 0, ',', '.') }} - Stok: {{ $variant->stok ? $variant->stok->jumlah : 0 }}</li>
                         @endforeach
                     </ul>
                     <button style="background-color: #A23C33;" class="btn btn-primary add-to-cart-btn w-100" data-bs-toggle="modal" data-bs-target="#addToCartModal{{$produk->id}}">Add to Cart <i class="bi bi-cart4 ms-2"></i></button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Beli</button>
                 </div>
             </div>
         </div>
@@ -76,8 +93,26 @@
         @endforeach
     </div>
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div> 
 @endsection
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('resources/js/order.js') }}"></script>
 @endpush

@@ -8,6 +8,11 @@ use App\Services\Cart\CartService;
 use App\Models\Produk\ProdukVariant;
 class CartController extends Controller
 {
+    public function index(){
+        $carts = Cart::all();
+
+        return view('cart.cart', compact('carts'));
+    }
     public function cart(Request $request)
     {
         $carts = Cart::with(['variant.produk'])
@@ -48,7 +53,7 @@ class CartController extends Controller
         }
 
         // Kurangi stok sesuai qty
-        $variant->stok()->limit($qty)->delete();
+        //$variant->stok()->limit($qty)->delete();
 
         //biar gak masuk keranjang 2 kali jadi updete qtynya aja
         if ($this->cartService->addToCart($userId, $variantId, $qty, $error)) {
