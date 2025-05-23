@@ -48,6 +48,7 @@
 @endsection
 
 @section('body')
+<x-navbar></x-navbar>
 <div class="container py-4">
     <h1 class="mb-4">Halaman Produk</h1>
     <div class="mb-3 mt-3">

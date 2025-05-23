@@ -57,7 +57,10 @@ Route::controller(AdminController::class)->prefix('/admin')->group(function(){
     Route::get('produk/variant/{id}', 'variantProduk')->name('admin.detailProduk');
     Route::get('/produk/variants/edit/{id}', 'editProdukVariant')->name('admin.editProduk');
     Route::get('/order/list', 'orderList')->name('admin.order');
+    Route::get('/order/detail/{id}', 'orderDetail')->name('admin.detailOrder');
 });
+
+Route::get('/api/orderListByTanggal', [\App\Http\Controllers\Api\ApiController::class, 'urutkanDataByTanggal']);
 
 Route::get('/tanggal',function(){
     echo now()->format('Y-m-d');

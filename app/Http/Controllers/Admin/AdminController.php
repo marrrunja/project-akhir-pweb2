@@ -51,9 +51,27 @@ class AdminController extends Controller
            
         return response()->view('admin.variants-produk', compact('variants'));
     }
-    public function orderList()
+    public function orderList():Response
     {
-        return response("Hello");
+        $orders = DB::table('pembelis')
+                    ->join('table_orders', 'pembelis.id','=','table_orders.pembeli_id')
+                    ->select('pembelis.username', 'table_orders.tanggal_transaksi', 'table_orders.is_dibayar', 'table_orders.id')
+                    ->get();
+        
+        return response()->view('admin.order-list',compact('orders'));
+
+    }
+    public function orderDetail(Request $request)
+    {
+        $id = $request->id;
+        $orderItems = DB::table('table_orders')
+                ->join('order_items', 'table_orders.id', '=', 'order_items.order_id')
+                ->join('produk_variants', 'order_items.variant_id', '=', 'produk_variants.id')
+                ->join('products', 'produk_variants.produk_id', '=', 'products.id')
+                ->select('table_orders.tanggal_transaksi', 'order_items.jumlah', 'order_items.total_harga', 'produk_variants.variant','products.nama','produk_variants.harga')
+                ->where('order_items.order_id', '=', $id)
+                ->get();
+        return response()->view('admin.order-detail', compact('orderItems'));
     }
 
     public function editProdukVariant(Request $request)
