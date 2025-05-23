@@ -56,7 +56,7 @@
                     </div>
                     <div class="mb-3">
                           
-                        <fieldset class="border border-dark p-3">
+                        <fieldset class="shadow rounded p-3">
                             <legend>Varian 1</legend>
                             @error('variant') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
 
@@ -89,6 +89,11 @@
                 </div>
             </div>
         </form>
+        <div class="row">
+            <div class="col">
+                <a href="{{ \Illuminate\Support\Facades\URL::previous() }}">&laquo;Kembali ke halaman utama</a>
+            </div>
+        </div>
     </div>
 </section>
 

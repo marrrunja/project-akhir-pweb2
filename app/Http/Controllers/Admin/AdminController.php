@@ -51,6 +51,10 @@ class AdminController extends Controller
            
         return response()->view('admin.variants-produk', compact('variants'));
     }
+    public function orderList()
+    {
+        return response("Hello");
+    }
 
     public function editProdukVariant(Request $request)
     {

@@ -61,12 +61,11 @@ class ProdukController extends Controller
         $deskripsi = $request->deskripsi;
      
         $foto = $request->file('foto');
-        // tambah produk
+
       
 
     
-       
-
+        // mulai transaksi database/Database Transaction   
         DB::beginTransaction();
 
         try{
@@ -101,35 +100,5 @@ class ProdukController extends Controller
             DB::rollback();
             return redirect()->back()->with('gagal', 'Gagal menambah produk baru');
         }
-       
-        // $produk = new Product();
-        // $produk->nama = $namaProduk;
-        // $produk->detail = $deskripsi;
-
-        // $produk->kategori_id = $kategori;
-        // $produk->foto = basename($namaFoto);
-        // $produk->save();
-
-        // $lastInsertIdProduk = $produk->id;
-
-        // // echo $lastInsertIdProduk."<hr>";
-
-        // // // tambah produk variant
-        // $produkVariant = new ProdukVariant();
-        // $produkVariant->variant = $variant;
-        // $produkVariant->produk_id = $lastInsertIdProduk;
-        // $produkVariant->harga = $harga;
-        // $produkVariant->save();
-
-        // $lastInsertProdukVariantId = $produkVariant->id;
-        // echo $lastInsertProdukVariantId . '<hr>';
-
-        // // tambah stok
-        // $stok = new Stok();
-        // Stok::insert([
-        //     'jumlah' => $jumlah,
-        //     'variant_id' => $lastInsertProdukVariantId
-        // ]);
-
     }
 }

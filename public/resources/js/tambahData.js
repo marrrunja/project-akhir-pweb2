@@ -28,7 +28,7 @@ function tambahInputVariant()
 	i++;
 	jumlahVariant.value = i;
 	let inputVariant = `
-                        <fieldset class="border border-dark p-3">
+                        <fieldset class="shadow p-3 rounded">
                             <legend>Varian ${i}</legend>
 							<div class="mb-3">
                                 <label for="variant${i}" class="form-label">Nama varian</label>
