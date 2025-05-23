@@ -36,12 +36,19 @@ class TransaksiController extends Controller
         $jumlah = $request->jumlah;
         $userId = $request->session()->get('user_id');
         $produkVariant = ProdukVariant::where('id', '=', $id)->first();
-        $data = [
-            'jumlah' => $jumlah,
-            'produkVariant' => $produkVariant,
-            'total' => $produkVariant->harga * $jumlah
-        ];
-        return response()->view('transaksi.order-detail', $data);
+
+        if($produkVariant){
+
+            $data = [
+                'jumlah' => $jumlah,
+                'produkVariant' => $produkVariant,
+                'total' => $produkVariant->harga * $jumlah
+            ];
+            return response()->view('transaksi.order-detail', $data);
+        }
+        else{
+            return redirect()->back();
+        }
     }
     public function makeOrder(Request $request)
     {
@@ -53,6 +60,7 @@ class TransaksiController extends Controller
         $tanggalSekarang = now()->format("Y-m-d");
         $response = [];
         $stok = Stok::where('variant_id', '=', $variantId)->firstOrFail();
+        
         if($stok->jumlah === 0 || $jumlah > $stok->jumlah){
             $response = [
                 "pesan" => "Stok belum mencukupi, silahkan kembali lagi ketika re stok",

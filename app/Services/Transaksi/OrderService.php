@@ -16,13 +16,6 @@ class OrderService
 	}
 	public function addOrder($tanggal, $idPembeli)
 	{
-		DB::beginTransaction();
-		try{
-			
-			DB::commit();
-			return true;
-		}catch(\Exception $e){
-			DB::rollback();
-		}
+		
 	}
 }

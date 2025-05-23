@@ -1,16 +1,17 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\CartController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Produk\ProdukController;
-use App\Http\Controllers\Transaksi\TransaksiController;
 use App\Http\Middleware\Auth\SessionHasMiddleware;
 use App\Http\Middleware\Auth\SessionHasNotMiddleware;
-use Illuminate\Support\Carbon;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Transaksi\TransaksiController;
 
 Route::get('/', [UserController::class, 'index']);
 
@@ -39,6 +40,7 @@ Route::post('/cart/delete/{id}', [CartController::class, 'destroy'])->name('cart
 Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
     Route::get('/variant', 'produkVariant')->middleware(SessionHasNotMiddleware::class)->name('produk.variant');
+    Route::post('/add', 'addProduk')->name('produk.tambah');
 });
 
 Route::controller(TransaksiController::class)->prefix('/transaksi')->group(function(){
@@ -46,6 +48,14 @@ Route::controller(TransaksiController::class)->prefix('/transaksi')->group(funct
     Route::post('/checkout', 'makeOrder');
     Route::get('/checkout/success', 'orderSuccess');
     Route::get('/checkout/fail', 'orderFail');
+});
+
+Route::controller(AdminController::class)->prefix('/admin')->group(function(){
+    Route::get('/tambah', 'tambah')->name('admin.tambah');
+    Route::get('/index', 'index');
+    Route::get('/produk', 'lihatProduk')->name('admin.manage');
+    Route::get('produk/variant/{id}', 'variantProduk')->name('admin.detailProduk');
+    Route::get('/produk/variants/edit/{id}', 'editProdukVariant')->name('admin.editProduk');
 });
 
 Route::get('/tanggal',function(){
