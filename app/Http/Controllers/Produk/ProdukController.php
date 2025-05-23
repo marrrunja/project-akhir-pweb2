@@ -42,43 +42,35 @@ class ProdukController extends Controller
         $validate = [
             'namaProduk' => ['required'],
             'kategori' => ['required'],
-            'stok' => ['integer', 'min:1'],
             'deskripsi' => ['required'],
             'foto' => ['required','mimes:jpeg,jpg,png', 'max:2000'],
-            'variant' => ['required'],
-            'harga' => ['required','integer', 'min:2000'],
         ];
         $pesanValidasi = [
             'namaProduk.required' => 'Nama produk tidak boleh kosong!',
             'kategori.required' => 'Pilih kategori terlebih dahulu!',
-            'stok.integer' => 'Stok harus bertipe angka!',
             'stok.min' => 'Stok minimal 1 buah!',
             'deskripsi.required' => 'Silahkan masukkan deskripsi!',
             'foto.mimes' => 'File harus foto jpg, jpeg, atau png!',
             'foto.max' => '2000',
-            'variant.required' => 'Variant produk tidak boleh kosong!!',
-            'harga.required' => 'Silahkan masukkan harga produknya terlebih dahulu',
-            'harga.integer' => 'Harga harus bertipe data integer!!',
-            'harga.min' => 'Harga produk minimal RP 2.000',
             'foto.required' => 'Masukkan foto produk!'
         ];
         $request->validate($validate, $pesanValidasi);
 
         $namaProduk = $request->namaProduk;
         $kategori = $request->kategori;
-        $jumlah = $request->stok;
         $deskripsi = $request->deskripsi;
-        $variant = $request->variant;
-        $harga = $request->harga;
+     
         $foto = $request->file('foto');
-
-        echo $jumlah;
         // tambah produk
-        $namaFoto = $request->foto->store('images', 'public');
+      
+
+    
+       
 
         DB::beginTransaction();
 
         try{
+            $namaFoto = $request->foto->store('images', 'public');
             DB::table('products')->insert([
                 'nama' => $namaProduk,
                 'kategori_id' => $kategori,
@@ -87,17 +79,21 @@ class ProdukController extends Controller
             ]);
             $lastInsertIdProduk = DB::getPdo()->lastInsertId();
 
-            DB::table('produk_variants')->insert([
-                'variant' => $variant,
-                'produk_id' => $lastInsertIdProduk,
-                'harga' => $harga
-            ]);
-            $lastInsertProdukVariantId = DB::getPdo()->lastInsertId();
+            $jumlahVariant = count($request->stok);
+            for($i = 0; $i < $jumlahVariant; $i++){
+                $variant =
+                DB::table('produk_variants')->insert([
+                    'variant' => $request->variant[$i],
+                    'produk_id' => $lastInsertIdProduk,
+                    'harga' => $request->harga[$i]
+                ]);
+                $lastInsertProdukVariantId = DB::getPdo()->lastInsertId();
 
-            DB::table('stoks')->insert([
-                'jumlah' => $jumlah,
-                'variant_id' => $lastInsertProdukVariantId
-            ]);
+                DB::table('stoks')->insert([
+                    'jumlah' => $request->stok[$i],
+                    'variant_id' => $lastInsertProdukVariantId
+                ]);
+            }
             DB::commit();
             return redirect()->back()->with('status', 'Berhasil menambah produk baru!!');
 

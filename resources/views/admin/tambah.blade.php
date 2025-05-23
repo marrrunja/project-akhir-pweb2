@@ -44,29 +44,44 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        @error('variant') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
-                        <label for="variant" class="form-label">Variant</label>
-                        <input type="text" id="variant" name="variant" class="form-control">
+                        @error('foto') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
+                        <label for="foto">Foto produk</label>
+                        <input type="file" name="foto" id="foto" class="form-control">
                     </div>
                     <div class="mb-3">
                         @error('deskripsi') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
                         <label for="editor" class="form-label">Deskripsi Produk</label>
                         <textarea name="deskripsi" class="form-control"></textarea>
+                         <input type="hidden" id="jumlahVariant" name="jumlahVariant" value="1">
                     </div>
                     <div class="mb-3">
-                        @error('harga') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
-                        <label for="harga" class="form-label">Harga</label>
-                        <input type="number" name="harga" class="form-control" id="harga">
+                          
+                        <fieldset class="border border-dark p-3">
+                            <legend>Varian 1</legend>
+                            @error('variant') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
+
+                            <div class="mb-3">
+                                <label for="variant" class="form-label">Nama varian</label>
+                                <input type="text" id="variant" name="variant[]" class="form-control"placeholder="Contoh, original">
+                            </div>
+                            
+                            <div class="mb-3">
+                                @error('harga') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
+                                <label for="harga" class="form-label">Harga</label>
+                                <input type="number" name="harga[]" class="form-control" id="harga" placeholder="Contoh, 5000">
+                            </div>
+                            <div class="mb-3">
+                                @error('stok') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
+                                 <label for="stok" class="form-label">Stok</label>
+                                <input type="number" name="stok[]" class="form-control" id="stok" placeholder="Contoh, 10">
+                            </div>
+                        </fieldset>
                     </div>
-                    <div class="mb-3">
-                        @error('stok') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
-                         <label for="stok" class="form-label">Stok</label>
-                        <input type="number" name="stok" class="form-control" id="stok">
-                    </div>
-                    <div class="mb-3">
-                        @error('foto') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
-                        <label for="foto">Foto produk</label>
-                        <input type="file" name="foto" id="foto" class="form-control">
+                    <div id="gaada"></div>
+                    <div id="pesan"></div>
+                    <div class="d-flex gap-3 mb-3">
+                        <button type="button" id="tambahVariant" class="btn btn-primary mb-2 mt-2">Tambah variant</button>
+                        <button type="button" id="kurangiVariant" class="mt-2 mb-2 btn btn-danger">Kurangi</button>
                     </div>
                     <div class="mb-3">
                         <button type="submit" class="btn btn-success">Tambah data</button>
@@ -86,6 +101,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous">
 </script>
-<script src="{{ asset('resources/js/ck.js') }}">
+<script src="{{ asset('resources/js/tambahData.js') }}">
 </script>
 @endpush
