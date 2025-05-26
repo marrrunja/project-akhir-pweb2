@@ -55,7 +55,8 @@ Route::controller(AdminController::class)->prefix('/admin')->group(function(){
     Route::get('/index', 'index');
     Route::get('/produk', 'lihatProduk')->name('admin.manage');
     Route::get('produk/variant/{id}', 'variantProduk')->name('admin.detailProduk');
-    Route::get('/produk/variants/edit/{id}', 'editProdukVariant')->name('admin.editProduk');
+    Route::get('/produk/variants/edit', 'editProdukVariant');
+    Route::post('/produk/variants/doEdit', 'doEdit');
     Route::get('/order/list', 'orderList')->name('admin.order');
     Route::get('/order/detail/{id}', 'orderDetail')->name('admin.detailOrder');
 });

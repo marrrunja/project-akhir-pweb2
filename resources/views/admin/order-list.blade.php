@@ -14,9 +14,9 @@
     <div class="container">
         <h1>Daftar Order User</h1>
         <div class="row mb-3 mt-3">
-            <div class="col-12 col-xl-5" id="kontent">
+            <div class="col-12 col-xl-3" id="kontent">
                 <select class="form-select" id="urutkan">
-                    <option value="">Urutkan</option>
+                    <option value="2">Urutkan</option>
                     <option value="0">Terbaru</option>
                     <option value="1">Terlama</option>
                 </select>

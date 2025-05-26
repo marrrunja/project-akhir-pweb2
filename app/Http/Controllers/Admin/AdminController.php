@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Kategori;
+use App\Models\Produk\Stok;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\Produk\ProdukVariant;
+
 class AdminController extends Controller
 {
     public function index():Response
@@ -74,8 +78,39 @@ class AdminController extends Controller
         return response()->view('admin.order-detail', compact('orderItems'));
     }
 
-    public function editProdukVariant(Request $request)
+    public function editProdukVariant(Request $request):JsonResponse
     {
-        return "Hello";
+        $id = $request->id;
+        $variant = DB::table('produk_variants')
+        ->join('stoks', 'produk_variants.id', '=', 'stoks.variant_id')
+        ->select('produk_variants.harga', 'stoks.jumlah', 'produk_variants.variant','produk_variants.id')
+        ->where('produk_variants.id', '=', $id)->get();
+      
+        $data = [
+            'variant' => $variant
+        ];
+        return response()->json($data);
+    }
+    public function doEdit(Request $request):JsonResponse
+    {
+        $id = $request->id;
+        $harga = $request->harga;
+        $jumlah = $request->jumlah;
+        $varian = $request->variant;
+
+        
+        $variant = DB::table('produk_variants')->where('id', $id);
+        $variant->update(['variant' => $varian,'harga' => $harga]);
+        DB::table('stoks')->where('variant_id', $id)->update([
+            'jumlah' => $jumlah
+        ]);
+        $response = [
+            'pesan' => 'berhasil update data',
+            'varian' => $varian,
+            'jumlah' => $jumlah,
+            'harga' => $harga
+        ];
+        return response()->json($response);
+        
     }
 }

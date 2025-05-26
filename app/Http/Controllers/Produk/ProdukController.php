@@ -78,10 +78,14 @@ class ProdukController extends Controller
             $lastInsertIdProduk = DB::getPdo()->lastInsertId();
 
             $jumlahVariant = count($request->stok);
+<<<<<<< HEAD
             for ($i = 0; $i < $jumlahVariant; $i++) {
                 $variant = $request->variant[$i];
                 $harga = $request->harga[$i];
                 $stok = $request->stok[$i];
+=======
+            for($i = 0; $i < $jumlahVariant; $i++){
+>>>>>>> d468a809189456c3871f5032b32c0495eff44595
                 DB::table('produk_variants')->insert([
                     'variant' => $variant,
                     'produk_id' => $lastInsertIdProduk,
