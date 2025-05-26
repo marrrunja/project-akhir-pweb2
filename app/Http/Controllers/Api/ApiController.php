@@ -17,13 +17,18 @@ class ApiController extends Controller
                     ->join('table_orders', 'pembelis.id','=','table_orders.pembeli_id')
                     ->select('pembelis.username', 'table_orders.tanggal_transaksi', 'table_orders.is_dibayar', 'table_orders.id');
 
-        $order = $request->order == "1" ? 'ASC' : 'DESC';
-        $data = [];
+        $order = null;
+        
+        if($request->order == "2") $order = "ASC";
+        else if($request->order == "0") $order = "DESC";
+        else
+            $order = "ASC";
+
         $data = [
             'pesan' => 'berhasil',
             'order' => $order,
             'orders' => $orders->orderBy("table_orders.tanggal_transaksi", $order)->get()
         ];
-        return response()->view('partial.tableOrder', $data);
+        return response()->view('partial.tableOrder', $data)->render();
     }
 }

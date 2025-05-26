@@ -4,6 +4,7 @@ const totalHarga = document.getElementById("hargaTotal").innerText;
 const URLENDPOINT = "http://127.0.0.1:8000/transaksi/checkout";
 const REDIRECTURL = "http://127.0.0.1:8000";
 const btnBayar = document.getElementById("btnBayar");
+const hargaSatuan = document.getElementById("hargaSatuan").innerText;
 
 const array = Array.from(totalHarga);
 const total = parseInt(array.filter((item) => item != '.')
@@ -14,7 +15,8 @@ async function sendData()
     const data = {
         jumlah : jumlah,
         totalHarga : total,
-        id:btnBayar.dataset.id
+        id:btnBayar.dataset.id,
+        harga:hargaSatuan
     }
     try{
         const response = await fetch(URLENDPOINT, {
@@ -31,7 +33,6 @@ async function sendData()
             document.location.href = REDIRECTURL +"/transaksi/checkout/success";
         else
             document.location.href = REDIRECTURL +"/transaksi/checkout/fail?pesan="+responseServer.pesan;
-
     }catch(error){
         console.error("Error fetching data "+error)
     }

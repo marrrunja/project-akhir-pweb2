@@ -8,6 +8,7 @@ use App\Models\Produk\ProdukVariant;
 use App\Models\Transaksi\Order;
 class OrderItem extends Model
 {
+    protected $table = 'order_items';
     public function produkVarian(): BelongsTo
     {
         return $this->belongsTo(ProdukVariant::class);
