@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Produk\ProdukVariant;
+use Illuminate\Http\RedirectResponse;
 
 class AdminController extends Controller
 {
@@ -91,7 +92,7 @@ class AdminController extends Controller
         ];
         return response()->json($data);
     }
-    public function doEdit(Request $request):JsonResponse
+    public function doEdit(Request $request):RedirectResponse
     {
         $id = $request->id;
         $harga = $request->harga;
@@ -100,17 +101,28 @@ class AdminController extends Controller
 
         
         $variant = DB::table('produk_variants')->where('id', $id);
-        $variant->update(['variant' => $varian,'harga' => $harga]);
-        DB::table('stoks')->where('variant_id', $id)->update([
+        $updateVariant = $variant->update(['variant' => $varian,'harga' => $harga]);
+
+        $updateStok = DB::table('stoks')->where('variant_id', $id)->update([
             'jumlah' => $jumlah
         ]);
-        $response = [
-            'pesan' => 'berhasil update data',
-            'varian' => $varian,
-            'jumlah' => $jumlah,
-            'harga' => $harga
+
+        $status = null;
+        $alert = null;
+        if($updateVariant > 0 || $updateStok > 0){
+            $status = "Berhasil update data";
+            $alert = "success";
+        }
+        else {
+            $status = "Tidak ada yang diupdate";
+            $alert = "warning";
+        }
+        
+        $flashMessage = [
+            'status' => $status,
+            'alert' => $alert
         ];
-        return response()->json($response);
+        return redirect()->back()->with($flashMessage);
         
     }
 }
