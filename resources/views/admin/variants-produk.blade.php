@@ -7,11 +7,16 @@
     integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="{{ asset('resources/css/admin.css') }}">
 @endpush
+
+@section('meta')
+<meta name="_token" content="{{ csrf_token() }}">
+@endsection
+
 @section('body')
 <section class="pt-5 pb-5">
     <div class="container">
         <h1>Daftar produk</h1>
-        <div class="row">
+        <div class="row" id="rowKonten">
             <div class="col-12 col-md-12 col-xl-10">
                 <table class="table">
                     <thead>
@@ -31,9 +36,10 @@
                             <td>{{ $variant->harga }}</td>
                             <td>{{ $variant->jumlah }}</td>
                             <td class="d-flex gap-3">
-                               <a class="btn btn-info" href="{{ route('admin.editProduk', $variant->id) }}">Edit</a>
+                               <button data-id="{{ $variant->id }}" class="btn btn-info btnEdit">Edit</button>
                             </td>
                         </tr>
+
                         @endforeach
                         <tr>
                             <td colspan="6">{{ $variants->links() }}</td>
@@ -55,4 +61,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous">
 </script>
+<script src="{{ asset('resources/js/admin.js') }}"></script>
 @endpush

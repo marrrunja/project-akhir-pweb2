@@ -11,9 +11,7 @@ for(let i = 0; i < btnTambah.length; i++){
         angka++;
         if(angka > parseInt(btnTambah[i].nextElementSibling.dataset.max)) {
             pesan[i].innerText = "Stok tersisa tidak cukup";
-          
             pesan[i].classList.remove("d-none");
-
             setTimeout(function(){
                 pesan[i].classList.add("d-none");
             },2000);

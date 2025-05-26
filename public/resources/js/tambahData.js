@@ -33,17 +33,12 @@ function tambahInputVariant()
 							<div class="mb-3">
                                 <label for="variant${i}" class="form-label">Nama varian</label>
                                 <input type="text" id="variant${i}" name="variant[]" class="form-control"placeholder="Contoh, original" required>
-                             
                             </div>
-                
-                    
                             <div class="mb-3">
-                      
                                 <label for="harga${i}" class="form-label">Harga</label>
                                 <input type="number" name="harga[]" class="form-control" id="harga${i}" placeholder="Contoh, 5000" required>
                             </div>
                             <div class="mb-3">
-                              
                                  <label for="stok${i}" class="form-label">Stok</label>
                                 <input type="number" name="stok[]" class="form-control" id="stok" placeholder="Contoh, 10" required>
                             </div>

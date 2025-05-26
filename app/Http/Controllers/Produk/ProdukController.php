@@ -80,7 +80,6 @@ class ProdukController extends Controller
 
             $jumlahVariant = count($request->stok);
             for($i = 0; $i < $jumlahVariant; $i++){
-                $variant =
                 DB::table('produk_variants')->insert([
                     'variant' => $request->variant[$i],
                     'produk_id' => $lastInsertIdProduk,
