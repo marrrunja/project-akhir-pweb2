@@ -44,3 +44,13 @@ Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
 Route::get('/tanggal',function(){
     echo now();
 });
+
+Route::get('/detail', function () {
+    return view('detail');
+});
+Route::get('/konfirmasi', function () {
+    return view('konfirmasi');
+});
+Route::get('/checkout', function () {
+    return view('checkout');
+});
