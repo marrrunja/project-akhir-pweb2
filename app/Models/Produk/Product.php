@@ -11,13 +11,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Product extends Model
 {
     protected $with = ['kategori'];
+    protected $table = 'products';
 
-    public function variant():HasMany
+    public function variant(): HasMany
     {
         return $this->hasMany(ProdukVariant::class, 'produk_id', 'id');
     }
-    public function kategori():BelongsTo
+    public function kategori(): BelongsTo
     {
         return $this->belongsTo(Kategori::class);
-    }  
+    }
 }
