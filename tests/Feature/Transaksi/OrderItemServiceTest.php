@@ -22,9 +22,5 @@ class OrderItemServiceTest extends TestCase
     {
         $orderItemService = $this->app->make(OrderItemService::class);
         self::assertSame($this->orderItemService, $orderItemService);
-    }
-    public function testFunctionHello():void
-    {
-        self::assertSame($this->orderItemService->hello())
     } 
 }

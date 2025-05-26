@@ -1,0 +1,7 @@
+.hover{
+	text-decoration: none;
+}
+.hover:hover{
+	text-decoration: underline !important;
+	transition: .3s;
+}

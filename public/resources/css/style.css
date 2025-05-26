@@ -93,3 +93,6 @@ button:hover {
 a {
     color:black;
 }
+#editor{
+    max-width: 500px;
+}

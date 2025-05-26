@@ -11,6 +11,6 @@ class Kategori extends Model
     public $incrementing = false;
 
     public function produk():HasMany{
-        return hasMany(Product::class);
+        return $this->hasMany(Product::class);
     }
 }

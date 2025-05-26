@@ -1,0 +1,13 @@
+ #editor {
+     width: 700px !important;
+     margin: 40px auto;
+ }
+
+ #editor-container {
+     width: inherit I !important;
+ }
+
+ .ck-editor__editable_inline {
+     min-height: 300px;
+     background-color: #fafafa;
+ }
