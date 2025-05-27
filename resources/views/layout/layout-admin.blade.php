@@ -12,11 +12,10 @@
 </head>
 
 <body>
-    @include('layout.header')
 
     @yield('body')
 
-    @include('layout.footer')
+    
     @stack('scripts')
     <!-- <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
@@ -28,8 +27,6 @@
     <script src="{{ asset('assets/vendor/drift-zoom/Drift.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script> -->
 
-    <!-- Main JS File -->
-    <script src="{{ asset('assets/js/main.js') }}"></script>
 </body>
 
 </html>

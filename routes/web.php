@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
@@ -20,10 +21,14 @@ Route::controller(LoginController::class)->prefix('/login')->group(function(){
     Route::post('/index/post', 'doLogin');
     Route::post('/logout', 'logout');
 });
-Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
-Route::get('/cart', [CartController::class, 'cart'])->name('cart.index');
-Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
-Route::post('/cart/delete/{id}', [CartController::class, 'destroy'])->name('cart.delete');
+Route::controller(RegisterController::class)->prefix('/cart')->group(function(){
+    Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
+    Route::post('/index', 'doLogin');
+    Route::post('/store', [CartController::class, 'store'])->name('cart.store');
+    Route::get('/', [CartController::class, 'cart'])->name('cart.index');
+    Route::post('/update/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/delete/{id}', [CartController::class, 'destroy'])->name('cart.delete');
+});
 
 
 Route::controller(RegisterController::class)->prefix('/register')->group(function(){
@@ -33,7 +38,7 @@ Route::controller(RegisterController::class)->prefix('/register')->group(functio
 
 
 Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
-Route::get('/cart', [CartController::class, 'cart'])->name('cart.index');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/delete/{id}', [CartController::class, 'destroy'])->name('cart.delete');
 
@@ -73,3 +78,12 @@ Route::get('/check', function(){
 Route::post('/check', function(Request $request){
     dump($request->all());
 });
+
+
+
+// Route::get('/cart/gaada',function(){
+//     $carts = Cart::with(['variant.produk'])
+//         ->where('pembeli_id', session('user_id'))
+//         ->get();
+//     return view('cart.nothing', compact('carts'));
+// });

@@ -1,4 +1,4 @@
-@extends('layout.layout')
+@extends('layout.layout-admin')
 
 @section('title', 'tambahData')
 

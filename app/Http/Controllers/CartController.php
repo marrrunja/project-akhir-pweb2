@@ -11,14 +11,14 @@ class CartController extends Controller
     public function index(){
         $carts = Cart::all();
 
-        return view('cart.cart', compact('carts'));
+        return view('cart.index', compact('carts'));
     }
     public function cart(Request $request)
     {
         $carts = Cart::with(['variant.produk'])
                     ->where('pembeli_id',$request->session()->get('user_id'))
                     ->get();
-        return view('cart.cart', compact('carts'));
+        return view('cart.index', compact('carts'));
     }
     private CartService $cartService;
     
@@ -105,15 +105,17 @@ class CartController extends Controller
                     ->firstOrFail();
 
         // Kurangi qty sebanyak 1
-        if ($cart->qty > 1) {
-            $cart->qty -= 1;
-            $cart->save();
-        } else {
-            // Jika qty sudah 1, hapus amar (eh maksudnya row)
-            $cart->delete();
-        }
+        // if ($cart->qty > 1) {
+        //     $cart->qty -= 1;
+        //     $cart->save();
+        // } else {
+        //     // Jika qty sudah 1, hapus amar (eh maksudnya row)
+        //     $cart->delete();
+        // }
 
+        $cart->delete();
         return redirect('cart');
     }
+    
 
 }
