@@ -5,59 +5,7 @@
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-<style>
-    body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-    }
-
-    .navbar {
-        background-color: #FF7A45;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 30px;
-        color: white;
-    }
-
-    .navbar .logo {
-        font-size: 24px;
-        font-weight: bold;
-    }
-
-    .navbar .nav-links {
-        display: flex;
-        gap: 20px;
-    }
-
-    .navbar .nav-links a {
-        color: white;
-        text-decoration: none;
-        font-weight: 500;
-    }
-
-    .navbar .nav-links a:hover {
-        text-decoration: underline;
-    }
-
-    .navbar .actions {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .navbar .cart,
-    .navbar .profil {
-        color: white;
-        text-decoration: none;
-        font-weight: 500;
-    }
-
-    .navbar .cart::before {
-        content: '🛒 ';
-    }
-
-</style>
+<link rel="stylesheet" type="text/css" href="{{ resource('resources/css/checkout.css') }}">
 @endpush
 
 @section('body')

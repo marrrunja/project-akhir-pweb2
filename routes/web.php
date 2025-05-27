@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Produk\ProdukController;
@@ -67,7 +68,7 @@ Route::controller(AdminController::class)->prefix('/admin')->group(function(){
 });
 
 Route::get('/api/orderListByTanggal', [\App\Http\Controllers\Api\ApiController::class, 'urutkanDataByTanggal']);
-
+Route::get('/payment/view', [PaymentController::class, 'index']);
 Route::get('/tanggal',function(){
     echo now()->format('Y-m-d');
 });
