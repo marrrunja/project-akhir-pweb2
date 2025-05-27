@@ -17,6 +17,7 @@ return new class extends Migration
             // $table->foreignId('kecamatan_id');
             // $table->foreign('kecamatan_id', 'kecamatan_id_FK')->references('id')->on('table_kecamatans');
             $table->foreignId("produk_id");
+            $table->integer('harga');
             $table->foreign('produk_id', 'produk_id_fk')->references('id')->on('products');
             $table->timestamps();
         });
