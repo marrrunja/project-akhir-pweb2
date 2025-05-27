@@ -53,7 +53,7 @@
             </div>
         </form>
         <div class="row">
-             <a href="{{ \Illuminate\Support\Facades\URL::previous() }}" class="hover">&laquo;Kembali ke halaman sebelumnya</a>
+             <a href="{{ route('admin.manage') }}" class="hover">&laquo;Kembali ke halaman sebelumnya</a>
         </div>
     </div>
 </section>

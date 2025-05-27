@@ -99,14 +99,13 @@ class AdminController extends Controller
         $jumlah = $request->jumlah;
         $varian = $request->variant;
 
-        
         $variant = DB::table('produk_variants')->where('id', $id);
         $updateVariant = $variant->update(['variant' => $varian,'harga' => $harga]);
 
         $updateStok = DB::table('stoks')->where('variant_id', $id)->update([
             'jumlah' => $jumlah
         ]);
-
+        
         $status = null;
         $alert = null;
         if($updateVariant > 0 || $updateStok > 0){
@@ -117,12 +116,10 @@ class AdminController extends Controller
             $status = "Tidak ada yang diupdate";
             $alert = "warning";
         }
-        
         $flashMessage = [
             'status' => $status,
             'alert' => $alert
         ];
         return redirect()->back()->with($flashMessage);
-        
     }
 }

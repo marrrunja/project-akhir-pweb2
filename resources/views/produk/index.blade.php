@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Blog - FashionStore Bootstrap Template</title>
+  
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -58,7 +59,7 @@
             </div>
           </div>
 
-<<<<<<< HEAD
+
           <div class="col-lg-6">
             <div class="d-flex justify-content-end">
               <div class="top-bar-item me-4">
@@ -195,10 +196,8 @@
                       <button class="cart-item-remove">
                         <i class="bi bi-x"></i>
                       </button>
-=======
-@section('meta')
-<meta name="_token" content="{{ csrf_token() }}">
-@endsection
+
+
 
 @section('body')
 <x-navbar></x-navbar>
@@ -1373,9 +1372,9 @@
 </body>
 
 </html>
-=======
+
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('resources/js/order.js') }}"></script>
 @endpush
->>>>>>> 5d68b9d000ac43d66eeefb62c5a2abce4be5cb1d
+
