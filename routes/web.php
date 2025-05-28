@@ -81,6 +81,8 @@ Route::post('/check', function(Request $request){
 });
 
 
+Route::get('/index/cart', [CartController::class, 'indexOfCart']);
+
 
 // Route::get('/cart/gaada',function(){
 //     $carts = Cart::with(['variant.produk'])

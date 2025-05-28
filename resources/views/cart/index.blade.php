@@ -37,11 +37,8 @@
         <h1>Cart</h1>
       </div>
     </div>
-
     <section id="cart" class="cart section">
-
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
         <div class="row">
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
             <div class="cart-items">
@@ -75,7 +72,6 @@
                         <h6 class="product-title">{{ $item->variant->produk->nama}}</h6>
                         <div class="product-meta">
                           <span class="product-color">{{ $item->variant->variant ?? 'Variant' }}</span>
-
                         </div>
                         <button class="remove-item" type="button">
                           <i class="bi bi-trash"></i> Remove

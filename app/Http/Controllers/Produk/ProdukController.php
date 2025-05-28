@@ -41,9 +41,9 @@ class ProdukController extends Controller
     {
         $validate = [
             'namaProduk' => ['required'],
-            'kategori' => ['required'],
+            'kategori' => ['required'],0
             'deskripsi' => ['required'],
-            'foto' => ['required','mimes:jpeg,jpg,png', 'max:2000'],
+            'foto' => ['required','mimes:jpeg,jpg,png', 'max:200'],
         ];
         $pesanValidasi = [
             'namaProduk.required' => 'Nama produk tidak boleh kosong!',
