@@ -15,7 +15,7 @@ class ProdukController extends Controller
 {
     public function index():Response
     {
-        $produk = Product::all();
+        $produk = DB::table('products')->get();
         $data = [
             'products' => $produk
         ];

@@ -64,7 +64,7 @@
                 <h1>Halaman Main</h1>
               <!-- Cart Item  -->
                @foreach($carts as $item)
-              <div class="cart-item">
+              <div class="cart-item" id="cart-item">
                 <div class="row align-items-center">
                   <div class="col-lg-6 col-12 mt-3 mt-lg-0 mb-lg-0 mb-3">
                     <div class="product-info d-flex align-items-center">
@@ -75,9 +75,8 @@
                         <h6 class="product-title">{{ $item->variant->produk->nama}}</h6>
                         <div class="product-meta">
                           <span class="product-color">{{ $item->variant->variant ?? 'Variant' }}</span>
-
                         </div>
-                        <button class="remove-item" type="button">
+                        <button class="hilangkan-item" data-id="{{ $item->id }}" data-user="{{ Session::get('user_id') }}" type="button">
                           <i class="bi bi-trash"></i> Remove
                         </button>
                       </div>
@@ -90,13 +89,13 @@
                   </div>
                   <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
                     <div class="quantity-selector">
-                      <button class="quantity-btn decrease">
+                      <!-- <button class="quantity-btn decrease">
                         <i class="bi bi-dash"></i>
-                      </button>
-                      <input type="number" class="quantity-input" value="1" min="1" max="10">
-                      <button class="quantity-btn increase">
+                      </button> -->
+                      <input disabled type="number" class="quantity-input" value="{{ $item->qty }}" min="1" max="10">
+                      <!-- <button class="quantity-btn increase">
                         <i class="bi bi-plus"></i>
-                      </button>
+                      </button> -->
                     </div>
                   </div>
                   <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
@@ -144,15 +143,9 @@
                 <span class="summary-label">Shipping</span>
                 <div class="shipping-options">
                   <div class="form-check text-end">
-                    <input class="form-check-input" type="radio" name="shipping" id="standard" checked="">
-                    <label class="form-check-label" for="standard">
-                      Standard Delivery - $4.99
-                    </label>
-                  </div>
-                  <div class="form-check text-end">
                     <input class="form-check-input" type="radio" name="shipping" id="express">
                     <label class="form-check-label" for="express">
-                      Express Delivery - $12.99
+                      Express Delivery - Free
                     </label>
                   </div>
                   <div class="form-check text-end">
@@ -164,29 +157,19 @@
                 </div>
               </div>
 
-              <div class="summary-item">
-                <span class="summary-label">Tax</span>
-                <span class="summary-value">$27.00</span>
-              </div>
-
-              <div class="summary-item discount">
-                <span class="summary-label">Discount</span>
-                <span class="summary-value">-$0.00</span>
-              </div>
-
               <div class="summary-total">
                 <span class="summary-label">Total</span>
-                <span class="summary-value">$301.95</span>
+                <span class="summary-value">Rp{{ number_format($carts->sum(fn($item) => ($item->variant->harga ?? 0) * $item->qty)) }} </span>
               </div>
 
               <div class="checkout-button">
-                <a href="#" class="btn btn-accent w-100">
+                <a href="/" class="btn btn-accent w-100">
                   Proceed to Checkout <i class="bi bi-arrow-right"></i>
                 </a>
               </div>
 
               <div class="continue-shopping">
-                <a href="#" class="btn btn-link w-100">
+                <a href="/produk/index" class="btn btn-link w-100">
                   <i class="bi bi-arrow-left"></i> Continue Shopping
                 </a>
               </div>
@@ -206,13 +189,16 @@
 
       </div>
 
-    </section><!-- /Cart Section -->
+    </section>
 
   </main>
 @endsection
 
 
 @push('scripts')
+<!-- sweet alert -->
+ 
+
 <!-- Vendor JS Files -->
 <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
@@ -226,4 +212,5 @@
 
 <!-- Main JS File -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
+<script src="{{ asset('resources/js/cart.js') }}"></script>
 @endpush

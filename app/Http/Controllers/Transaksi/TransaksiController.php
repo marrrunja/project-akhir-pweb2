@@ -28,7 +28,7 @@ class TransaksiController extends Controller
             'jumlah' => ['integer','required', 'min:1'],
         ];
         $pesanValidasi = [
-            'jumlah.number' => 'Input jumlah harus bertipe angka!',
+            'jumlah.integer' => 'Input jumlah harus bertipe angka!',
             'jumlah.required' => 'Inputan jumlah harus diisi!!',
             'jumlah.min' => 'Jumlah pesanan minimal 1!!'
         ];
