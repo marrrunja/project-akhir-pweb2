@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProdukVariant extends Model
 {
+    protected $table = 'produk_variants';
     protected $with = ['produk']; 
     public function produk():BelongsTo
     {

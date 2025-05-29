@@ -14,7 +14,7 @@
     <div class="container">
         <h1>Daftar produk</h1>
         <div class="row">
-            <div class="col-12 col-md-12 col-xl-10">
+            <div class="col-12">
                 <table class="table">
                     <thead>
                         <th>#</th>

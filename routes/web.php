@@ -45,8 +45,9 @@ Route::post('/cart/delete', [CartController::class, 'destroy'])->name('cart.dele
 
 Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
-    Route::get('/variant/{id}', 'produkVariant')->middleware(SessionHasNotMiddleware::class)->name('produk.variant');
+    Route::get('/variant', 'produkVariant')->middleware(SessionHasNotMiddleware::class)->name('produk.variant');
     Route::post('/add', 'addProduk')->name('produk.tambah');
+    Route::post('/variant/tambah/{id}', 'addProdukVariant');
 });
 
 Route::controller(TransaksiController::class)->prefix('/transaksi')->group(function(){
@@ -88,8 +89,3 @@ Route::post('/check', function(Request $request){
 //         ->get();
 //     return view('cart.nothing', compact('carts'));
 // });
-
-
-Route::get('/contoh/{id}', function($id){
-    return "nilai id adalah $id";
-});

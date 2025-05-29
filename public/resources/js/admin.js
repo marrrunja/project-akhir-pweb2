@@ -3,7 +3,10 @@ let token = document.querySelector("meta[name=_token]").content;
 
 let apiurl = 'http://127.0.0.1:8000/admin/produk/variants/edit';
 let sibling = null;
+let contentAddVariant = false;
 let formUbah = document.getElementById("formUbah");
+let btnTambahProdukVariant = document.getElementById("btnTambahProdukVariant");
+let formTambahProdukVariant = document.getElementById("form-tambah");
 
 function insertAfter(newNode, existingNode) {
     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
@@ -82,6 +85,36 @@ async function showDetailVariant(e) {
         formUbah.setAttribute("action", "http://127.0.0.1:8000/admin/produk/variants/doEdit");
     }
 }
+function makeInputAddVariantElement()
+{
+    let containerAddProdukVariant = document.createElement("div");
+    containerAddProdukVariant.classList.add("d-flex");
+    containerAddProdukVariant.classList.add("flex-wrap");
+    containerAddProdukVariant.classList.add("gap-3");
+    let inputToken = `<input type="hidden" name="_token" value="${token}">`;
+    let inputVarian = `<input type="text" name="nama" placeholder="Nama variant" class="form-control">`;
+    let inputHarga = `<input type="number" name="harga" placeholder="Harga Produk Variant" class="form-control">`;
+    let inputStok = `<input type="number" name="stok" placeholder="Stok Produk Variant" class="form-control">`;
+    let inputGambar = `<input type="file" name="gambar" class="form-control">`;
+    let btnSubmit = `<button type="submit" class="btn btn-success">Tambah</button>`;
+    containerAddProdukVariant.innerHTML = inputToken + inputVarian + inputHarga + inputStok + inputGambar + btnSubmit;
+    formTambahProdukVariant.append(containerAddProdukVariant);
+    contentAddVariant = true;
+}
 
+function addProdukVariant()
+{
+    if(contentAddVariant == true) return;
+    var apiData = "http://127.0.0.1:8000/produk/variant/tambah/"+this.dataset.id;
+    makeInputAddVariantElement();
+    formTambahProdukVariant.setAttribute("action", apiData);
+}
 
 rowKonten.addEventListener("click", showDetailVariant);
+
+
+
+btnTambahProdukVariant.addEventListener("click", addProdukVariant);
+
+
+
