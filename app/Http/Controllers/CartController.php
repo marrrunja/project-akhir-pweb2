@@ -82,21 +82,21 @@ class CartController extends Controller
     }
 
 
-
-
-    // public function index(Request $request) 
-    // {
-    //     $cartItems = 
-    //     return view('cart.index', compact('cartItems'));
-    // }
-
-    //method update jumlah di cart
+    // method update jumlah di cart
     public function update(Request $request, $id)
     {
-        $cart = Cart::where('id', $id)->where('pembeli_id', $request->session()->get('user_id'))->firstOrFail();
-        $cart->update(['qty' => $request->qty]);
+        $request->validate([
+                'id' => 'required|exists:carts,id',
+                'qty' => 'required|integer|min:1',
+        ]);
 
-        return redirect('cart');
+            $cart = Cart::findOrFail($request->id);
+            $newQty = max(1, min($request->qty, $cart->variant->stok->jumlah));
+
+            $cart->qty = $newQty;
+            $cart->save();
+
+        return response()->json(['success'=> true, 'qty' => $request->qty, 'id'=>$request ->id]);
     }
 
     //method hapus hapus
@@ -126,5 +126,7 @@ class CartController extends Controller
         return response()->json($data);
     }
     
+
+
 
 }

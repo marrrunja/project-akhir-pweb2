@@ -1,27 +1,7 @@
 const cartItem = document.getElementById("cart");
 const urlHapusCart = "http://127.0.0.1:8000/cart/delete";
+const urlUpdateCart = "http://127.0.0.1:8000/cart/update/{id}"
 let token = document.querySelector("meta[name=_token]").content;
-
-function updateCartTotal() {
-    const itemTotals = document.querySelectorAll(".item-total");
-    let subtotal = 0;
-
-    itemTotals.forEach(item => {
-        const itemValue = item.dataset.total;
-        subtotal += parseInt(itemValue);
-    });
-
-    // Format angka ke Rupiah
-    const formatted = new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        minimumFractionDigits: 0
-    });
-
-    document.getElementById("cart-subtotal").textContent = formatted.format(subtotal);
-    document.getElementById("cart-total").textContent = formatted.format(subtotal);
-}
-
 
 async function removeItemCart(e) {
     if (e.target.classList.contains("hilangkan-item")) {
@@ -89,3 +69,58 @@ async function removeItemCart(e) {
 }
 
 cartItem.addEventListener("click", removeItemCart);
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await initCartHandler();
+});
+
+async function initCartHandler() {
+    const buttons = document.querySelectorAll('.quantity-btn');
+
+    const updateQty = async (cartId, newQty, button) => {
+        try {
+            const url = urlUpdateCart.replace('{id}', cartId);
+            const res = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    'X-CSRF-TOKEN': token
+                },
+                body: JSON.stringify({ qty: newQty, id: cartId})
+            });
+
+            const data = await res.json();
+            console.log(data);
+            if (data.success) {
+                const input = button.parentElement.querySelector('.quantity-input');
+                input.value = data.qty;
+            } else {
+                Swal.fire('Gagal!', 'Gagal mengubah kuantitas. Coba lagi ya!', 'warning');
+            }
+        } catch (err) {
+            console.error(err);
+            Swal.fire('Error!', 'Terjadi kesalahan saat update kuantitas.', 'error');
+        }
+    };
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const isIncrease = btn.classList.contains('increase');
+            const input = btn.parentElement.querySelector('.quantity-input');
+            const cartId = btn.getAttribute('data-id');
+            console.log(cartId);
+            const stock = parseInt(btn.getAttribute('data-stock'));
+            let currentQty = parseInt(input.value);
+
+            let newQty = isIncrease ? currentQty + 1 : currentQty - 1;
+
+            if (newQty < 1 || newQty > stock) {
+                Swal.fire('Ups!', 'Jumlah tidak valid. Cek stok atau minimal pembelian.', 'warning');
+                return;
+            }
+
+            updateQty(cartId, newQty, btn);
+        });
+    });
+}

@@ -65,7 +65,6 @@
                   </div>
                 </div>
               </div>
-                <h1>Halaman Main</h1>
               <!-- Cart Item  -->
                @foreach($carts as $item)
               <div class="cart-item" id="cart-item">
@@ -80,7 +79,6 @@
                         <div class="product-meta">
                           <span class="product-color">{{ $item->variant->variant ?? 'Variant' }}</span>
                         </div>
-                        
                         <button class="hilangkan-item" data-id="{{ $item->id }}" data-user="{{ Session::get('user_id') }}" type="button">
                           <i class="bi bi-trash"></i> Remove
                         </button>
@@ -94,11 +92,11 @@
                   </div>
                   <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
                     <div class="quantity-selector">
-                      <button class="quantity-btn decrease">
+                      <button class="quantity-btn decrease" data-id="{{ $item->id }}" data-stock="{{ $item->variant->stok->jumlah }}">
                         <i class="bi bi-dash"></i>
                       </button>
-                      <input disabled type="number" class="quantity-input" value="{{ $item->qty }}" min="1" max="10">
-                      <button class="quantity-btn increase">
+                      <input disabled type="number" class="quantity-input" value="{{ $item->qty }}" min="1" max="{{ $item->variant->stok->jumlah }}">
+                      <button class="quantity-btn increase" data-id="{{ $item->id }}" data-stock="{{ $item->variant->stok->jumlah }}">
                         <i class="bi bi-plus"></i>
                       </button>
                     </div>
@@ -110,7 +108,7 @@
                   </div>
                 </div>
               </div><!-- End Cart Item -->
-              
+              @endforeach
 
               <div class="cart-actions">
                 <div class="row">
@@ -123,9 +121,6 @@
                     </div>
                   </div>
                   <div class="col-lg-6 text-md-end">
-                    <button class="btn btn-outline-heading me-2">
-                      <i class="bi bi-arrow-clockwise"></i> Update Cart
-                    </button>
                     <button class="btn btn-outline-remove">
                       <i class="bi bi-trash"></i> Clear Cart
                     </button>
@@ -141,9 +136,7 @@
 
               <div class="summary-item">
                 <span class="summary-label">Subtotal</span>
-                <span class="cart-subtotal summary-value">
-                  Rp{{ number_format($carts->sum(fn($item) => ($item->variant->harga ?? 0) * $item->qty)) }} 
-                  </span>
+                <span class="summary-value">Rp{{ number_format($carts->sum(fn($item) => ($item->variant->harga ?? 0) * $item->qty)) }} </span>
               </div>
 
               <div class="summary-item shipping-item">
@@ -166,13 +159,8 @@
 
               <div class="summary-total">
                 <span class="summary-label">Total</span>
-                <span class="cart-total summary-value">
-                <span class="item-total" data-total="{{ ($item->variant->harga ?? 0) * $item->qty }}">
-                  Rp{{ number_format(($item->variant->harga ?? 0) * $item->qty) }}
-                </span>
-                 </span>
+                <span class="summary-value">Rp{{ number_format($carts->sum(fn($item) => ($item->variant->harga ?? 0) * $item->qty)) }} </span>
               </div>
-              @endforeach
 
               <div class="checkout-button">
                 <a href="/" class="btn btn-accent w-100">
@@ -223,6 +211,6 @@
 <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
 
 <!-- Main JS File -->
-<script src="{{ asset('assets/js/main.js') }}"></script>
 <script src="{{ asset('resources/js/cart.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
 @endpush

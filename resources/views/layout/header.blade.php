@@ -133,7 +133,7 @@
                     <span class="cart-total-price">$279.97</span>
                   </div>
                   <div class="cart-actions">
-                    <a href="cart.html" class="btn btn-outline-primary">View Cart</a>
+                    <a href="{{ url('/cart') }}" class="btn btn-outline-primary">View Cart</a>
                     <a href="checkout.html" class="btn btn-primary">Checkout</a>
                   </div>
                 </div>
