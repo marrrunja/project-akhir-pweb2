@@ -63,7 +63,7 @@
                 </div>
               </div>
               <!-- Cart Item  -->
-               @foreach($carts as $item)
+              @foreach($carts as $item)
               <div class="cart-item" id="cart-item">
                 <div class="row align-items-center">
                   <div class="col-lg-6 col-12 mt-3 mt-lg-0 mb-lg-0 mb-3">

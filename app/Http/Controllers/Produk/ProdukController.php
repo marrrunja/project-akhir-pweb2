@@ -16,7 +16,8 @@ class ProdukController extends Controller
 {
     public function index():Response
     {
-        $produk = Product::all();
+        //DB::raw('SUM(price) as total_sales')
+        $produk = DB::table('products')->get();
         $data = [
             'products' => $produk
         ];
@@ -29,7 +30,7 @@ class ProdukController extends Controller
         if($variants){
             $data = [
                 'variants' => $variants
-            ];
+            ];  
             return response()->view('produk.variant-produk', $data);
         }
         else
@@ -65,10 +66,6 @@ class ProdukController extends Controller
         $foto = $request->file('foto');
         $gambar = $request->file('gambar');
 
-
-      
-
-    
         // mulai transaksi database/Database Transaction   
         DB::beginTransaction();
 
@@ -107,9 +104,10 @@ class ProdukController extends Controller
 
         }catch(\Exception $e){
             DB::rollback();
-            return redirect()->back()->with('gagal', 'Gagal menambah produk baru');
+            return redirect()->back()->with('gagal', 'Gagal menambah produk baru '. $e->getMessage());
         }
     }
+    
     public function addProdukVariant(Request $request)
     {
         $produkId = $request->id;
@@ -145,7 +143,6 @@ class ProdukController extends Controller
                 'alert' => "success"
             ];
             return redirect()->back()->with($flashMessage);
-
         }catch(\Exception $e){
             DB::rollback();
             $flashMessage = [

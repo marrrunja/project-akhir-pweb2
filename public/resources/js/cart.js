@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function initCartHandler() {
     const buttons = document.querySelectorAll('.quantity-btn');
-
     const updateQty = async (cartId, newQty, button) => {
         try {
             const url = urlUpdateCart.replace('{id}', cartId);
@@ -89,7 +88,6 @@ async function initCartHandler() {
                 },
                 body: JSON.stringify({ qty: newQty, id: cartId})
             });
-
             const data = await res.json();
             console.log(data);
             if (data.success) {

@@ -45,7 +45,7 @@ Route::post('/cart/delete', [CartController::class, 'destroy'])->name('cart.dele
 
 Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
-    Route::get('/variant', 'produkVariant')->middleware(SessionHasNotMiddleware::class)->name('produk.variant');
+    Route::get('/variant/{id}', 'produkVariant')->middleware(SessionHasNotMiddleware::class)->name('produk.variant');
     Route::post('/add', 'addProduk')->name('produk.tambah');
     Route::post('/variant/tambah/{id}', 'addProdukVariant');
 });

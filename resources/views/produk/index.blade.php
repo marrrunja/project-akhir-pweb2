@@ -58,15 +58,17 @@
               </div>
               <div class="product-info">
                 <h5 class="product-title"><a href="{{ route('produk.variant', $product->id) }}">{{ $product->nama }}</a></h5>
+               <div class="product-price">
+                  <span class="current-price">{{ Str::limit($product->detail, 10) }}</span>
+                </div>
                 <div class="product-price">
-                  <span class="current-price">Stok tersisa {{ $product->variant()->count() }}</span>
+                  <a href="{{ route('produk.variant', $product->id) }}" class="current-price">Lihat variant &raquo;</a>
                 </div>
               </div>
             </div>
           </div><!-- End Product Item --> 
           @endforeach        
         </div>
-
         <div class="text-center mt-5" data-aos="fade-up">
           <a href="category.html" class="view-all-btn">View All Products <i class="bi bi-arrow-right"></i></a>
         </div>
