@@ -41,7 +41,7 @@ Route::controller(RegisterController::class)->prefix('/register')->group(functio
 Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
-Route::post('/cart/delete/{id}', [CartController::class, 'destroy'])->name('cart.delete');
+Route::post('/cart/delete', [CartController::class, 'destroy'])->name('cart.delete');
 
 Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
