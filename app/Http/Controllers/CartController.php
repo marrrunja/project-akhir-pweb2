@@ -104,9 +104,8 @@ class CartController extends Controller
     {
         $cartId = $request->id;
         $userId = $request->userId;
-        // $cart = Cart::where('id', $cartId)
-        //             ->where('pembeli_id', $userId)
-        //             ->firstOrFail();
+        $cart = Cart::where('id', $cartId)
+                    ->where('pembeli_id', $userId);
 
         // Kurangi qty sebanyak 1
         // if ($cart->qty > 1) {
@@ -123,6 +122,7 @@ class CartController extends Controller
             'cart_id' => $cartId,
             'user_id' => $userId
         ];
+        $cart->delete();
         return response()->json($data);
     }
     

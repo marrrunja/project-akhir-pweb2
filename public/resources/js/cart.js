@@ -1,10 +1,31 @@
 const cartItem = document.getElementById("cart");
 const urlHapusCart = "http://127.0.0.1:8000/cart/delete";
-const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+let token = document.querySelector("meta[name=_token]").content;
+
+function updateCartTotal() {
+    const itemTotals = document.querySelectorAll(".item-total");
+    let subtotal = 0;
+
+    itemTotals.forEach(item => {
+        const itemValue = item.dataset.total;
+        subtotal += parseInt(itemValue);
+    });
+
+    // Format angka ke Rupiah
+    const formatted = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0
+    });
+
+    document.getElementById("cart-subtotal").textContent = formatted.format(subtotal);
+    document.getElementById("cart-total").textContent = formatted.format(subtotal);
+}
+
 
 async function removeItemCart(e) {
     if (e.target.classList.contains("hilangkan-item")) {
-        const parent = e.target.closest(".item-cart");
+        const parent = e.target.parentElement.parentElement.parentElement.parentElement.parentElement;
         const cartId = e.target.dataset.id;
         const userId = e.target.dataset.user;
 
@@ -26,7 +47,7 @@ async function removeItemCart(e) {
             if (result.isConfirmed) {
                 try {
                     const response = await fetch(urlHapusCart, {
-                        method: "DELETE",
+                        method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                             "Accept": "application/json",
