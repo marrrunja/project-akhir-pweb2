@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Services\Cart\CartService;
 use App\Models\Produk\ProdukVariant;
+
 class CartController extends Controller
 {
     public function index(){
@@ -98,11 +100,13 @@ class CartController extends Controller
     }
 
     //method hapus hapus
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request):JsonResponse
     {
-        $cart = Cart::where('id', $id)
-                    ->where('pembeli_id', $request->session()->get('user_id'))
-                    ->firstOrFail();
+        $cartId = $request->id;
+        $userId = $request->userId;
+        // $cart = Cart::where('id', $cartId)
+        //             ->where('pembeli_id', $userId)
+        //             ->firstOrFail();
 
         // Kurangi qty sebanyak 1
         // if ($cart->qty > 1) {
@@ -113,8 +117,13 @@ class CartController extends Controller
         //     $cart->delete();
         // }
 
-        $cart->delete();
-        return redirect('cart');
+        // $cart->delete();
+        // return redirect('cart');
+        $data = [
+            'cart_id' => $cartId,
+            'user_id' => $userId
+        ];
+        return response()->json($data);
     }
     
 
