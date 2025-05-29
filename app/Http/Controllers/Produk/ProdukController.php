@@ -41,7 +41,7 @@ class ProdukController extends Controller
     {
         $validate = [
             'namaProduk' => ['required'],
-            'kategori' => ['required'],0
+            'kategori' => ['required'],
             'deskripsi' => ['required'],
             'foto' => ['required','mimes:jpeg,jpg,png', 'max:200'],
         ];
