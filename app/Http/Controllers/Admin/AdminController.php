@@ -51,10 +51,13 @@ class AdminController extends Controller
                     ->join('kategoris', 'products.kategori_id', '=','kategoris.id')
                     ->join('produk_variants', 'products.id', '=','produk_variants.produk_id')
                     ->join('stoks', 'produk_variants.id', 'stoks.variant_id')
-                    ->select('products.nama', 'produk_variants.variant', 'produk_variants.harga','produk_variants.id', 'stoks.jumlah')
+                    ->select('products.nama', 'produk_variants.variant', 'produk_variants.harga','produk_variants.id', 'stoks.jumlah','produk_variants.foto')
                     ->where('products.id', '=', $id)->paginate(10);
-           
-        return response()->view('admin.variants-produk', compact('variants'));
+        $data = [
+            'variants' => $variants,
+            'id' => $id
+        ];
+        return response()->view('admin.variants-produk', $data);
     }
     public function orderList():Response
     {
@@ -122,4 +125,6 @@ class AdminController extends Controller
         ];
         return redirect()->back()->with($flashMessage);
     }
+
+
 }

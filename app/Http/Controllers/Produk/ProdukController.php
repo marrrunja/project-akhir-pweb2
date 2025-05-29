@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Produk;
 
+use App\Models\Produk\Stok;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Produk\Product;
@@ -9,13 +11,12 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Produk\ProdukVariant;
 use Illuminate\Http\RedirectResponse;
-use App\Models\Produk\Stok;
 
 class ProdukController extends Controller
 {
     public function index():Response
     {
-        $produk = DB::table('products')->get();
+        $produk = Product::all();
         $data = [
             'products' => $produk
         ];
@@ -43,7 +44,8 @@ class ProdukController extends Controller
             'namaProduk' => ['required'],
             'kategori' => ['required'],
             'deskripsi' => ['required'],
-            'foto' => ['required','mimes:jpeg,jpg,png', 'max:200'],
+            'foto' => ['required','mimes:jpeg,jpg,png', 'max:2048'],
+            'gambar.*' =>  'file|mimes:jpg,jpeg,png|max:2048',
         ];
         $pesanValidasi = [
             'namaProduk.required' => 'Nama produk tidak boleh kosong!',
@@ -61,6 +63,8 @@ class ProdukController extends Controller
         $deskripsi = $request->deskripsi;
      
         $foto = $request->file('foto');
+        $gambar = $request->file('gambar');
+
 
       
 
@@ -76,17 +80,23 @@ class ProdukController extends Controller
                 'detail' => $deskripsi,
                 'foto' => basename($namaFoto)
             ]);
+
             $lastInsertIdProduk = DB::getPdo()->lastInsertId();
 
             $jumlahVariant = count($request->stok);
             for($i = 0; $i < $jumlahVariant; $i++){
-                DB::table('produk_variants')->insert([
+                $originalName = Str::uuid().'-'.$lastInsertIdProduk. '-'.$gambar[$i]->getClientOriginalName();
+                $insertProdukVariant = DB::table('produk_variants')->insert([
+
                     'variant' => $request->variant[$i],
                     'produk_id' => $lastInsertIdProduk,
-                    'harga' => $request->harga[$i]
+                    'harga' => $request->harga[$i],
+                    'foto' => $originalName
                 ]);
+                if($insertProdukVariant > 0){
+                    $gambar[$i]->storeAs('image-variant', $originalName, 'public');
+                }
                 $lastInsertProdukVariantId = DB::getPdo()->lastInsertId();
-
                 DB::table('stoks')->insert([
                     'jumlah' => $request->stok[$i],
                     'variant_id' => $lastInsertProdukVariantId
@@ -98,6 +108,51 @@ class ProdukController extends Controller
         }catch(\Exception $e){
             DB::rollback();
             return redirect()->back()->with('gagal', 'Gagal menambah produk baru');
+        }
+    }
+    public function addProdukVariant(Request $request)
+    {
+        $produkId = $request->id;
+        $variant = $request->nama;
+        $jumlah = $request->stok;
+        $harga = $request->harga;
+        $gambar = $request->file('gambar');
+        $originalName = Str::uuid().'-'.$produkId. '-'.$gambar->getClientOriginalName();
+
+        $data = [
+            'variant' => $variant,
+            'produk_id' => $produkId,
+            'harga' => $harga,
+            'foto' => $originalName
+        ];
+        DB::beginTransaction();
+        try{
+            $insertProdukVariant = DB::table('produk_variants')->insert($data);
+            if($insertProdukVariant > 0) {
+                $gambar->storeAs('image-variant', $originalName, 'public');
+            }
+            $lastInsertProdukVariantId = DB::getPdo()->lastInsertId();
+            $data2 = [
+                'jumlah' => $jumlah,
+                'variant_id' => $lastInsertProdukVariantId
+            ];
+
+            DB::table('stoks')->insert($data2);
+
+            DB::commit();
+            $flashMessage = [
+                'status' => "berhasil menambah data variant",
+                'alert' => "success"
+            ];
+            return redirect()->back()->with($flashMessage);
+
+        }catch(\Exception $e){
+            DB::rollback();
+            $flashMessage = [
+                'status' => "Gagal menambah data variant " . $e->getMessage(),
+                'alert' => "danger"
+            ];
+            return redirect()->back()->with($flashMessage);
         }
     }
 }

@@ -27,12 +27,6 @@
 @section('body')
   <main class="main">
 
-   
-   
-
-  
-   
-
     <!-- Product List Section -->
     <section id="product-list" class="product-list section">
 
@@ -60,29 +54,12 @@
               <div class="product-image">
                 <span class="badge">Sale</span>
                 <img src="{{ asset('storage/images/'.$product->foto) }}" alt="Product" class="img-fluid main-img">
-                <img src="{{ asset('storage/images/'.$product->foto) }}" alt="Product Hover" class="img-fluid hover-img">
-                <div class="product-overlay">
-                  <a href="cart.html" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
-                  <div class="product-actions">
-                    <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
-                  </div>
-                </div>
+                <img src="{{ asset('storage/images/'.$product->foto) }}" alt="Product Hover" class="img-fluid">
               </div>
               <div class="product-info">
-                <h5 class="product-title"><a href="product-details.html">Lorem ipsum dolor sit amet</a></h5>
+                <h5 class="product-title"><a href="{{ route('produk.variant', $product->id) }}">{{ $product->nama }}</a></h5>
                 <div class="product-price">
-                  <span class="current-price">$89.99</span>
-                  <span class="old-price">$129.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-half"></i>
-                  <span>(24)</span>
+                  <span class="current-price">Stok tersisa {{ $product->variant()->count() }}</span>
                 </div>
               </div>
             </div>

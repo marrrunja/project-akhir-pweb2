@@ -62,7 +62,6 @@
                   </div>
                 </div>
               </div>
-                <h1>Halaman Main</h1>
               <!-- Cart Item  -->
                @foreach($carts as $item)
               <div class="cart-item" id="cart-item">

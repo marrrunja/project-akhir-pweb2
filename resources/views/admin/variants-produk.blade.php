@@ -15,7 +15,15 @@
 @section('body')
 <section class="pt-5 pb-5">
     <div class="container">
-        <h1>Daftar produk</h1>
+        <h1 class="mb-3">Daftar produk</h1>
+        <button class="btn btn-primary mb-3 mt-2" data-id="{{ $id }}" id="btnTambahProdukVariant">[+] Tambah Produk</button>
+        <div class="row">
+            <div class="col-12 col-xl-5">    
+                <form id="form-tambah" method="post" enctype="multipart/form-data">
+                    
+                </form>
+            </div>
+        </div>
         <form action="" id="formUbah" method="post">
             <div class="row" id="rowKonten">
                 <div class="col-12 col-md-12 col-xl-10">
@@ -29,6 +37,7 @@
                             <th>Variant</th>
                             <th>Harga</th>
                             <th>Jumlah</th>
+                            <th>Foto</th>
                             <th>Aksi</th>
                         </thead>
                         <tbody>
@@ -39,13 +48,14 @@
                                 <td>{{ $variant->variant }}</td>
                                 <td>{{ $variant->harga }}</td>
                                 <td>{{ $variant->jumlah }}</td>
+                                <td><img src="{{ asset('storage/image-variant/'.$variant->foto) }}" width="100"></td>
                                 <td class="d-flex gap-3">
                                 <button type="button" data-id="{{ $variant->id }}" class="btn btn-info btnEdit">Edit</button>
                                 </td>
                             </tr>
                             @endforeach
                             <tr>
-                                <td colspan="6">{{ $variants->links() }}</td>
+                                <td colspan="7">{{ $variants->links() }}</td>
                             </tr>
                         </tbody>
                     </table>
