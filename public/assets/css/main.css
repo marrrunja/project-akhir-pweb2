@@ -3920,6 +3920,28 @@ section,
   background-color: var(--surface-color);
   font-size: 14px;
 }
+.product-price .quantity-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.product-price .quantity-input {
+  width: 60px;
+  height: 40px;
+  text-align: center;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
+  border-left: none;
+  border-right: none;
+  color: var(--default-color);
+  background-color: var(--surface-color);
+  font-size: 14px;
+}
 
 .product-details .product-info-wrapper .product-options .option-group .quantity-selector .quantity-input:focus {
   border-color: var(--accent-color);

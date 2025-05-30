@@ -24,6 +24,7 @@
 <!-- Main CSS File -->
 <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+{{-- <link rel="stylesheet" type="text/css" href="{{ asset('resources/css/style.css') }}"> --}}
 @endpush
 
 @section('meta')
@@ -90,14 +91,13 @@
                 </div>
                 <div class="product-price">
                   <a href="{{ route('produk.variant', $product->id) }}" class="current-price">Lihat variant &raquo;</a>
-
-                  <button class="quantity-btn decrease" data-id="" data-stock="">
+                  	<button class="quantity-btn decrease" data-id="" data-stock="">
                         <i class="bi bi-dash"></i>
-                      </button>
+                     </button>
                       <input disabled type="number" class="quantity-input" value="" min="1" max="">
-                      <button class="quantity-btn increase" data-id="" data-stock="">
+                     <button class="quantity-btn increase" data-id="" data-stock="">
                         <i class="bi bi-plus"></i>
-                      </button>
+                  </button>
                 </div>
               </div>
             </div>

@@ -65,6 +65,7 @@ async function removeItemCart(e) {
                 }
             }
         });
+        e.stopPropagation();
     }
 }
 

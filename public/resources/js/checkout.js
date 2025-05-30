@@ -29,6 +29,7 @@ async function sendData()
         });
 
         const responseServer = await response.json();
+        console.log(responseServer);
         if(response.status === 200 && responseServer.status === 'berhasil')
             document.location.href = REDIRECTURL +"/transaksi/checkout/success";
         else

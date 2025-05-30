@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Kategori;
 use App\Models\Produk\Stok;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Produk\ProdukVariant;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -82,28 +84,35 @@ class AdminController extends Controller
         return response()->view('admin.order-detail', compact('orderItems'));
     }
 
-    public function editProdukVariant(Request $request):JsonResponse
-    {
-        $id = $request->id;
-        $variant = DB::table('produk_variants')
-        ->join('stoks', 'produk_variants.id', '=', 'stoks.variant_id')
-        ->select('produk_variants.harga', 'stoks.jumlah', 'produk_variants.variant','produk_variants.id')
-        ->where('produk_variants.id', '=', $id)->get();
-      
-        $data = [
-            'variant' => $variant
-        ];
-        return response()->json($data);
-    }
     public function doEdit(Request $request):RedirectResponse
     {
+
+        // ambil semua request
         $id = $request->id;
         $harga = $request->harga;
         $jumlah = $request->jumlah;
         $varian = $request->variant;
+        $fotoLama = $request->foto;
+        $fotoBaru = $request->file('gambar');
+        $originalName = '';
+
+        // jika foto barunya null(tidak ada) maka isi original name dengan foto lama
+        if($fotoBaru == null){
+            $originalName = $fotoLama;
+        }
+        // jika tidak, original name dirangkai dengan mengambil originalName dari foto baru
+        else{
+            // cek apakah foto lama ada di folder image variant, jika iya, hapus
+            if(Storage::disk('public')->exists('image-variant/' . $fotoLama)){
+                Storage::disk('public')->delete('image-variant/' . $fotoLama);
+            }
+            $originalName = Str::replace(' ','', Str::uuid() . '-' . $id . '-' . $fotoBaru->getClientOriginalName());
+            $fotoBaru->storeAs('image-variant', $originalName, 'public');
+        }
+
 
         $variant = DB::table('produk_variants')->where('id', $id);
-        $updateVariant = $variant->update(['variant' => $varian,'harga' => $harga]);
+        $updateVariant = $variant->update(['variant' => $varian,'harga' => $harga, 'foto' => $originalName]);
 
         $updateStok = DB::table('stoks')->where('variant_id', $id)->update([
             'jumlah' => $jumlah

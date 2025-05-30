@@ -16,7 +16,6 @@ class ApiController extends Controller
         $orders = DB::table('pembelis')
                     ->join('table_orders', 'pembelis.id','=','table_orders.pembeli_id')
                     ->select('pembelis.username', 'table_orders.tanggal_transaksi', 'table_orders.is_dibayar', 'table_orders.id');
-
         $order = null;
         
         if($request->order == "2") $order = "ASC";
