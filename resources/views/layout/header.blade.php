@@ -13,9 +13,10 @@
           </a>
 
           <!-- Search -->
-          <form class="search-form desktop-search-form">
+          <form class="search-form desktop-search-form" method="post" action="{{ env('BASE_URL') }}/produk/search">
+            @csrf
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for products...">
+              <input type="text" name="keyword" class="form-control" placeholder="Search for products...">
               <button class="btn search-btn" type="submit">
                 <i class="bi bi-search"></i>
               </button>
@@ -203,5 +204,4 @@
         </form>
       </div>
     </div>
-
   </header>
