@@ -318,11 +318,11 @@
       <div class="container-fluid container-xl position-relative">
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html">{{route('')}}</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="category.html">Category</a></li>
             <li><a href="product-details.html">Product Details</a></li>
-            <li><a href="cart.html" class="active">Cart</a></li>
+            <li><a href="cart.html" class="active">{{route('cart.index')}}t</a></li>
             <li><a href="checkout.html">Checkout</a></li>
             <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
