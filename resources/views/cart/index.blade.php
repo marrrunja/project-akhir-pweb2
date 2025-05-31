@@ -38,12 +38,11 @@
             <li class="current">Cart</li>
           </ol>
         </nav>
-        <h1>Cart</h1>
       </div>
-    </div>
+     </div>
     <section id="cart" class="cart section">
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row">
+         <div class="row">
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
             <div class="cart-items">
               <div class="cart-header d-none d-lg-block">

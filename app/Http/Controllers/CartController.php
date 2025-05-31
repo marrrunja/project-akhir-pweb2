@@ -107,17 +107,6 @@ class CartController extends Controller
         $cart = Cart::where('id', $cartId)
                     ->where('pembeli_id', $userId);
 
-        // Kurangi qty sebanyak 1
-        // if ($cart->qty > 1) {
-        //     $cart->qty -= 1;
-        //     $cart->save();
-        // } else {
-        //     // Jika qty sudah 1, hapus amar (eh maksudnya row)
-        //     $cart->delete();
-        // }
-
-        // $cart->delete();
-        // return redirect('cart');
         $data = [
             'cart_id' => $cartId,
             'user_id' => $userId

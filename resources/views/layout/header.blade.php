@@ -6,7 +6,7 @@
         <div class="d-flex py-3 align-items-center justify-content-between">
 
           <!-- Logo -->
-          <a href="index.html" class="logo d-flex align-items-center">
+          <a href="" class="logo d-flex align-items-center">
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="assets/img/logo.webp" alt=""> -->
             <h1 class="sitename">Adila<span>Snack</span></h1>
@@ -64,8 +64,8 @@
                   </a>
                 </div>
                 <div class="dropdown-footer">
-                  <a href="login.html" class="btn btn-primary w-100 mb-2">Sign In</a>
-                  <a href="register.html" class="btn btn-outline-primary w-100">Register</a>
+                  <a href="/login/index" class="btn btn-primary w-100 mb-2">Sign In</a>
+                  <a href="/register/index" class="btn btn-outline-primary w-100">Register</a>
                 </div>
               </div>
             </div>
@@ -85,46 +85,30 @@
                 <div class="dropdown-body">
                   <div class="cart-items">
                     <!-- Cart Item 1 -->
+                     {{-- @foreach($carts as $item)
                     <div class="cart-item">
                       <div class="cart-item-image">
                         <img src="assets/img/product/product-1.webp" alt="Product" class="img-fluid">
                       </div>
                       <div class="cart-item-content">
-                        <h6 class="cart-item-title">Wireless Headphones</h6>
-                        <div class="cart-item-meta">1 × $89.99</div>
+                        <h6 class="cart-item-title">{{ $item->variant->produk->nama}}</h6>
+                        <div class="product-meta">
+                          <span class="product-color">{{ $item->variant->variant ?? 'Variant' }}</span>
+                        </div>
+                        <div class="cart-item-meta">
+                          <span class="current-price">
+                           {{ $item->qty }}
+                        </span> ×
+                        <span class="item-total">
+                          Rp{{ number_format(($item->variant->harga ?? 0) * $item->qty) }}
+                        </span> 
                       </div>
-                      <button class="cart-item-remove">
-                        <i class="bi bi-x"></i>
+                      </div>
+                      <button class="hilangkan-item" data-id="{{ $item->id }}" data-user="{{ Session::get('user_id') }}" type="button">
+                          <i class="bi bi-trash"></i> Remove
                       </button>
                     </div>
-
-                    <!-- Cart Item 2 -->
-                    <div class="cart-item">
-                      <div class="cart-item-image">
-                        <img src="assets/img/product/product-2.webp" alt="Product" class="img-fluid">
-                      </div>
-                      <div class="cart-item-content">
-                        <h6 class="cart-item-title">Smart Watch</h6>
-                        <div class="cart-item-meta">1 × $129.99</div>
-                      </div>
-                      <button class="cart-item-remove">
-                        <i class="bi bi-x"></i>
-                      </button>
-                    </div>
-
-                    <!-- Cart Item 3 -->
-                    <div class="cart-item">
-                      <div class="cart-item-image">
-                        <img src="assets/img/product/product-3.webp" alt="Product" class="img-fluid">
-                      </div>
-                      <div class="cart-item-content">
-                        <h6 class="cart-item-title">Bluetooth Speaker</h6>
-                        <div class="cart-item-meta">1 × $59.99</div>
-                      </div>
-                      <button class="cart-item-remove">
-                        <i class="bi bi-x"></i>
-                      </button>
-                    </div>
+                    @endforeach --}}
                   </div>
                 </div>
                 <div class="dropdown-footer">

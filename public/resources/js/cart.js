@@ -73,6 +73,8 @@ cartItem.addEventListener("click", removeItemCart);
 
 document.addEventListener('DOMContentLoaded', async () => {
     await initCartHandler();
+    updateCartSummary();
+
 });
 
 async function initCartHandler() {
@@ -95,7 +97,14 @@ async function initCartHandler() {
             if (data.success) {
                 const input = button.parentElement.querySelector('.quantity-input');
                 input.value = data.qty;
-            } else {
+
+                const hargaText = button.closest('.cart-item').querySelector('.current-price').textContent.replace(/[^\d]/g, '');
+                const harga = parseInt(hargaText);
+
+                updateItemTotal(button, harga);
+                updateCartSummary();
+            }
+            else {
                 Swal.fire('Gagal!', 'Gagal mengubah kuantitas. Coba lagi ya!', 'warning');
             }
         } catch (err) {
@@ -124,3 +133,27 @@ async function initCartHandler() {
         });
     });
 }
+
+function updateItemTotal(button, harga) {
+    const qty = parseInt(button.parentElement.querySelector('.quantity-input').value);
+    const totalEl = button.closest('.cart-item').querySelector('.item-total span');
+    totalEl.textContent = "Rp" + new Intl.NumberFormat('id-ID').format(harga * qty);
+}
+
+function updateCartSummary() {
+    let total = 0;
+    document.querySelectorAll('.cart-item').forEach(item => {
+        const qty = parseInt(item.querySelector('.quantity-input').value);
+        const priceText = item.querySelector('.current-price').textContent.replace(/[^\d]/g, '');
+        const harga = parseInt(priceText);
+        total += harga * qty;
+    });
+
+    const formatted = "Rp" + new Intl.NumberFormat('id-ID').format(total);
+    document.querySelectorAll('.summary-value').forEach(el => {
+        el.textContent = formatted;
+    });
+}
+
+
+
