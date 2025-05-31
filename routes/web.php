@@ -50,6 +50,7 @@ Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
     Route::get('/variant/{id}', 'produkVariant')->middleware(SessionHasNotMiddleware::class)->name('produk.variant');
     Route::post('/add', 'addProduk')->name('produk.tambah');
     Route::post('/variant/tambah/{id}', 'addProdukVariant');
+    Route::post('/search', 'search')->middleware(SessionHasNotMiddleware::class);
 });
 
 Route::controller(TransaksiController::class)->prefix('/transaksi')->group(function(){
@@ -85,7 +86,9 @@ Route::post('/check', function(Request $request){
     dump($request->all());
 });
 
-
+Route::get('/gaada', function(){
+    return view('index');
+});
 
 // Route::get('/cart/gaada',function(){
 //     $carts = Cart::with(['variant.produk'])
