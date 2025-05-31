@@ -1,8 +1,8 @@
 const cartItem = document.getElementById("cart");
-const urlHapusCart = "http://127.0.0.1:8000/cart/delete";
-const urlUpdateCart = "http://127.0.0.1:8000/cart/update/{id}"
+const appurl = document.querySelector("meta[name=_appurl]").content;
+const urlHapusCart = appurl+"/cart/delete";
+const urlUpdateCart = appurl+"/cart/update/{id}";
 let token = document.querySelector("meta[name=_token]").content;
-
 async function removeItemCart(e) {
     if (e.target.classList.contains("hilangkan-item")) {
         const parent = e.target.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -65,6 +65,7 @@ async function removeItemCart(e) {
                 }
             }
         });
+        e.stopPropagation();
     }
 }
 
@@ -79,7 +80,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function initCartHandler() {
     const buttons = document.querySelectorAll('.quantity-btn');
-
     const updateQty = async (cartId, newQty, button) => {
         try {
             const url = urlUpdateCart.replace('{id}', cartId);
@@ -91,7 +91,6 @@ async function initCartHandler() {
                 },
                 body: JSON.stringify({ qty: newQty, id: cartId})
             });
-
             const data = await res.json();
             console.log(data);
             if (data.success) {

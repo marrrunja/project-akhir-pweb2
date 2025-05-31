@@ -87,40 +87,7 @@
 @endpush
 
 @section('body')
-    <!-- Profile Section -->
-  <div class="container my-5">
-    <div class="card p-4">
-      <h2 class="mb-4 text-maroon">Profil Pengguna</h2>
-      <div class="row g-4">
-        <div class="col-md-4 text-center">
-          <img src="https://via.placeholder.com/150" alt="Foto Profil" class="profile-pic mb-3">
-          <div class="mb-3">
-          </div>
-        </div>
-        <div class="col-md-8">
-          <form>
-            <div class="mb-3">
-              <label for="nama" class="form-label">Nama Lengkap</label>
-              <input type="text" class="form-control" id="nama" value="Nama User">
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Alamat Email</label>
-              <input type="email" class="form-control" id="email" value="user@email.com">
-            </div>
-            <div class="mb-3">
-              <label for="telepon" class="form-label">No. Telepon</label>
-              <input type="text" class="form-control" id="telepon" value="+62 81234567890">
-            </div>
-            <div class="mb-3">
-              <label for="alamat" class="form-label">Alamat</label>
-              <textarea class="form-control" id="alamat" rows="3">Alamat lengkap pengguna</textarea>
-            </div>
-            <button type="submit" class="btn btn-maroon">edit profil</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 @endsection
 
 @push('scripts')

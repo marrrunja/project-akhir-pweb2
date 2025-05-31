@@ -71,13 +71,11 @@
                         <fieldset class="shadow rounded p-3">
                             <legend>Varian 1</legend>
                             @error('variant') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
-
                             <div class="mb-3">
                                 <label for="variant" class="form-label">Nama varian</label>
                                 <input type="text" id="variant" name="variant[]" class="form-control"
                                     placeholder="Contoh, original">
                             </div>
-
                             <div class="mb-3">
                                 @error('harga') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
                                 <label for="harga" class="form-label">Harga</label>

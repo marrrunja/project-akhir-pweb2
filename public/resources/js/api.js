@@ -1,6 +1,7 @@
 let urutkan = document.getElementById("urutkan");
+const appurl = document.querySelector("meta[name=_appurl]").content;
 let konten = document.getElementById("konten");
-let APIURL = "http://127.0.0.1:8000/api/orderListByTanggal";
+let APIURL = appurl+ "/api/orderListByTanggal";
 async function orderByTanggal() {
 	try {
 		let response = await fetch(APIURL + "?order=" + urutkan.value);

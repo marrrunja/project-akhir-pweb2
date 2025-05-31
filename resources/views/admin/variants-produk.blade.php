@@ -10,15 +10,21 @@
 
 @section('meta')
 <meta name="_token" content="{{ csrf_token() }}">
+<meta name="_appurl" content="{{ env('BASE_URL') }}">
 @endsection
 
 @section('body')
 <section class="pt-5 pb-5">
     <div class="container">
-        <h1 class="mb-3">Daftar produk</h1>
-        <button class="btn btn-primary mb-3 mt-2" data-id="{{ $id }}" id="btnTambahProdukVariant">[+] Tambah Produk</button>
+        <h1 class="mb-3">Daftar variant {{ $nama }}</h1>
+        <button class="btn btn-primary mb-3 mt-2" data-id="{{ $id }}" id="btnTambahProdukVariant">[+] Tambah Variant</button>
         <div class="row">
-            <div class="col-12 col-xl-5">    
+            <div class="col-12 col-xl-5">  
+                @if($errors->any())
+                <div class="alert alert-danger">
+                    Semua inputan harus diisi dengan benar
+                </div>
+                @endif
                 <form id="form-tambah" method="post" enctype="multipart/form-data">
                     
                 </form>
@@ -26,7 +32,7 @@
         </div>
         <form action="" id="formUbah" method="post">
             <div class="row" id="rowKonten">
-                <div class="col-12 col-md-12 col-xl-10">
+                <div class="col-12 col-md-12 col-xl-8">
                     @if(Session::has('status') && Session::has('alert'))
                         <div class="alert alert-{{ Session::get('alert') }}">{{ Session::get('status') }}</div>
                     @endif

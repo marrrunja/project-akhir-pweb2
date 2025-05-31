@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Produk\ProdukController;
 use App\Http\Middleware\Auth\SessionHasMiddleware;
 use App\Http\Middleware\Auth\SessionHasNotMiddleware;
 use App\Http\Controllers\Transaksi\TransaksiController;
+use App\Http\Controllers\Api\ProdukVariantApiController;
 
 Route::get('/', [UserController::class, 'index']);
 
@@ -45,7 +47,7 @@ Route::post('/cart/delete', [CartController::class, 'destroy'])->name('cart.dele
 
 Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
-    Route::get('/variant', 'produkVariant')->middleware(SessionHasNotMiddleware::class)->name('produk.variant');
+    Route::get('/variant/{id}', 'produkVariant')->middleware(SessionHasNotMiddleware::class)->name('produk.variant');
     Route::post('/add', 'addProduk')->name('produk.tambah');
     Route::post('/variant/tambah/{id}', 'addProdukVariant');
 });
@@ -62,13 +64,15 @@ Route::controller(AdminController::class)->prefix('/admin')->group(function(){
     Route::get('/index', 'index');
     Route::get('/produk', 'lihatProduk')->name('admin.manage');
     Route::get('produk/variant/{id}', 'variantProduk')->name('admin.detailProduk');
-    Route::get('/produk/variants/edit', 'editProdukVariant');
     Route::post('/produk/variants/doEdit', 'doEdit');
     Route::get('/order/list', 'orderList')->name('admin.order');
     Route::get('/order/detail/{id}', 'orderDetail')->name('admin.detailOrder');
 });
 
-Route::get('/api/orderListByTanggal', [\App\Http\Controllers\Api\ApiController::class, 'urutkanDataByTanggal']);
+Route::get('/api/orderListByTanggal', [ApiController::class, 'urutkanDataByTanggal']);
+Route::get('api/produk/variants/edit',[ProdukVariantApiController::class, 'editProdukVariant']);
+
+
 Route::get('/payment/view', [PaymentController::class, 'index']);
 Route::get('/tanggal',function(){
     echo now()->format('Y-m-d');

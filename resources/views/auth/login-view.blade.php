@@ -8,6 +8,8 @@
 @endpush
 
 @section('body')
+
+@endsection
 <div class="login-container">
     <!-- Tab -->
     <div class="d-flex justify-content-center">
@@ -48,4 +50,3 @@
         </div>
     </div>
 </div>
-@endsection

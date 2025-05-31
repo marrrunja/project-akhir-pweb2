@@ -33,7 +33,6 @@ for(let i = 0; i < btnKurang.length; i++){
             },2000);
             return;
         };
-      
         btnHasil[i].innerText = angka;
         btnHasil[i].previousElementSibling.value = angka;
     });

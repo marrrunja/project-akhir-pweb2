@@ -1,6 +1,12 @@
 @extends('layout.layout')
 @section('title', 'Keranjang Belanja')
 
+
+@section('meta')
+<meta name="_token" content="{{ csrf_token() }}">
+<meta name="_appurl" content="{{ env('BASE_URL') }}">
+@endsection
+
 @push('styles')
 <!-- Favicon & Apple Touch Icon -->
 <link href="{{ asset('assets/img/favicon.png') }}" rel="icon">
@@ -22,11 +28,6 @@
 <!-- Main CSS File -->
 <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
 @endpush
-
-@section('meta')
-<meta name="_token" content="{{ csrf_token() }}">
-@endsection
-
 
 @section('body')
  <main class="main">
@@ -62,7 +63,7 @@
                 </div>
               </div>
               <!-- Cart Item  -->
-               @foreach($carts as $item)
+              @foreach($carts as $item)
               <div class="cart-item" id="cart-item">
                 <div class="row align-items-center">
                   <div class="col-lg-6 col-12 mt-3 mt-lg-0 mb-lg-0 mb-3">
