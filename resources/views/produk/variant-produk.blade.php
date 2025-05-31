@@ -24,7 +24,7 @@
 <!-- Main CSS File -->
 <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-{{-- <link rel="stylesheet" type="text/css" href="{{ asset('resources/css/style.css') }}"> --}}
+<!-- {{-- <link rel="stylesheet" type="text/css" href="{{ asset('resources/css/style.css') }}"> --}} -->
 @endpush
 
 @section('meta')

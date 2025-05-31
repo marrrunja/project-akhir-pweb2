@@ -7,6 +7,7 @@ use App\Models\Produk\Stok;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\Produk\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -47,8 +48,8 @@ class AdminController extends Controller
     }
     public function variantProduk(Request $request):Response
     {
-
         $id = $request->id;
+        $produk = Product::where('id', $id)->first();
         $variants = DB::table('products')
                     ->join('kategoris', 'products.kategori_id', '=','kategoris.id')
                     ->join('produk_variants', 'products.id', '=','produk_variants.produk_id')
@@ -57,7 +58,8 @@ class AdminController extends Controller
                     ->where('products.id', '=', $id)->paginate(10);
         $data = [
             'variants' => $variants,
-            'id' => $id
+            'id' => $id,
+            'nama' => $produk->nama
         ];
         return response()->view('admin.variants-produk', $data);
     }

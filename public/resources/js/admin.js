@@ -100,23 +100,38 @@ async function showDetailVariant(e) {
 function makeInputAddVariantElement()
 {
     let containerAddProdukVariant = document.createElement("div");
+    let containerBtn = document.createElement("div");
     containerAddProdukVariant.classList.add("d-flex");
     containerAddProdukVariant.classList.add("flex-wrap");
     containerAddProdukVariant.classList.add("gap-3");
+    // containerBtn.classList.add("d-flex");
+    // containerBtn.classList.add("flex-wrap");
+    // containerBtn.classList.add("gap-2");
 
     let inputToken = `<input type="hidden" name="_token" value="${token}">`;
-    let inputVarian = `<input type="text" name="nama" placeholder="Nama variant" class="form-control">`;
-    let inputHarga = `<input type="number" name="harga" placeholder="Harga Produk Variant" class="form-control">`;
-    let inputStok = `<input type="number" name="stok" placeholder="Stok Produk Variant" class="form-control">`;
-    let inputGambar = `<input type="file" name="gambar" class="form-control">`;
-    let btnSubmit = `<button type="submit" class="btn btn-success mb-3">Tambah</button>`;
+    let inputVarian = `<input type="text" name="nama" placeholder="Nama variant" class="form-control" required>`;
+    let inputHarga = `<input type="number" name="harga" placeholder="Harga Produk Variant" class="form-control" required>`;
+    let inputStok = `<input type="number" name="stok" placeholder="Stok Produk Variant" class="form-control" required>`;
+    let inputGambar = `<input type="file" name="gambar" class="form-control" required>`;
+
+    let btnSubmit = `<button type="submit" class="btn btn-success mb-3 mt-2 me-2">Tambah</button>`;
+    let btnBatal = `<button type="button" class="btn btn-danger btn-batal mb-3 mt-2">Batal</button>`;
     
-    containerAddProdukVariant.innerHTML = inputToken + inputVarian + inputHarga + inputStok + inputGambar + btnSubmit;
+    containerAddProdukVariant.innerHTML = inputToken + inputVarian + inputHarga + inputStok + inputGambar;
+    containerBtn.innerHTML = btnSubmit + btnBatal;
     formTambahProdukVariant.append(containerAddProdukVariant);
+    formTambahProdukVariant.append(containerBtn);
     contentAddVariant = true;
+
+    const btn = document.querySelector('.btn-batal');
+    btn.addEventListener("click", function(){
+        btn.parentElement.previousElementSibling.remove();
+        btn.parentElement.remove();
+        contentAddVariant = false;
+    });
 }
 
-function addProdukVariant()
+function addProdukVariant(e)
 {
     if(contentAddVariant == true) return;
     var apiData = "http://127.0.0.1:8000/produk/variant/tambah/"+this.dataset.id;
