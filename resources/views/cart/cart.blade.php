@@ -1,75 +1,69 @@
-@extends('layout.layout-admin')
-@section('title', 'Register')
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-@push('styles')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-<link rel="stylesheet" href="{{ asset('resources/css/style.css') }}">
-@endpush
-
-@section('body')
-    <div class="login-container">
-    <!-- Bagian Tab -->
-    <div class="d-flex justify-content-center">
-        <div class="register-wrapper">
-            <ul class="nav nav-tabs justify-content-evenly mb-3">
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{ url('/register/index') }}">Sign Up</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/login/index') }}">Log In</a>
-                </li>
-            </ul>
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Keranjang Belanja</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered align-middle">
+                    <thead class="table-primary text-center">
+                        <tr>
+                            <th>Nama Produk</th>
+                            <th>Variant</th>
+                            <th>Harga</th>
+                            <th>Quantity</th>
+                            <th>Total Harga</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($carts as $item)
+                            <tr>
+                                <td>{{ $item->variant->produk->nama_produk ?? 'Nama Produk' }}</td>
+                                <td>{{ $item->variant->variant ?? 'Variant' }}</td>
+                                <td class="text-end">Rp{{ number_format($item->variant->harga ?? 0) }}</td>
+                                <td class="text-center">
+                                    <form method="POST" action="{{ route('cart.update', $item->id) }}" class="d-inline">
+                                        @csrf
+                                        <div class="input-group">
+                                            <input type="number" name="qty" value="{{ $item->qty }}" min="1" class="form-control form-control-sm" style="max-width: 80px;">
+                                            <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="text-end">Rp{{ number_format(($item->variant->harga ?? 0) * $item->qty) }}</td>
+                                <td class="text-center">
+                                    <form method="POST" action="{{ route('cart.delete', $item->id) }}" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                     <tfoot>
+                        <tr class="table-primary">
+                            <th colspan="4" class="text-end">Total Belanja:</th>
+                            <th class="text-end">
+                                Rp{{ number_format($carts->sum(fn($item) => ($item->variant->harga ?? 0) * $item->qty)) }}
+                            </th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+                <a href="/" class="btn btn-success btn-lg">
+                    Checkout
+                </a>
+            </div>
         </div>
     </div>
+</div> -->
 
-    <!-- Form -->
-    <div class="tab-content">
-        <div class="tab-pane fade show active">
-            <form method="POST" action="/register/index" class="text-center">
-                @csrf
-                @foreach (['username', 'desa', 'jalan'] as $field)
-                    @error($field)
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                @endforeach
-
-                <div>
-                    <label class="text-start w-100 ps-3">Username</label>
-                    <input type="text" name="username" placeholder="Masukkan Username Anda" required>
-                </div>
-                <div>
-                    <label class="text-start w-100 ps-3">Password</label>
-                    <input type="password" name="password" placeholder="Masukkan Password Anda" required>
-                </div>
-                <div>
-                    <label class="text-start w-100 ps-3">Kecamatan</label>
-                    <select name="kecamatan" id="kecamatan">
-                        <option value="">Pilih Kecamatan</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="text-start w-100 ps-3">Desa</label>
-                    <select name="desa" id="desa">
-                        <option value="">Pilih Desa</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="text-start w-100 ps-3">Alamat</label>
-                    <input type="text" name="alamat" placeholder="Masukkan Jalan/Alamat Spesifik">
-                </div>
-                <div class="d-flex justify-content-center">
-                    <button class="w-50" type="submit">Register</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-@endsection
-
-@push('scripts')
-<script src="{{ asset('resources/js/alamat.js') }}"></script>
-@endpush
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -77,7 +71,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Register - FashionStore Bootstrap Template</title>
+  <title>Cart - FashionStore Bootstrap Template</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -110,7 +104,7 @@
   ======================================================== -->
 </head>
 
-<body class="register-page">
+<body class="cart-page">
 
   <header id="header" class="header position-relative">
     <!-- Top Bar -->
@@ -324,11 +318,11 @@
       <div class="container-fluid container-xl position-relative">
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html">{{route('')}}</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="category.html">Category</a></li>
             <li><a href="product-details.html">Product Details</a></li>
-            <li><a href="cart.html">Cart</a></li>
+            <li><a href="cart.html" class="active">{{route('cart.index')}}t</a></li>
             <li><a href="checkout.html">Checkout</a></li>
             <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
@@ -961,105 +955,270 @@
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.html">Home</a></li>
-            <li class="current">Register</li>
+            <li class="current">Cart</li>
           </ol>
         </nav>
-        <h1>Register</h1>
+        <h1>Cart</h1>
       </div>
     </div><!-- End Page Title -->
 
-    <!-- Register Section -->
-    <section id="register" class="register section">
+    <!-- Cart Section -->
+    <section id="cart" class="cart section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <div class="row justify-content-center">
-          <div class="col-lg-6">
-
-            <div class="registration-form-wrapper" data-aos="zoom-in" data-aos-delay="200">
-
-              <div class="section-header mb-4 text-center">
-                <h2>Create Your Account</h2>
-                <p>Sign up to start shopping and enjoy exclusive offers</p>
+        <div class="row">
+          <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+            <div class="cart-items">
+              <div class="cart-header d-none d-lg-block">
+                <div class="row align-items-center">
+                  <div class="col-lg-6">
+                    <h5>Product</h5>
+                  </div>
+                  <div class="col-lg-2 text-center">
+                    <h5>Price</h5>
+                  </div>
+                  <div class="col-lg-2 text-center">
+                    <h5>Quantity</h5>
+                  </div>
+                  <div class="col-lg-2 text-center">
+                    <h5>Total</h5>
+                  </div>
+                </div>
               </div>
 
-              <form action="#" method="POST">
+              <!-- Cart Item 1 -->
+              <div class="cart-item">
+                <div class="row align-items-center">
+                  <div class="col-lg-6 col-12 mt-3 mt-lg-0 mb-lg-0 mb-3">
+                    <div class="product-info d-flex align-items-center">
+                      <div class="product-image">
+                        <img src="assets/img/product/product-1.webp" alt="Product" class="img-fluid" loading="lazy">
+                      </div>
+                      <div class="product-details">
+                        <h6 class="product-title">Lorem ipsum dolor sit amet</h6>
+                        <div class="product-meta">
+                          <span class="product-color">Color: Black</span>
+                          <span class="product-size">Size: M</span>
+                        </div>
+                        <button class="remove-item" type="button">
+                          <i class="bi bi-trash"></i> Remove
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                    <div class="price-tag">
+                      <span class="current-price">$89.99</span>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                    <div class="quantity-selector">
+                      <button class="quantity-btn decrease">
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="number" class="quantity-input" value="1" min="1" max="10">
+                      <button class="quantity-btn increase">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                    <div class="item-total">
+                      <span>$89.99</span>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Cart Item -->
 
+              <!-- Cart Item 2 -->
+              <div class="cart-item">
+                <div class="row align-items-center">
+                  <div class="col-lg-6 col-12 mt-3 mt-lg-0 mb-lg-0 mb-3">
+                    <div class="product-info d-flex align-items-center">
+                      <div class="product-image">
+                        <img src="assets/img/product/product-3.webp" alt="Product" class="img-fluid" loading="lazy">
+                      </div>
+                      <div class="product-details">
+                        <h6 class="product-title">Consectetur adipiscing elit</h6>
+                        <div class="product-meta">
+                          <span class="product-color">Color: White</span>
+                          <span class="product-size">Size: L</span>
+                        </div>
+                        <button class="remove-item" type="button">
+                          <i class="bi bi-trash"></i> Remove
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                    <div class="price-tag">
+                      <span class="current-price">$64.99</span>
+                      <span class="original-price">$79.99</span>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                    <div class="quantity-selector">
+                      <button class="quantity-btn decrease">
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="number" class="quantity-input" value="2" min="1" max="10">
+                      <button class="quantity-btn increase">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                    <div class="item-total">
+                      <span>$129.98</span>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Cart Item -->
+
+              <!-- Cart Item 3 -->
+              <div class="cart-item">
+                <div class="row align-items-center">
+                  <div class="col-lg-6 col-12 mt-3 mt-lg-0 mb-lg-0 mb-3">
+                    <div class="product-info d-flex align-items-center">
+                      <div class="product-image">
+                        <img src="assets/img/product/product-5.webp" alt="Product" class="img-fluid" loading="lazy">
+                      </div>
+                      <div class="product-details">
+                        <h6 class="product-title">Sed do eiusmod tempor</h6>
+                        <div class="product-meta">
+                          <span class="product-color">Color: Blue</span>
+                          <span class="product-size">Size: S</span>
+                        </div>
+                        <button class="remove-item" type="button">
+                          <i class="bi bi-trash"></i> Remove
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                    <div class="price-tag">
+                      <span class="current-price">$49.99</span>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                    <div class="quantity-selector">
+                      <button class="quantity-btn decrease">
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="number" class="quantity-input" value="1" min="1" max="10">
+                      <button class="quantity-btn increase">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                    <div class="item-total">
+                      <span>$49.99</span>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Cart Item -->
+
+              <div class="cart-actions">
                 <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <div class="form-group">
-                      <label for="firstName">First Name</label>
-                      <input type="text" class="form-control" name="firstName" id="firstName" required="" minlength="2" placeholder="John">
+                  <div class="col-lg-6 mb-3 mb-lg-0">
+                    <div class="coupon-form">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Coupon code">
+                        <button class="btn btn-outline-accent" type="button">Apply Coupon</button>
+                      </div>
                     </div>
                   </div>
-
-                  <div class="col-md-6 mb-3">
-                    <div class="form-group">
-                      <label for="lastName">Last Name</label>
-                      <input type="text" class="form-control" name="lastName" id="lastName" required="" minlength="2" placeholder="Doe">
-                    </div>
+                  <div class="col-lg-6 text-md-end">
+                    <button class="btn btn-outline-heading me-2">
+                      <i class="bi bi-arrow-clockwise"></i> Update Cart
+                    </button>
+                    <button class="btn btn-outline-remove">
+                      <i class="bi bi-trash"></i> Clear Cart
+                    </button>
                   </div>
                 </div>
-
-                <div class="form-group mb-3">
-                  <label for="email">Email Address</label>
-                  <input type="email" class="form-control" name="email" id="email" required="" placeholder="you@example.com">
-                </div>
-
-                <div class="form-group mb-3">
-                  <label for="password">Password</label>
-                  <div class="password-input">
-                    <input type="password" class="form-control" name="password" id="password" required="" minlength="8" placeholder="At least 8 characters">
-                    <i class="bi bi-eye toggle-password"></i>
-                  </div>
-                  <small class="password-requirements">
-                    Must be at least 8 characters long and include uppercase, lowercase, number, and special character
-                  </small>
-                </div>
-
-                <div class="form-group mb-4">
-                  <label for="confirmPassword">Confirm Password</label>
-                  <div class="password-input">
-                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" required="" minlength="8" placeholder="Repeat your password">
-                    <i class="bi bi-eye toggle-password"></i>
-                  </div>
-                </div>
-
-                <div class="form-group mb-4">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="newsletter" id="newsletter">
-                    <label class="form-check-label" for="newsletter">
-                      Subscribe to our newsletter for exclusive offers and updates
-                    </label>
-                  </div>
-                </div>
-
-                <div class="form-group mb-4">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="terms" id="terms" required="">
-                    <label class="form-check-label" for="terms">
-                      I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
-                    </label>
-                  </div>
-                </div>
-                <div class="text-center mb-4">
-                  <button type="submit" class="btn btn-primary w-100">Create Account</button>
-                </div>
-
-                <div class="text-center">
-                  <p class="mb-0">Already have an account? <a href="#">Sign in</a></p>
-                </div>
-
-              </form>
-
+              </div>
             </div>
+          </div>
 
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+            <div class="cart-summary">
+              <h4 class="summary-title">Order Summary</h4>
+
+              <div class="summary-item">
+                <span class="summary-label">Subtotal</span>
+                <span class="summary-value">$269.96</span>
+              </div>
+
+              <div class="summary-item shipping-item">
+                <span class="summary-label">Shipping</span>
+                <div class="shipping-options">
+                  <div class="form-check text-end">
+                    <input class="form-check-input" type="radio" name="shipping" id="standard" checked="">
+                    <label class="form-check-label" for="standard">
+                      Standard Delivery - $4.99
+                    </label>
+                  </div>
+                  <div class="form-check text-end">
+                    <input class="form-check-input" type="radio" name="shipping" id="express">
+                    <label class="form-check-label" for="express">
+                      Express Delivery - $12.99
+                    </label>
+                  </div>
+                  <div class="form-check text-end">
+                    <input class="form-check-input" type="radio" name="shipping" id="free">
+                    <label class="form-check-label" for="free">
+                      Free Shipping (Orders over $300)
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="summary-item">
+                <span class="summary-label">Tax</span>
+                <span class="summary-value">$27.00</span>
+              </div>
+
+              <div class="summary-item discount">
+                <span class="summary-label">Discount</span>
+                <span class="summary-value">-$0.00</span>
+              </div>
+
+              <div class="summary-total">
+                <span class="summary-label">Total</span>
+                <span class="summary-value">$301.95</span>
+              </div>
+
+              <div class="checkout-button">
+                <a href="#" class="btn btn-accent w-100">
+                  Proceed to Checkout <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
+
+              <div class="continue-shopping">
+                <a href="#" class="btn btn-link w-100">
+                  <i class="bi bi-arrow-left"></i> Continue Shopping
+                </a>
+              </div>
+
+              <div class="payment-methods">
+                <p class="payment-title">We Accept</p>
+                <div class="payment-icons">
+                  <i class="bi bi-credit-card"></i>
+                  <i class="bi bi-paypal"></i>
+                  <i class="bi bi-wallet2"></i>
+                  <i class="bi bi-bank"></i>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
       </div>
 
-    </section><!-- /Register Section -->
+    </section><!-- /Cart Section -->
 
   </main>
 
