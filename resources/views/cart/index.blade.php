@@ -118,8 +118,8 @@
                     </div>
                   </div>
                   <div class="col-lg-6 text-md-end">
-                    <button class="btn btn-outline-remove">
-                      <i class="bi bi-trash"></i> Clear Cart
+                    <button id="clear-cart-btn" class="btn btn-outline-remove" data-user="{{ Session::get('user_id') }}">
+                        <i class="bi bi-trash"></i> Clear Cart
                     </button>
                   </div>
                 </div>

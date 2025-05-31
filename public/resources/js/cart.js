@@ -76,6 +76,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     await initCartHandler();
     updateCartSummary();
 
+    const clearCartBtn = document.getElementById('clear-cart-btn');
+    clearCartBtn.addEventListener('click', clearCartHandler);
+
 });
 
 async function initCartHandler() {
@@ -153,6 +156,48 @@ function updateCartSummary() {
         el.textContent = formatted;
     });
 }
+
+document.getElementById('clear-cart-btn').addEventListener('click', function () {
+    const userId = this.dataset.user;
+
+    Swal.fire({
+        title: 'Hapus semua?',
+        text: 'Seluruh isi keranjang akan terhapus. Yakin?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Hapus semua!'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch('/cart/clear', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    },
+                    body: JSON.stringify({ userId: userId })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    document.querySelectorAll('.cart-item').forEach(item => item.remove());
+
+                    document.querySelectorAll('.summary-value').forEach(el => {
+                    el.textContent = 'Rp0';
+                    });
+                    Swal.fire('Berhasil!', 'Semua item telah dihapus dari cart.', 'success');
+                } else {
+                    Swal.fire('Oops!', 'Gagal menghapus isi cart.', 'error');
+                }
+            } catch (error) {
+                console.error(error);
+                Swal.fire('Error!', 'Gagal menghubungi server.', 'error');
+            }
+        }
+    });
+});
 
 
 

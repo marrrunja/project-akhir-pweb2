@@ -115,6 +115,14 @@ class CartController extends Controller
         return response()->json($data);
     }
     
+    public function clearCart(Request $request): JsonResponse
+{
+    $userId = $request->userId;
+    Cart::where('pembeli_id', $userId)->delete();
+
+    return response()->json(['success' => true]);
+}
+
 
 
 
