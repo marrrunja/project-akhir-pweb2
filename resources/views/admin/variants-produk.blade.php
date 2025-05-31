@@ -32,7 +32,7 @@
         </div>
         <form action="" id="formUbah" method="post">
             <div class="row" id="rowKonten">
-                <div class="col-12">
+                <div class="col-12 col-md-12 col-xl-8">
                     @if(Session::has('status') && Session::has('alert'))
                         <div class="alert alert-{{ Session::get('alert') }}">{{ Session::get('status') }}</div>
                     @endif
