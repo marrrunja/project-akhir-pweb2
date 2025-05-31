@@ -39,12 +39,11 @@
             <li class="current">Cart</li>
           </ol>
         </nav>
-        <h1>Cart</h1>
       </div>
-    </div>
+     </div>
     <section id="cart" class="cart section">
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row">
+         <div class="row">
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
             <div class="cart-items">
               <div class="cart-header d-none d-lg-block">
@@ -119,8 +118,8 @@
                     </div>
                   </div>
                   <div class="col-lg-6 text-md-end">
-                    <button class="btn btn-outline-remove">
-                      <i class="bi bi-trash"></i> Clear Cart
+                    <button id="clear-cart-btn" class="btn btn-outline-remove" data-user="{{ Session::get('user_id') }}">
+                        <i class="bi bi-trash"></i> Clear Cart
                     </button>
                   </div>
                 </div>
