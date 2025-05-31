@@ -1,4 +1,4 @@
-@extends('layout.layout')
+@extends('layout.layout-admin')
 @section('title', 'Variant produk')
 
 
@@ -10,46 +10,66 @@
 
 @section('meta')
 <meta name="_token" content="{{ csrf_token() }}">
+<meta name="_appurl" content="{{ env('BASE_URL') }}">
 @endsection
 
 @section('body')
 <section class="pt-5 pb-5">
     <div class="container">
-        <h1>Daftar produk</h1>
-        <div class="row" id="rowKonten">
-            <div class="col-12 col-md-12 col-xl-10">
-                <table class="table">
-                    <thead>
-                        <th>#</th>
-                        <th>Nama</th>
-                        <th>Variant</th>
-                        <th>Harga</th>
-                        <th>Jumlah</th>
-                        <th>Aksi</th>
-                    </thead>
-                    <tbody>
-                        @foreach($variants as $index => $variant)
-                        <tr>
-                            <th>{{ $variants->firstItem() + $index }}</th>
-                            <td>{{ $variant->nama }}</td>
-                            <td>{{ $variant->variant }}</td>
-                            <td>{{ $variant->harga }}</td>
-                            <td>{{ $variant->jumlah }}</td>
-                            <td class="d-flex gap-3">
-                               <button data-id="{{ $variant->id }}" class="btn btn-info btnEdit">Edit</button>
-                            </td>
-                        </tr>
-
-                        @endforeach
-                        <tr>
-                            <td colspan="6">{{ $variants->links() }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <h1 class="mb-3">Daftar variant {{ $nama }}</h1>
+        <button class="btn btn-primary mb-3 mt-2" data-id="{{ $id }}" id="btnTambahProdukVariant">[+] Tambah Variant</button>
+        <div class="row">
+            <div class="col-12 col-xl-5">  
+                @if($errors->any())
+                <div class="alert alert-danger">
+                    Semua inputan harus diisi dengan benar
+                </div>
+                @endif
+                <form id="form-tambah" method="post" enctype="multipart/form-data">
+                    
+                </form>
             </div>
         </div>
+        <form action="" id="formUbah" method="post">
+            <div class="row" id="rowKonten">
+                <div class="col-12">
+                    @if(Session::has('status') && Session::has('alert'))
+                        <div class="alert alert-{{ Session::get('alert') }}">{{ Session::get('status') }}</div>
+                    @endif
+                    <table class="table">
+                        <thead>
+                            <th>#</th>
+                            <th>Nama</th>
+                            <th>Variant</th>
+                            <th>Harga</th>
+                            <th>Jumlah</th>
+                            <th>Foto</th>
+                            <th>Aksi</th>
+                        </thead>
+                        <tbody>
+                            @foreach($variants as $index => $variant)
+                            <tr>
+                                <th>{{ $variants->firstItem() + $index }}</th>
+                                <td>{{ $variant->nama }}</td>
+                                <td>{{ $variant->variant }}</td>
+                                <td>{{ $variant->harga }}</td>
+                                <td>{{ $variant->jumlah }}</td>
+                                <td><img src="{{ asset('storage/image-variant/'.$variant->foto) }}" width="100"></td>
+                                <td class="d-flex gap-3">
+                                <button type="button" data-id="{{ $variant->id }}" class="btn btn-info btnEdit">Edit</button>
+                                </td>
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <td colspan="7">{{ $variants->links() }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
         <div class="row">
-             <a href="{{ \Illuminate\Support\Facades\URL::previous() }}" class="hover">&laquo;Kembali ke halaman sebelumnya</a>
+             <a href="{{ route('admin.manage') }}" class="hover">&laquo;Kembali ke halaman sebelumnya</a>
         </div>
     </div>
 </section>

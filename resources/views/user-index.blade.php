@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @extends('layout.layout')
 @section('title', 'Halaman Index User')
 
@@ -2020,3 +2021,6 @@
 
 </html>
 @endsection
+=======
+<a href="/produk/index">Ke halaman produk &raquo;</a>
+>>>>>>> 47e8e81f333f640b95bd228791bcabf6e98b2cb2

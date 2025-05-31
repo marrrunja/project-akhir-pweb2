@@ -4,21 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Services\Cart\CartService;
 use App\Models\Produk\ProdukVariant;
+
 class CartController extends Controller
 {
     public function index(){
         $carts = Cart::all();
 
-        return view('cart.cart', compact('carts'));
+        return view('cart.index', compact('carts'));
     }
     public function cart(Request $request)
     {
         $carts = Cart::with(['variant.produk'])
                     ->where('pembeli_id',$request->session()->get('user_id'))
                     ->get();
-        return view('cart.cart', compact('carts'));
+        return view('cart.index', compact('carts'));
     }
     private CartService $cartService;
     
@@ -80,40 +82,51 @@ class CartController extends Controller
     }
 
 
-
-
-    // public function index(Request $request) 
-    // {
-    //     $cartItems = 
-    //     return view('cart.index', compact('cartItems'));
-    // }
-
-    //method update jumlah di cart
+    // method update jumlah di cart
     public function update(Request $request, $id)
     {
-        $cart = Cart::where('id', $id)->where('pembeli_id', $request->session()->get('user_id'))->firstOrFail();
-        $cart->update(['qty' => $request->qty]);
+        $request->validate([
+                'id' => 'required|exists:carts,id',
+                'qty' => 'required|integer|min:1',
+        ]);
 
-        return redirect('cart');
+            $cart = Cart::findOrFail($request->id);
+            $newQty = max(1, min($request->qty, $cart->variant->stok->jumlah));
+
+            $cart->qty = $newQty;
+            $cart->save();
+
+        return response()->json(['success'=> true, 'qty' => $request->qty, 'id'=>$request ->id]);
     }
 
     //method hapus hapus
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request):JsonResponse
     {
-        $cart = Cart::where('id', $id)
-                    ->where('pembeli_id', $request->session()->get('user_id'))
-                    ->firstOrFail();
+        $cartId = $request->id;
+        $userId = $request->userId;
+        $cart = Cart::where('id', $cartId)
+                    ->where('pembeli_id', $userId);
 
         // Kurangi qty sebanyak 1
-        if ($cart->qty > 1) {
-            $cart->qty -= 1;
-            $cart->save();
-        } else {
-            // Jika qty sudah 1, hapus amar (eh maksudnya row)
-            $cart->delete();
-        }
+        // if ($cart->qty > 1) {
+        //     $cart->qty -= 1;
+        //     $cart->save();
+        // } else {
+        //     // Jika qty sudah 1, hapus amar (eh maksudnya row)
+        //     $cart->delete();
+        // }
 
-        return redirect('cart');
+        // $cart->delete();
+        // return redirect('cart');
+        $data = [
+            'cart_id' => $cartId,
+            'user_id' => $userId
+        ];
+        $cart->delete();
+        return response()->json($data);
     }
+    
+
+
 
 }

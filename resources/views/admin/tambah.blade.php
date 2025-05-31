@@ -1,4 +1,4 @@
-@extends('layout.layout')
+@extends('layout.layout-admin')
 
 @section('title', 'tambahData')
 
@@ -20,12 +20,12 @@
                 <div class="col-12 col-xl-5">
                     @if(Session::has('status'))
                     <div class="alert alert-primary" role="alert">
-                      {{ Session::get('status') }}
+                        {{ Session::get('status') }}
                     </div>
                     @endif
                     @if(Session::has('gagal'))
-                     <div class="alert alert-danger" role="alert">
-                      {{ Session::get('gagal') }}
+                    <div class="alert alert-danger" role="alert">
+                        {{ Session::get('gagal') }}
                     </div>
                     @endif
                     <div class="mb-3">
@@ -52,35 +52,53 @@
                         @error('deskripsi') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
                         <label for="editor" class="form-label">Deskripsi Produk</label>
                         <textarea name="deskripsi" class="form-control"></textarea>
-                         <input type="hidden" id="jumlahVariant" name="jumlahVariant" value="1">
+                        <input type="hidden" id="jumlahVariant" name="jumlahVariant" value="1">
+                    </div>
+                    <div class="error">
+                        @if($errors->has('gambar.*'))
+                        <h1>There is an error in your input array</h1>
+                        <ul>
+                            @foreach($errors->get('gambar.*') as $errors)
+                            @foreach($errors as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                            @endforeach
+                        </ul>
+                        @endif
                     </div>
                     <div class="mb-3">
-                          
+
                         <fieldset class="shadow rounded p-3">
                             <legend>Varian 1</legend>
                             @error('variant') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
-
                             <div class="mb-3">
                                 <label for="variant" class="form-label">Nama varian</label>
-                                <input type="text" id="variant" name="variant[]" class="form-control"placeholder="Contoh, original">
+                                <input type="text" id="variant" name="variant[]" class="form-control"
+                                    placeholder="Contoh, original">
                             </div>
-                            
                             <div class="mb-3">
                                 @error('harga') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
                                 <label for="harga" class="form-label">Harga</label>
-                                <input type="number" name="harga[]" class="form-control" id="harga" placeholder="Contoh, 5000">
+                                <input type="number" name="harga[]" class="form-control" id="harga"
+                                    placeholder="Contoh, 5000">
                             </div>
                             <div class="mb-3">
                                 @error('stok') <div class="text-danger fw-semibold">{{ $message }}</div>@enderror
-                                 <label for="stok" class="form-label">Stok</label>
-                                <input type="number" name="stok[]" class="form-control" id="stok" placeholder="Contoh, 10">
+                                <label for="stok" class="form-label">Stok</label>
+                                <input type="number" name="stok[]" class="form-control" id="stok"
+                                    placeholder="Contoh, 10">
+                            </div>
+                            <div class="mb-3">
+                                <label for="gambar1">Foto produk</label>
+                                <input type="file" name="gambar[]" id="gambar1" class="form-control" multiple>
                             </div>
                         </fieldset>
                     </div>
                     <div id="gaada"></div>
                     <div id="pesan"></div>
                     <div class="d-flex gap-3 mb-3">
-                        <button type="button" id="tambahVariant" class="btn btn-primary mb-2 mt-2">Tambah variant</button>
+                        <button type="button" id="tambahVariant" class="btn btn-primary mb-2 mt-2">Tambah
+                            variant</button>
                         <button type="button" id="kurangiVariant" class="mt-2 mb-2 btn btn-danger">Kurangi</button>
                     </div>
                     <div class="mb-3">

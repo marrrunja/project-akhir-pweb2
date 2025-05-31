@@ -11,12 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
-    public function urutkanDataByTanggal(Request $request):Response
+    public function urutkanDataByTanggal(Request $request)
     {
         $orders = DB::table('pembelis')
                     ->join('table_orders', 'pembelis.id','=','table_orders.pembeli_id')
                     ->select('pembelis.username', 'table_orders.tanggal_transaksi', 'table_orders.is_dibayar', 'table_orders.id');
-
         $order = null;
         
         if($request->order == "2") $order = "ASC";
@@ -29,6 +28,6 @@ class ApiController extends Controller
             'order' => $order,
             'orders' => $orders->orderBy("table_orders.tanggal_transaksi", $order)->get()
         ];
-        return response()->view('partial.tableOrder', $data)->render();
+        return view('partial.tableOrder', $data)->render();
     }
 }

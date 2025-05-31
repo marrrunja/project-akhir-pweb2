@@ -1,8 +1,9 @@
 const token = document.querySelector('meta[name="_token"]').content;
+const appurl = document.querySelector("meta[name=_appurl]").content;
 const jumlah = document.getElementById("jumlah").innerText;
 const totalHarga = document.getElementById("hargaTotal").innerText;
-const URLENDPOINT = "http://127.0.0.1:8000/transaksi/checkout";
-const REDIRECTURL = "http://127.0.0.1:8000";
+const URLENDPOINT = appurl+"/transaksi/checkout";
+const REDIRECTURL = appurl;
 const btnBayar = document.getElementById("btnBayar");
 const hargaSatuan = document.getElementById("hargaSatuan").innerText;
 
@@ -29,6 +30,7 @@ async function sendData()
         });
 
         const responseServer = await response.json();
+        console.log(responseServer);
         if(response.status === 200 && responseServer.status === 'berhasil')
             document.location.href = REDIRECTURL +"/transaksi/checkout/success";
         else
