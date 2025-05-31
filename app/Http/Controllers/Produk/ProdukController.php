@@ -37,6 +37,7 @@ class ProdukController extends Controller
             return redirect('/produk/index');
     }
 
+
     // method untuk menambahkan produk baru
 
     public function addProduk(Request $request)

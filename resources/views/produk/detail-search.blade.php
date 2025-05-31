@@ -26,25 +26,33 @@
 @endpush
 
 @section('body')
+
 <section class="pt-5 pb-5">    
     <div class="container">
-        <div class="row">
-            @foreach($products as $row)
-                <div class="col-12 col-md-6 col-xl-4">
-                    <div class="card">
-                      <img class="card-img-top" src="{{ asset('storage/image-variant/'.$row->foto) }}" alt="Card image cap">
-                      <div class="card-body">
-                        <form method="post" {{ route('transaksi.order', $row->id) }}>
-                            @csrf
-                            <h5 class="card-title">{{ $row->nama }}</h5>
-                            <small class="card-subtitle mb-2">{{ $row->variant }}</small>
-                            <p class="card-text">{{ $row->detail }}</p>
-                            <button class="btn btn-primary" type="submit">Beli {{ $row->harga }}</button>
-                        </form>
-                      </div>
+        <div class="row gy-2">
+            @if(count($products) > 0)
+                @foreach($products as $row)
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <div class="card">
+                          <img class="card-img-top" src="{{ asset('storage/image-variant/'.$row->foto) }}" alt="Card image cap">
+                          <div class="card-body">
+                            <form method="post" {{ route('transaksi.order', $row->id) }}>
+                                @csrf
+                                <h5 class="card-title">{{ $row->nama }}</h5>
+                                <small class="card-subtitle mb-2">{{ $row->variant }}</small>
+                                <p class="card-text">{{ $row->detail }}</p>
+                                <button class="btn btn-primary" type="submit">Beli {{ $row->harga }}</button>
+                            </form>
+                          </div>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            @else
+            <div class="col-12 col-md-10 col-xl-8">
+                <h1 class="mt-2 mb-2">Uupsss... produk yang dicari tidak ada</h1>  
+            </div>
+            @endif
+
         </div>
     </div>
 </section>

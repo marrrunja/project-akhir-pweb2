@@ -8,7 +8,6 @@
                 <span class="sitename">FashionStore</span>
               </a>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in nibh vehicula, facilisis magna ut, consectetur lorem. Proin eget tortor risus.</p>
-
               <div class="social-links mt-4">
                 <h5>Connect With Us</h5>
                 <div class="social-icons">
@@ -22,7 +21,6 @@
               </div>
             </div>
           </div>
-
           <div class="col-lg-2 col-md-6 col-sm-6">
             <div class="footer-widget">
               <h4>Shop</h4>
