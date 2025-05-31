@@ -117,7 +117,6 @@
                   <i class="bi bi-cash" aria-label="Cash on Delivery"></i>
                 </div>
               </div>
-
               <div class="legal-links">
                 <a href="tos.html">Terms</a>
                 <a href="privacy.html">Privacy</a>

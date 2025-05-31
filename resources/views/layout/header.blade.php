@@ -193,6 +193,7 @@
     <div class="collapse" id="mobileSearch">
       <div class="container">
         <form class="search-form" method="post" action="{{ env('BASE_URL') }}/produk/search">
+          @csrf
           <div class="input-group">
             <input type="text" name="keyword" class="form-control" placeholder="Search for products...">
             <button class="btn search-btn" type="submit">
