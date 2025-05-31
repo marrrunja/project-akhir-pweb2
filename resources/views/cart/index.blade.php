@@ -3,6 +3,7 @@
 
 
 @section('meta')
+<meta name="_token" content="{{ csrf_token() }}">
 <meta name="_appurl" content="{{ env('BASE_URL') }}">
 @endsection
 
@@ -27,11 +28,6 @@
 <!-- Main CSS File -->
 <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
 @endpush
-
-@section('meta')
-<meta name="_token" content="{{ csrf_token() }}">
-@endsection
-
 
 @section('body')
  <main class="main">

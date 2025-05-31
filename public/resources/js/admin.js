@@ -63,8 +63,9 @@ async function showInputEditElement(target) {
     let btnEdit = target;
     let parentElement = btnEdit.parentElement.parentElement;
     let data = await getDataFromApi(btnEdit.dataset.id);
-    console.log(data);
+
     let tr = createInputEditElement(data.variant, data.jumlah, data.harga, data.foto,token, data.id);
+
     insertAfter(tr, parentElement);
 
     let button = `
@@ -92,7 +93,7 @@ async function showDetailVariant(e) {
         e.stopPropagation();
     }
     if (e.target.classList.contains("btnUbah")) {
-        formUbah.setAttribute("action", "http://127.0.0.1:8000/admin/produk/variants/doEdit");
+        formUbah.setAttribute("action", appurl+"/admin/produk/variants/doEdit");
         formUbah.setAttribute("enctype", "multipart/form-data");
         e.stopPropagation();
     }
@@ -131,7 +132,7 @@ function makeInputAddVariantElement()
 function addProdukVariant(e)
 {
     if(contentAddVariant == true) return;
-    var apiData = appurl+"/produk/variant/tambah/"+this.dataset.id;
+    let apiData = appurl+"/produk/variant/tambah/"+this.dataset.id;
     makeInputAddVariantElement();
     formTambahProdukVariant.setAttribute("action", apiData);
 }
