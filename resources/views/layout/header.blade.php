@@ -140,10 +140,8 @@
                 </div>
               </div>
             </div>
-
             <!-- Mobile Navigation Toggle -->
             <i class="mobile-nav-toggle d-xl-none bi bi-list me-0"></i>
-
           </div>
         </div>
       </div>
@@ -194,9 +192,9 @@
     <!-- Mobile Search Form -->
     <div class="collapse" id="mobileSearch">
       <div class="container">
-        <form class="search-form">
+        <form class="search-form" method="post" action="{{ env('BASE_URL') }}/produk/search">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for products...">
+            <input type="text" name="keyword" class="form-control" placeholder="Search for products...">
             <button class="btn search-btn" type="submit">
               <i class="bi bi-search"></i>
             </button>
