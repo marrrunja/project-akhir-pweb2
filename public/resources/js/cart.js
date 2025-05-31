@@ -1,8 +1,10 @@
 const cartItem = document.getElementById("cart");
-const urlHapusCart = "http://127.0.0.1:8000/cart/delete";
-const urlUpdateCart = "http://127.0.0.1:8000/cart/update/{id}"
+const appurl = document.querySelector("meta[name=_appurl]").content;
+const urlHapusCart = appurl+"/cart/delete";
+const urlUpdateCart = appurl+"/cart/update/{id}"
 let token = document.querySelector("meta[name=_token]").content;
-
+console.log(urlHapusCart);
+console.log(urlUpdateCart);
 async function removeItemCart(e) {
     if (e.target.classList.contains("hilangkan-item")) {
         const parent = e.target.parentElement.parentElement.parentElement.parentElement.parentElement;

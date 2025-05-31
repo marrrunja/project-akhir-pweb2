@@ -9,6 +9,7 @@
 
 @section('meta')
 <meta name="_token" content="{{ csrf_token() }}">
+<meta name="_appurl" content="{{ env('BASE_URL') }}">
 @endsection
 
 

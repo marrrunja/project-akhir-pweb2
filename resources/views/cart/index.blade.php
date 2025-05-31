@@ -1,6 +1,11 @@
 @extends('layout.layout')
 @section('title', 'Keranjang Belanja')
 
+
+@section('meta')
+<meta name="_appurl" content="{{ env('BASE_URL') }}">
+@endsection
+
 @push('styles')
 <!-- Favicon & Apple Touch Icon -->
 <link href="{{ asset('assets/img/favicon.png') }}" rel="icon">

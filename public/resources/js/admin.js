@@ -1,7 +1,7 @@
 const rowKonten = document.getElementById("rowKonten");
 let token = document.querySelector("meta[name=_token]").content;
-
-let apiurl = 'http://127.0.0.1:8000/api/produk/variants/edit';
+let appurl = document.querySelector("meta[name=_appurl]").content;
+let apiurl = appurl+'/api/produk/variants/edit';
 let sibling = null;
 let contentAddVariant = false;
 let formUbah = document.getElementById("formUbah");
@@ -104,9 +104,6 @@ function makeInputAddVariantElement()
     containerAddProdukVariant.classList.add("d-flex");
     containerAddProdukVariant.classList.add("flex-wrap");
     containerAddProdukVariant.classList.add("gap-3");
-    // containerBtn.classList.add("d-flex");
-    // containerBtn.classList.add("flex-wrap");
-    // containerBtn.classList.add("gap-2");
 
     let inputToken = `<input type="hidden" name="_token" value="${token}">`;
     let inputVarian = `<input type="text" name="nama" placeholder="Nama variant" class="form-control" required>`;
@@ -134,7 +131,7 @@ function makeInputAddVariantElement()
 function addProdukVariant(e)
 {
     if(contentAddVariant == true) return;
-    var apiData = "http://127.0.0.1:8000/produk/variant/tambah/"+this.dataset.id;
+    var apiData = appurl+"/produk/variant/tambah/"+this.dataset.id;
     makeInputAddVariantElement();
     formTambahProdukVariant.setAttribute("action", apiData);
 }
