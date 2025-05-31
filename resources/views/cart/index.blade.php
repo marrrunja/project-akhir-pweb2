@@ -29,11 +29,6 @@
 <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
 @endpush
 
-@section('meta')
-<meta name="_token" content="{{ csrf_token() }}">
-@endsection
-
-
 @section('body')
  <main class="main">
     <div class="page-title light-background">
