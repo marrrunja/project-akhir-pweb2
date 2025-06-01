@@ -1,5 +1,4 @@
-
- <table class="table">
+<table class="table">
     <thead>
         <th>#</th>
         <th>Nama</th>
