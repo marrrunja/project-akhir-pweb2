@@ -14,14 +14,26 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 class ProdukController extends Controller
 {
-    public function index():Response
+    public function index(): Response
     {
         //DB::raw('SUM(price) as total_sales')
         $produk = DB::table('products')->get();
         $data = [
             'products' => $produk
         ];
-        return response()->view('produk.index',$data);
+        return response()->view('produk.index', $data);
+    }
+    public function produkVariant(Request $request): Response|RedirectResponse
+    {
+        $id = $request->id;
+        $variants = ProdukVariant::where('produk_id', $id)->get();
+        if ($variants) {
+            $data = [
+                'variants' => $variants
+            ];
+            return response()->view('produk.variant-produk', $data);
+        } else
+            return redirect('/produk/index');
     }
   
 
@@ -50,14 +62,14 @@ class ProdukController extends Controller
         $namaProduk = $request->namaProduk;
         $kategori = $request->kategori;
         $deskripsi = $request->deskripsi;
-     
+
         $foto = $request->file('foto');
         $gambar = $request->file('gambar');
 
         // mulai transaksi database/Database Transaction   
         DB::beginTransaction();
 
-        try{
+        try {
             $namaFoto = $request->foto->store('images', 'public');
             DB::table('products')->insert([
                 'nama' => $namaProduk,

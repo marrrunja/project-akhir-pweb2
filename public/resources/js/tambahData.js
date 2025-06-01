@@ -40,7 +40,7 @@ function tambahInputVariant()
                             </div>
                             <div class="mb-3">
                                  <label for="stok${i}" class="form-label">Stok</label>
-                                <input type="number" name="stok[]" class="form-control" id="stok" placeholder="Contoh, 10" required>
+                                <input type="number" id="stok${i}" name="stok[]" class="form-control" id="stok" placeholder="Contoh, 10" required>
                             </div>
                             <div class="mb-3">
                                 <label for="gambar${i}">Foto produk</label>

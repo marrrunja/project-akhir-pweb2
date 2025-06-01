@@ -77,10 +77,9 @@ class TransaksiController extends Controller
             $order->total_harga = $totalHarga;
             $order->save();
 
+            // generate id untuk order item, dengan last id insert pada order
             $orderInsertId = $order->id;
-            $orderId = 'INV-' . now()->format('YmdHis') . '-' . $orderInsertId;
-
-            // Update order_id yang sudah digenerate
+            $orderId = 'INV-' .now() .'-'.$orderInsertId;
             $order->order_id = $orderId;
             $order->save();
 
@@ -103,13 +102,30 @@ class TransaksiController extends Controller
                 'order_id' => $orderId
             ]);
 
-        } catch (\Exception $e) {
-            // Tangani error tak terduga
-            return response()->json([
-                'pesan' => 'Terjadi kesalahan saat memproses pesanan.',
-                'status' => 'error',
-                'error' => $e->getMessage()
-            ], 500);
+            // $params = [
+            //     'transaction_details' => [
+            //         'order_id' => $orderId,
+            //         'gross_amount' => $totalHarga
+            //     ],
+            //     'item_details' => [
+            //         [
+            //             'price' => $harga,
+            //             'quantity' => $jumlah,
+            //             'name' => $orderId
+            //         ],
+            //     ],
+            //     'customer_details'=> [
+            //         'first_name' => $request->session()->get('username'),
+            //         'email' => 'emailku@gmail.com'
+            //     ],
+            //     'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart']
+            // ];
+
+            $response = [
+                'pesan' => "Berhasil",
+                'status' => 'berhasil'
+            ];
+            echo json_encode($response);
         }
     }
 

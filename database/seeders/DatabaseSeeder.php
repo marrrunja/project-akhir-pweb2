@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             KategoriSeeder::class,
             // StokSeeder::class
         ];
-        
+
         $this->call($data);
     }
 }
