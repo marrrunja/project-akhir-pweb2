@@ -5,23 +5,23 @@
           <div class="col-lg-4 col-md-6">
             <div class="footer-widget footer-about">
               <a href="index.html" class="logo">
-                <span class="sitename">FashionStore</span>
+                <span class="sitename">AdilaSnack</span>
               </a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in nibh vehicula, facilisis magna ut, consectetur lorem. Proin eget tortor risus.</p>
+              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in nibh vehicula, facilisis magna ut, consectetur lorem. Proin eget tortor risus.</p> -->
               <div class="social-links mt-4">
-                <h5>Connect With Us</h5>
+                <h5>Ikuti kami</h5>
                 <div class="social-icons">
-                  <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                  <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                  <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
-                  <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
-                  <a href="#" aria-label="Pinterest"><i class="bi bi-pinterest"></i></a>
-                  <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                  <!-- <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a> -->
+                  <a href="https://www.instagram.com/geraiadila?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram" target="blank"><i class="bi bi-instagram"></i></a>
+                  <!-- <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a> -->
+                  <a href="https://www.tiktok.com/@adilasnack?_t=ZS-8wqEFCySwT4&_r=1" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                  <!-- <a href="#" aria-label="Pinterest"><i class="bi bi-pinterest"></i></a> -->
+                  <!-- <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a> -->
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-2 col-md-6 col-sm-6">
+          <!-- <div class="col-lg-2 col-md-6 col-sm-6">
             <div class="footer-widget">
               <h4>Shop</h4>
               <ul class="footer-links">
@@ -33,9 +33,9 @@
                 <li><a href="category.html">Sale</a></li>
               </ul>
             </div>
-          </div>
+          </div> -->
 
-          <div class="col-lg-2 col-md-6 col-sm-6">
+          <!-- <div class="col-lg-2 col-md-6 col-sm-6">
             <div class="footer-widget">
               <h4>Support</h4>
               <ul class="footer-links">
@@ -47,7 +47,7 @@
                 <li><a href="contact.html">Contact Us</a></li>
               </ul>
             </div>
-          </div>
+          </div> -->
 
           <div class="col-lg-4 col-md-6">
             <div class="footer-widget">
@@ -55,32 +55,23 @@
               <div class="footer-contact">
                 <div class="contact-item">
                   <i class="bi bi-geo-alt"></i>
-                  <span>123 Fashion Street, New York, NY 10001</span>
+                  <span>Jl. Husni Thamrin No.49, RT.005, Lb. Bandung, Kec.Jelutung, Kota Jambi, Jambi 36135</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-telephone"></i>
-                  <span>+1 (555) 123-4567</span>
+                  <span>+62 895-1203-3997</span>
                 </div>
-                <div class="contact-item">
+                <!-- <div class="contact-item">
                   <i class="bi bi-envelope"></i>
                   <span>hello@example.com</span>
-                </div>
+                </div> -->
                 <div class="contact-item">
                   <i class="bi bi-clock"></i>
-                  <span>Monday-Friday: 9am-6pm<br>Saturday: 10am-4pm<br>Sunday: Closed</span>
+                  <span>Buka setiap hari: 07:30 WIB-20:30 WIB</span>
                 </div>
               </div>
 
-              <div class="app-buttons mt-4">
-                <a href="#" class="app-btn">
-                  <i class="bi bi-apple"></i>
-                  <span>App Store</span>
-                </a>
-                <a href="#" class="app-btn">
-                  <i class="bi bi-google-play"></i>
-                  <span>Google Play</span>
-                </a>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -92,36 +83,17 @@
         <div class="row gy-3 align-items-center">
           <div class="col-lg-6 col-md-12">
             <div class="copyright">
-              <p>© <span>Copyright</span> <strong class="sitename">MyWebsite</strong>. All Rights Reserved.</p>
+              <p>© <span>Copyright</span> <strong class="sitename">AdilaSnack</strong>. All Rights Reserved.</p>
             </div>
             <div class="credits mt-1">
               <!-- All the links in the footer should remain intact. -->
               <!-- You can delete the links only if you've purchased the pro version. -->
               <!-- Licensing information: https://bootstrapmade.com/license/ -->
               <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-              Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              Designed by <a href="https://bootstrapmade.com/">WhiteSystem</a>
             </div>
           </div>
 
-          <div class="col-lg-6 col-md-12">
-            <div class="d-flex flex-wrap justify-content-lg-end justify-content-center align-items-center gap-4">
-              <div class="payment-methods">
-                <div class="payment-icons">
-                  <i class="bi bi-credit-card" aria-label="Credit Card"></i>
-                  <i class="bi bi-paypal" aria-label="PayPal"></i>
-                  <i class="bi bi-apple" aria-label="Apple Pay"></i>
-                  <i class="bi bi-google" aria-label="Google Pay"></i>
-                  <i class="bi bi-shop" aria-label="Shop Pay"></i>
-                  <i class="bi bi-cash" aria-label="Cash on Delivery"></i>
-                </div>
-              </div>
-              <div class="legal-links">
-                <a href="tos.html">Terms</a>
-                <a href="privacy.html">Privacy</a>
-                <a href="tos.html">Cookies</a>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
