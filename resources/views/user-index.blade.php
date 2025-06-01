@@ -1,10 +1,10 @@
-<!-- @extends('layout.layout')
+@extends('layout.layout')
 @section('title', 'Halaman Index User')
 
 @section('body')
 <!-- @if(Session::has('status'))
     {{ Session::get('status') }}
-@endif --> -->
+@endif -->
 <!DOCTYPE html>
 <html lang="en">
 
