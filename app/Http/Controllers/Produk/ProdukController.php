@@ -50,7 +50,7 @@ class ProdukController extends Controller
             'stok.min' => 'Stok minimal 1 buah!',
             'deskripsi.required' => 'Silahkan masukkan deskripsi!',
             'foto.mimes' => 'File harus foto jpg, jpeg, atau png!',
-            'foto.max' => '2000',
+            'foto.max' => 'Ukuran foto makasimal adalah 2MB!',
             'foto.required' => 'Masukkan foto produk!'
         ];
         $request->validate($validate, $pesanValidasi);
@@ -78,14 +78,11 @@ class ProdukController extends Controller
             $lastInsertIdProduk = DB::getPdo()->lastInsertId();
 
             $jumlahVariant = count($request->stok);
-<<<<<<< HEAD
+
             for ($i = 0; $i < $jumlahVariant; $i++) {
                 $variant = $request->variant[$i];
                 $harga = $request->harga[$i];
                 $stok = $request->stok[$i];
-=======
-            for($i = 0; $i < $jumlahVariant; $i++){
->>>>>>> d468a809189456c3871f5032b32c0495eff44595
                 DB::table('produk_variants')->insert([
                     'variant' => $variant,
                     'produk_id' => $lastInsertIdProduk,
@@ -100,8 +97,8 @@ class ProdukController extends Controller
             }
             DB::commit();
             return redirect()->back()->with('status', 'Berhasil menambah produk baru!!');
-
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('gagal', 'Gagal menambah produk baru');
         }

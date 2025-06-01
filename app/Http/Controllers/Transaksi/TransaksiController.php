@@ -78,8 +78,8 @@ class TransaksiController extends Controller
             $order->save();
 
             // generate id untuk order item, dengan last id insert pada order
-            $orderId = 'INV-' .now() .'-'.$orderInsertId;
             $orderInsertId = $order->id;
+            $orderId = 'INV-' .now() .'-'.$orderInsertId;
             $order->order_id = $orderId;
             $order->save();
 
@@ -97,24 +97,24 @@ class TransaksiController extends Controller
             $jumlahInsertDB = $jumlahStokFromDB - $jumlah;
             Stok::where('variant_id', '=',$variantId)->update(['jumlah' => $jumlahInsertDB]);
 
-            $params = [
-                'transaction_details' => [
-                    'order_id' => $orderId,
-                    'gross_amount' => $totalHarga
-                ],
-                'item_details' => [
-                    [
-                        'price' => $harga,
-                        'quantity' => $jumlah,
-                        'name' => $orderId
-                    ],
-                ],
-                'customer_details'=> [
-                    'first_name' => $request->session()->get('username'),
-                    'email' => 'emailku@gmail.com'
-                ],
-                'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart']
-            ];
+            // $params = [
+            //     'transaction_details' => [
+            //         'order_id' => $orderId,
+            //         'gross_amount' => $totalHarga
+            //     ],
+            //     'item_details' => [
+            //         [
+            //             'price' => $harga,
+            //             'quantity' => $jumlah,
+            //             'name' => $orderId
+            //         ],
+            //     ],
+            //     'customer_details'=> [
+            //         'first_name' => $request->session()->get('username'),
+            //         'email' => 'emailku@gmail.com'
+            //     ],
+            //     'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart']
+            // ];
 
             $response = [
                 'pesan' => "Berhasil",
