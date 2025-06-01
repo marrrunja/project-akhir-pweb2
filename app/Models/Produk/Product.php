@@ -12,6 +12,7 @@ class Product extends Model
 {
     protected $with = ['kategori'];
     protected $table = 'products';
+    protected $guarded = ['id'];
 
     public function variant(): HasMany
     {

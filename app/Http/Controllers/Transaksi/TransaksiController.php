@@ -28,7 +28,7 @@ class TransaksiController extends Controller
             'jumlah' => ['integer','required', 'min:1'],
         ];
         $pesanValidasi = [
-            'jumlah.number' => 'Input jumlah harus bertipe angka!',
+            'jumlah.integer' => 'Input jumlah harus bertipe angka!',
             'jumlah.required' => 'Inputan jumlah harus diisi!!',
             'jumlah.min' => 'Jumlah pesanan minimal 1!!'
         ];
@@ -50,30 +50,30 @@ class TransaksiController extends Controller
             return redirect()->back();
         }
     }
-    public function makeOrder(Request $request)
+  public function makeOrder(Request $request)
     {
-        
         $userId = $request->session()->get('user_id');
         $jumlah = $request->jumlah;
         $hargaSatuan = $request->harga;
         $totalHarga = $request->totalHarga;
         $variantId = $request->id;
         $tanggalSekarang = now()->format("Y-m-d");
-        $response = [];
-        $stok = Stok::where('variant_id', '=', $variantId)->firstOrFail();
-        
-        if($stok->jumlah === 0 || $jumlah > $stok->jumlah){
-            $response = [
-                "pesan" => "Stok belum mencukupi, silahkan kembali lagi ketika re stok",
-                'status' => 'gagal'
-            ];
-            echo json_encode($response);
-        }else{
-            // buat order baru
+
+        try {
+            $stok = Stok::where('variant_id', $variantId)->firstOrFail();
+
+            if ($stok->jumlah === 0 || $jumlah > $stok->jumlah) {
+                return response()->json([
+                    'pesan' => 'Stok belum mencukupi, silahkan kembali lagi ketika re stok',
+                    'status' => 'gagal'
+                ]);
+            }
+
+            // Simpan order baru
             $order = new Order();
             $order->tanggal_transaksi = $tanggalSekarang;
             $order->pembeli_id = $userId;
-            $order->order_id = null;
+            $order->order_id = null; // akan diupdate setelah insert
             $order->total_harga = $totalHarga;
             $order->save();
 
@@ -83,7 +83,7 @@ class TransaksiController extends Controller
             $order->order_id = $orderId;
             $order->save();
 
-            // buat order item baru
+            // Buat item order
             $orderItem = new OrderItem();
             $orderItem->variant_id = $variantId;
             $orderItem->order_id = $orderInsertId;
@@ -91,11 +91,16 @@ class TransaksiController extends Controller
             $orderItem->total_harga = $totalHarga;
             $orderItem->save();
 
+            // Update stok
+            $jumlahBaru = $stok->jumlah - $jumlah;
+            $stok->update(['jumlah' => $jumlahBaru]);
 
-            // update stok pada table stok
-            $jumlahStokFromDB = $stok->jumlah;
-            $jumlahInsertDB = $jumlahStokFromDB - $jumlah;
-            Stok::where('variant_id', '=',$variantId)->update(['jumlah' => $jumlahInsertDB]);
+            // Response sukses
+            return response()->json([
+                'pesan' => 'Berhasil',
+                'status' => 'berhasil',
+                'order_id' => $orderId
+            ]);
 
             // $params = [
             //     'transaction_details' => [
@@ -123,6 +128,7 @@ class TransaksiController extends Controller
             echo json_encode($response);
         }
     }
+
     public function orderSuccess():RedirectResponse
     {
         return redirect('/produk/index')->with('status', 'Berhasil order!!');

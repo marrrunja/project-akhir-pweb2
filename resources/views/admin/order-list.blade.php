@@ -1,6 +1,9 @@
-@extends('layout.layout')
+@extends('layout.layout-admin')
 @section('title', 'Daftar Produk')
 
+@section('meta')
+<meta name="_appurl" content="{{ env('BASE_URL') }}">
+@endsection
 
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -11,6 +14,7 @@
 
 @section('body')
 <section class="pt-5 pb-5">
+    <a href="{{ env('APP_URL') }}:8000">Ke halaman utama</a>
     <div class="container">
         <h1>Daftar Order User</h1>
         <div class="row mb-3 mt-3">

@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Kategori;
 use App\Models\Produk\Stok;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\Produk\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Produk\ProdukVariant;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -45,16 +48,20 @@ class AdminController extends Controller
     }
     public function variantProduk(Request $request):Response
     {
-
         $id = $request->id;
+        $produk = Product::where('id', $id)->first();
         $variants = DB::table('products')
                     ->join('kategoris', 'products.kategori_id', '=','kategoris.id')
                     ->join('produk_variants', 'products.id', '=','produk_variants.produk_id')
                     ->join('stoks', 'produk_variants.id', 'stoks.variant_id')
-                    ->select('products.nama', 'produk_variants.variant', 'produk_variants.harga','produk_variants.id', 'stoks.jumlah')
+                    ->select('products.nama', 'produk_variants.variant', 'produk_variants.harga','produk_variants.id', 'stoks.jumlah','produk_variants.foto')
                     ->where('products.id', '=', $id)->paginate(10);
-           
-        return response()->view('admin.variants-produk', compact('variants'));
+        $data = [
+            'variants' => $variants,
+            'id' => $id,
+            'nama' => $produk->nama
+        ];
+        return response()->view('admin.variants-produk', $data);
     }
     public function orderList():Response
     {
@@ -79,47 +86,5 @@ class AdminController extends Controller
         return response()->view('admin.order-detail', compact('orderItems'));
     }
 
-    public function editProdukVariant(Request $request):JsonResponse
-    {
-        $id = $request->id;
-        $variant = DB::table('produk_variants')
-        ->join('stoks', 'produk_variants.id', '=', 'stoks.variant_id')
-        ->select('produk_variants.harga', 'stoks.jumlah', 'produk_variants.variant','produk_variants.id')
-        ->where('produk_variants.id', '=', $id)->get();
-      
-        $data = [
-            'variant' => $variant
-        ];
-        return response()->json($data);
-    }
-    public function doEdit(Request $request):RedirectResponse
-    {
-        $id = $request->id;
-        $harga = $request->harga;
-        $jumlah = $request->jumlah;
-        $varian = $request->variant;
 
-        $variant = DB::table('produk_variants')->where('id', $id);
-        $updateVariant = $variant->update(['variant' => $varian,'harga' => $harga]);
-
-        $updateStok = DB::table('stoks')->where('variant_id', $id)->update([
-            'jumlah' => $jumlah
-        ]);
-        
-        $status = null;
-        $alert = null;
-        if($updateVariant > 0 || $updateStok > 0){
-            $status = "Berhasil update data";
-            $alert = "success";
-        }
-        else {
-            $status = "Tidak ada yang diupdate";
-            $alert = "warning";
-        }
-        $flashMessage = [
-            'status' => $status,
-            'alert' => $alert
-        ];
-        return redirect()->back()->with($flashMessage);
-    }
 }
