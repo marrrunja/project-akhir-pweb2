@@ -119,6 +119,9 @@
 
                             <form method="POST" action="/login/index/post">
                                 @csrf
+                                @if(Session::has('status'))
+                                <div class="alert alert-danger">{{ Session::get('status') }}</div>
+                                @endif
                                 <div class="mb-4">
                                     <label for="username" class="form-label">Username</label>
                                     <input type="text" class="form-control" id="username"
@@ -321,8 +324,8 @@
 </html>
 @endsection
 <!-- <div class="login-container"> -->
-    <!-- Tab -->
-    <!-- <div class="d-flex justify-content-center">
+<!-- Tab -->
+<!-- <div class="d-flex justify-content-center">
         <div class="register-wrapper">
             <ul class="nav nav-tabs justify-content-evenly mb-3">
                 <li class="nav-item">
@@ -336,8 +339,8 @@
         </div>
     </div> -->
 
-    <!-- Form -->
-    <!-- <div class="tab-content">
+<!-- Form -->
+<!-- <div class="tab-content">
         <div class="tab-pane fade show active">
             <form method="POST" action="/login/index/post" class="text-center">
                 @csrf
