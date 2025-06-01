@@ -25,8 +25,8 @@ async function getDataSearchFromApi(keyword, element)
 		let text = await response.text();
 
 		if(!response.ok){
-			throw new Error(`Http error ${response.status}`);
 			element.innerHTML = `Http error ${response.status}`;
+			throw new Error(`Http error ${response.status}`);
 		}
 		if(response.status === 200){
 			element.innerHTML = text;
@@ -34,16 +34,17 @@ async function getDataSearchFromApi(keyword, element)
 
 	}catch(error){
 		console.log("Gagal fetch data " + error);
+		element.innerHTML = "Gagal fetch data " + error;
 	}
 }
 
-async function onButtonSearchClick()
+function onButtonSearchClick()
 {
 	getDataSearchFromApi(inputCari.value, containerTableProduk);
 	
 }
 
-async function onKeyDownEnterInput(e)
+function onKeyDownEnterInput(e)
 {
 	if(e.key=="Enter"){
 		getDataSearchFromApi(inputCari.value, containerTableProduk);

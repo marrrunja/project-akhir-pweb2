@@ -27,7 +27,6 @@ class ProdukController extends Controller
 
 
     // method untuk menambahkan produk baru
-
     public function addProduk(Request $request)
     {
         $validate = [
