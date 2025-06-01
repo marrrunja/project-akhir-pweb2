@@ -16,6 +16,7 @@ use App\Http\Middleware\Auth\SessionHasMiddleware;
 use App\Http\Middleware\Auth\SessionHasNotMiddleware;
 use App\Http\Controllers\Transaksi\TransaksiController;
 use App\Http\Controllers\Api\ProdukVariantApiController;
+use App\Http\Controllers\Produk\ProdukVariantController;
 
 Route::get('/', [UserController::class, 'index']);
 
@@ -24,14 +25,6 @@ Route::controller(LoginController::class)->prefix('/login')->group(function(){
     Route::post('/index/post', 'doLogin');
     Route::post('/logout', 'logout');
 });
-Route::controller(RegisterController::class)->prefix('/cart')->group(function(){
-    Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
-    Route::post('/index', 'doLogin');
-    Route::post('/store', [CartController::class, 'store'])->name('cart.store');
-    Route::get('/', [CartController::class, 'cart'])->name('cart.index');
-    Route::post('/update/{id}', [CartController::class, 'update'])->name('cart.update');
-    Route::post('/delete/{id}', [CartController::class, 'destroy'])->name('cart.delete');
-});
 
 
 Route::controller(RegisterController::class)->prefix('/register')->group(function(){
@@ -39,7 +32,7 @@ Route::controller(RegisterController::class)->prefix('/register')->group(functio
     Route::post('/index', 'doRegister');
 });
 
-
+// cart
 Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
 Route::get('/cart', [CartController::class, 'index'])->middleware(SessionHasNotMiddleware::class)->name('cart.index');
 Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
@@ -47,14 +40,22 @@ Route::post('/cart/delete', [CartController::class, 'destroy'])->name('cart.dele
 Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
 
 
+// produk 
 Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
-    Route::get('/variant/{id}', 'produkVariant')->middleware(SessionHasNotMiddleware::class)->name('produk.variant');
     Route::post('/add', 'addProduk')->name('produk.tambah');
     Route::post('/variant/tambah/{id}', 'addProdukVariant');
-    Route::post('/search', 'search')->middleware(SessionHasNotMiddleware::class);
 });
 
+// produk variant
+Route::post('/variant/search', [ProdukVariantController::class, 'search'])->middleware(SessionHasNotMiddleware::class);
+
+Route::get('/variant/{id}', [ProdukVariantController::class, 'produkVariant'])->middleware(SessionHasNotMiddleware::class)->name('produk.variant');
+
+Route::post('/variant/tambah/{id}', [ProdukVariantController::class,'addProdukVariant']);
+
+
+// transaksi
 Route::controller(TransaksiController::class)->prefix('/transaksi')->group(function(){
     Route::post('/index/{id}', 'index')->name('transaksi.order');
     Route::post('/checkout', 'makeOrder');
@@ -62,6 +63,7 @@ Route::controller(TransaksiController::class)->prefix('/transaksi')->group(funct
     Route::get('/checkout/fail', 'orderFail');
 });
 
+// controller admin
 Route::controller(AdminController::class)->prefix('/admin')->group(function(){
     Route::get('/tambah', 'tambah')->name('admin.tambah');
     Route::get('/index', 'index');
@@ -72,6 +74,7 @@ Route::controller(AdminController::class)->prefix('/admin')->group(function(){
     Route::get('/order/detail/{id}', 'orderDetail')->name('admin.detailOrder');
 });
 
+// route untuk api
 Route::get('/api/orderListByTanggal', [ApiController::class, 'urutkanDataByTanggal']);
 Route::get('api/produk/variants/edit',[ProdukVariantApiController::class, 'editProdukVariant']);
 
