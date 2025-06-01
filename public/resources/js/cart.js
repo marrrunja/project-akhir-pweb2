@@ -74,6 +74,11 @@ cartItem.addEventListener("click", removeItemCart);
 
 document.addEventListener('DOMContentLoaded', async () => {
     await initCartHandler();
+    updateCartSummary();
+
+    const clearCartBtn = document.getElementById('clear-cart-btn');
+    clearCartBtn.addEventListener('click', clearCartHandler);
+
 });
 
 async function initCartHandler() {
@@ -94,7 +99,14 @@ async function initCartHandler() {
             if (data.success) {
                 const input = button.parentElement.querySelector('.quantity-input');
                 input.value = data.qty;
-            } else {
+
+                const hargaText = button.closest('.cart-item').querySelector('.current-price').textContent.replace(/[^\d]/g, '');
+                const harga = parseInt(hargaText);
+
+                updateItemTotal(button, harga);
+                updateCartSummary();
+            }
+            else {
                 Swal.fire('Gagal!', 'Gagal mengubah kuantitas. Coba lagi ya!', 'warning');
             }
         } catch (err) {
@@ -123,3 +135,69 @@ async function initCartHandler() {
         });
     });
 }
+
+function updateItemTotal(button, harga) {
+    const qty = parseInt(button.parentElement.querySelector('.quantity-input').value);
+    const totalEl = button.closest('.cart-item').querySelector('.item-total span');
+    totalEl.textContent = "Rp" + new Intl.NumberFormat('id-ID').format(harga * qty);
+}
+
+function updateCartSummary() {
+    let total = 0;
+    document.querySelectorAll('.cart-item').forEach(item => {
+        const qty = parseInt(item.querySelector('.quantity-input').value);
+        const priceText = item.querySelector('.current-price').textContent.replace(/[^\d]/g, '');
+        const harga = parseInt(priceText);
+        total += harga * qty;
+    });
+
+    const formatted = "Rp" + new Intl.NumberFormat('id-ID').format(total);
+    document.querySelectorAll('.summary-value').forEach(el => {
+        el.textContent = formatted;
+    });
+}
+
+document.getElementById('clear-cart-btn').addEventListener('click', function () {
+    const userId = this.dataset.user;
+
+    Swal.fire({
+        title: 'Hapus semua?',
+        text: 'Seluruh isi keranjang akan terhapus. Yakin?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Hapus semua!'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch('/cart/clear', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    },
+                    body: JSON.stringify({ userId: userId })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    document.querySelectorAll('.cart-item').forEach(item => item.remove());
+
+                    document.querySelectorAll('.summary-value').forEach(el => {
+                    el.textContent = 'Rp0';
+                    });
+                    Swal.fire('Berhasil!', 'Semua item telah dihapus dari cart.', 'success');
+                } else {
+                    Swal.fire('Oops!', 'Gagal menghapus isi cart.', 'error');
+                }
+            } catch (error) {
+                console.error(error);
+                Swal.fire('Error!', 'Gagal menghubungi server.', 'error');
+            }
+        }
+    });
+});
+
+
+

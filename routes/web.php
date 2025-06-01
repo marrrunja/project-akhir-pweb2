@@ -44,12 +44,15 @@ Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store')
 Route::get('/cart', [CartController::class, 'index'])->middleware(SessionHasNotMiddleware::class)->name('cart.index');
 Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/delete', [CartController::class, 'destroy'])->name('cart.delete');
+Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
+
 
 Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
     Route::get('/variant/{id}', 'produkVariant')->middleware(SessionHasNotMiddleware::class)->name('produk.variant');
     Route::post('/add', 'addProduk')->name('produk.tambah');
     Route::post('/variant/tambah/{id}', 'addProdukVariant');
+    Route::post('/search', 'search')->middleware(SessionHasNotMiddleware::class);
 });
 
 Route::controller(TransaksiController::class)->prefix('/transaksi')->group(function(){
@@ -85,7 +88,9 @@ Route::post('/check', function(Request $request){
     dump($request->all());
 });
 
-
+Route::get('/gaada', function(){
+    return view('index');
+});
 
 // Route::get('/cart/gaada',function(){
 //     $carts = Cart::with(['variant.produk'])

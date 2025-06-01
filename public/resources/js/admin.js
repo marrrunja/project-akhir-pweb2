@@ -7,7 +7,7 @@ let contentAddVariant = false;
 let formUbah = document.getElementById("formUbah");
 let btnTambahProdukVariant = document.getElementById("btnTambahProdukVariant");
 let formTambahProdukVariant = document.getElementById("form-tambah");
-
+console.log("Muammar irfan");
 function insertAfter(newNode, existingNode) {
     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }

@@ -37,6 +37,7 @@ class ProdukController extends Controller
             return redirect('/produk/index');
     }
 
+
     // method untuk menambahkan produk baru
 
     public function addProduk(Request $request)
@@ -159,5 +160,18 @@ class ProdukController extends Controller
             ];
             return redirect()->back()->with($flashMessage);
         }
+    }
+
+    public function search(Request $request):Response
+    {
+        $keyword = $request->keyword;
+        $products = DB::table('produk_variants')
+            ->join('products', 'produk_variants.produk_id', '=', 'products.id')
+            ->join('stoks', 'produk_variants.id', '=', 'stoks.variant_id')
+            ->select('produk_variants.*', 'products.nama', 'products.detail', 'stoks.jumlah')
+            ->where('produk_variants.variant', 'LIKE', '%'.$keyword.'%')
+            ->orWhere('products.nama', 'LIKE', '%'.$keyword.'%')
+            ->get();
+        return response()->view('produk.detail-search', ['products' => $products]);
     }
 }
