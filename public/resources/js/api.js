@@ -25,8 +25,8 @@ async function getDataSearchFromApi(keyword, element)
 		let text = await response.text();
 
 		if(!response.ok){
-			element.innerHTML = `Http error ${response.status}`;
 			throw new Error(`Http error ${response.status}`);
+			element.innerHTML = `Http error ${response.status}`;
 		}
 		if(response.status === 200){
 			element.innerHTML = text;
@@ -39,7 +39,7 @@ async function getDataSearchFromApi(keyword, element)
 
 async function onButtonSearchClick()
 {
-	await getDataSearchFromApi(inputCari.value, containerTableProduk);
+	getDataSearchFromApi(inputCari.value, containerTableProduk);
 	
 }
 
