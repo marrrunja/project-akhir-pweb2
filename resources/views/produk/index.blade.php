@@ -46,7 +46,6 @@
         </div>
 
         <div class="row product-container isotope-container" data-aos="fade-up" data-aos-delay="200">
-
           <!-- Product Item 1 -->
           @foreach($products as $product)
           <div class="col-md-6 col-lg-3 product-item isotope-item filter-clothing">

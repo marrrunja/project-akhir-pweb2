@@ -8,7 +8,11 @@
     @stack('styles')
 </head>
 <body class="index-page">
-    @include('layout.header')
+    @if(Session::has('user_id'))
+        @include('layout.header')
+    @else
+        @include('layout.header_userindex')
+    @endif
     @yield('body')
     @include('layout.footer')
     @stack('scripts')

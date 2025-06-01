@@ -86,56 +86,5 @@ class AdminController extends Controller
         return response()->view('admin.order-detail', compact('orderItems'));
     }
 
-    public function doEdit(Request $request):RedirectResponse
-    {
-
-        // ambil semua request
-        $id = $request->id;
-        $harga = $request->harga;
-        $jumlah = $request->jumlah;
-        $varian = $request->variant;
-        $fotoLama = $request->foto;
-        $fotoBaru = $request->file('gambar');
-        $originalName = '';
-
-        // jika foto barunya null(tidak ada) maka isi original name dengan foto lama
-        if($fotoBaru == null){
-            $originalName = $fotoLama;
-        }
-        // jika tidak, original name dirangkai dengan mengambil originalName dari foto baru
-        else{
-            // cek apakah foto lama ada di folder image variant, jika iya, hapus
-            if(Storage::disk('public')->exists('image-variant/' . $fotoLama)){
-                Storage::disk('public')->delete('image-variant/' . $fotoLama);
-            }
-            $originalName = Str::replace(' ','', Str::uuid() . '-' . $id . '-' . $fotoBaru->getClientOriginalName());
-            $fotoBaru->storeAs('image-variant', $originalName, 'public');
-        }
-
-
-        $variant = DB::table('produk_variants')->where('id', $id);
-        $updateVariant = $variant->update(['variant' => $varian,'harga' => $harga, 'foto' => $originalName]);
-
-        $updateStok = DB::table('stoks')->where('variant_id', $id)->update([
-            'jumlah' => $jumlah
-        ]);
-        
-        $status = null;
-        $alert = null;
-        if($updateVariant > 0 || $updateStok > 0){
-            $status = "Berhasil update data";
-            $alert = "success";
-        }
-        else {
-            $status = "Tidak ada yang diupdate";
-            $alert = "warning";
-        }
-        $flashMessage = [
-            'status' => $status,
-            'alert' => $alert
-        ];
-        return redirect()->back()->with($flashMessage);
-    }
-
 
 }

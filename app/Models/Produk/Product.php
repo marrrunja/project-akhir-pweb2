@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Product extends Model
 {
     protected $with = ['kategori'];
+    protected $guarded = ['id'];
 
     public function variant():HasMany
     {

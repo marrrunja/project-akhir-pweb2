@@ -61,8 +61,15 @@
                   </a>
                 </div>
                 <div class="dropdown-footer">
+                  @if(!Session::has('user_id'))
                   <a href="/login/index" class="btn btn-primary w-100 mb-2">Sign In</a>
                   <a href="/register/index" class="btn btn-outline-primary w-100">Register</a>
+                  @else
+                  <form method="post" action="/login/logout">
+                    @csrf
+                  <button type="submit" class="btn btn-primary w-100">Logout</button>  
+                  </form>
+                  @endif
                 </div>
               </div>
             </div>

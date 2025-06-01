@@ -44,7 +44,9 @@ Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.cle
 Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
     Route::post('/add', 'addProduk')->name('produk.tambah');
-    Route::post('/variant/tambah/{id}', 'addProdukVariant');
+    Route::get('/edit/{id}', 'editProduk')->name('produk.edit');
+    Route::post('edit/{id}', 'doEdit')->name('produk.doEdit');
+    Route::get('/search', 'searchOnlyProduk');
 });
 
 // produk variant
@@ -53,7 +55,7 @@ Route::post('/variant/search', [ProdukVariantController::class, 'search'])->midd
 Route::get('/variant/{id}', [ProdukVariantController::class, 'produkVariant'])->middleware(SessionHasNotMiddleware::class)->name('produk.variant');
 
 Route::post('/variant/tambah/{id}', [ProdukVariantController::class,'addProdukVariant']);
-
+Route::post('/variant/doEdit', [ProdukVariantController::class, 'doEdit']);
 
 // transaksi
 Route::controller(TransaksiController::class)->prefix('/transaksi')->group(function(){
@@ -69,7 +71,6 @@ Route::controller(AdminController::class)->prefix('/admin')->group(function(){
     Route::get('/index', 'index');
     Route::get('/produk', 'lihatProduk')->name('admin.manage');
     Route::get('produk/variant/{id}', 'variantProduk')->name('admin.detailProduk');
-    Route::post('/produk/variants/doEdit', 'doEdit');
     Route::get('/order/list', 'orderList')->name('admin.order');
     Route::get('/order/detail/{id}', 'orderDetail')->name('admin.detailOrder');
 });

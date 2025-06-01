@@ -91,7 +91,7 @@ function showDetailVariant(e) {
         e.stopPropagation();
     }
     if (e.target.classList.contains("btnUbah")) {
-        formUbah.setAttribute("action", appurl+"/admin/produk/variants/doEdit");
+        formUbah.setAttribute("action", appurl+"/variant/doEdit");
         formUbah.setAttribute("enctype", "multipart/form-data");
         e.stopPropagation();
     }

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Produk\ProdukVariant;
 use Illuminate\Http\RedirectResponse;
-
+use Illuminate\Support\Facades\Storage;
 class ProdukController extends Controller
 {
     public function index():Response
@@ -99,10 +99,77 @@ class ProdukController extends Controller
     
     public function editProduk(Request $request)
     {
+        $id = $request->id;
+        $categories = \App\Models\Kategori::all();
+        $produk = Product::where('id', $id)->first();
+        $data = [
+            'produk' => $produk,
+            'categories' => $categories
+        ];
+
+        return view('admin.edit-produk', $data);
     }
-    public function searchOnlyProduk($keyword)
+    public function doEdit(Request $request)
     {
-        
+        $id = $request->id;
+        $nama = $request->nama;
+        $detail = $request->detail;
+        $kategori = $request->kategori;
+        $newImage = $request->file('gambar');
+        $oldImage = $request->gambarLama;
+        $originalName = '';
+
+
+        if($newImage == null){
+            $originalName = $oldImage;
+        }
+        else {
+            if(Storage::disk('public')->exists('images/'.$oldImage)){
+                Storage::disk('public')->delete('images/'.$oldImage);
+            }
+            $originalName = Str::replace(' ', '', Str::uuid() . '-'. $kategori . '-' . $newImage->getClientOriginalName());
+            $newImage->storeAs('images', $originalName, 'public');
+        }
+        // update data
+        $produk = DB::table('products')->where('id', '=', $id);
+        $insert = $produk->update([
+            'nama' => $nama, 
+            'detail' => $detail, 
+            'kategori_id' => $kategori,
+            'foto' => $originalName
+        ]);
+
+        if($insert > 0)
+        {
+            $flashMessage = [
+                'status' => 'berhasil mengupdate data',
+                'alert' => 'success',
+            ];
+            return redirect()->back()->with($flashMessage);
+        }
+        else{
+             $flashMessage = [
+                'status' => 'Tidak ada yang diupdate',
+                'alert' => 'primary',
+            ];
+            return redirect()->back()->with($flashMessage);
+        }
+
+    }
+    public function searchOnlyProduk(Request $request)
+    {
+        $keyword = $request->keyword;
+        $products = DB::table('products')->join('kategoris', 'products.kategori_id', 'kategoris.id')
+                    ->select('products.*','kategoris.kategori')
+                    ->where('products.nama', 'LIKE', '%'. $keyword.'%')
+                    ->orWhere('kategoris.kategori', 'LIKE', '%'. $keyword .'%')
+                    ->get();
+
+        $data = [
+            'products' => $products
+        ];
+
+        return response()->json($data);
     }
 
 }

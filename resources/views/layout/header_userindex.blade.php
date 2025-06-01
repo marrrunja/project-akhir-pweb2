@@ -1,5 +1,4 @@
 <header id="header" class="header position-relative">
-
     <!-- Main Header -->
     <div class="main-header">
         <div class="container-fluid container-xl">
@@ -11,7 +10,6 @@
                     <!-- <img src="assets/img/logo.webp" alt=""> -->
                     <h1 class="sitename">Adila<span>Snack</span></h1>
                 </a>
-
                 <!-- Search -->
                 <form class="search-form desktop-search-form" method="post"
                     action="{{ env('BASE_URL') }}/produk/search">
