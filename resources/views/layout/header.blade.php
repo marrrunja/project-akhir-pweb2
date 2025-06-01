@@ -1,19 +1,16 @@
 <header id="header" class="header position-relative">
-
     <!-- Main Header -->
     <div class="main-header">
       <div class="container-fluid container-xl">
         <div class="d-flex py-3 align-items-center justify-content-between">
-
           <!-- Logo -->
           <a href="" class="logo d-flex align-items-center">
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="assets/img/logo.webp" alt=""> -->
             <h1 class="sitename">Adila<span>Snack</span></h1>
           </a>
-
           <!-- Search -->
-          <form class="search-form desktop-search-form" method="post" action="{{ env('BASE_URL') }}/produk/search">
+          <form class="search-form desktop-search-form" method="post" action="{{ env('BASE_URL') }}/variant/search">
             @csrf
             <div class="input-group">
               <input type="text" name="keyword" class="form-control" placeholder="Search for products...">
@@ -22,7 +19,6 @@
               </button>
             </div>
           </form>
-
           <!-- Actions -->
           <div class="header-actions d-flex align-items-center justify-content-end">
 
@@ -176,7 +172,7 @@
     <!-- Mobile Search Form -->
     <div class="collapse" id="mobileSearch">
       <div class="container">
-        <form class="search-form" method="post" action="{{ env('BASE_URL') }}/produk/search">
+        <form class="search-form" method="post" action="{{ env('BASE_URL') }}/variant/search">
           @csrf
           <div class="input-group">
             <input type="text" name="keyword" class="form-control" placeholder="Search for products...">

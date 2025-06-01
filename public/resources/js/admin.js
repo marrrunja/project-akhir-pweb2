@@ -7,11 +7,10 @@ let contentAddVariant = false;
 let formUbah = document.getElementById("formUbah");
 let btnTambahProdukVariant = document.getElementById("btnTambahProdukVariant");
 let formTambahProdukVariant = document.getElementById("form-tambah");
-console.log("Muammar irfan");
+
 function insertAfter(newNode, existingNode) {
     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
-
 
 function createInputEditElement(variant, jumlah, harga,foto, token, id) {
     let tr = document.createElement("tr");
@@ -41,7 +40,6 @@ function createInputEditElement(variant, jumlah, harga,foto, token, id) {
     tr.append(tdHarga);
     tr.append(tdJumlah);
     tr.append(tdFile);
-
     return tr;
 }
 async function getDataFromApi(id) {
@@ -80,7 +78,7 @@ async function showInputEditElement(target) {
     tr.append(tdButton);
 }
 
-async function showDetailVariant(e) {
+function showDetailVariant(e) {
     if (e.target.classList.contains("btnEdit")) {
         if (sibling != null) return;
         showInputEditElement(e.target);
@@ -132,7 +130,7 @@ function makeInputAddVariantElement()
 function addProdukVariant(e)
 {
     if(contentAddVariant == true) return;
-    let apiData = appurl+"/produk/variant/tambah/"+this.dataset.id;
+    let apiData = appurl+"/variant/tambah/"+this.dataset.id;
     makeInputAddVariantElement();
     formTambahProdukVariant.setAttribute("action", apiData);
 }

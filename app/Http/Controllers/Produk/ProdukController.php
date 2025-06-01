@@ -23,19 +23,7 @@ class ProdukController extends Controller
         ];
         return response()->view('produk.index',$data);
     }
-    public function produkVariant(Request $request):Response|RedirectResponse
-    {
-        $id = $request->id;
-        $variants = ProdukVariant::where('produk_id', $id)->get();
-        if($variants){
-            $data = [
-                'variants' => $variants
-            ];  
-            return response()->view('produk.variant-produk', $data);
-        }
-        else
-            return redirect('/produk/index');
-    }
+  
 
 
     // method untuk menambahkan produk baru
@@ -109,69 +97,12 @@ class ProdukController extends Controller
         }
     }
     
-    public function addProdukVariant(Request $request)
+    public function editProduk(Request $request)
     {
-        $validate = [
-            'nama' => 'required',
-            'stok' => 'required',
-            'harga' => 'required',
-            'gambar' => 'required',
-        ];
-        $request->validate($validate);
-
-        $produkId = $request->id;
-        $variant = $request->nama;
-        $jumlah = $request->stok;
-        $harga = $request->harga;
-        $gambar = $request->file('gambar');
-        $originalName = Str::replace(' ', '' ,Str::uuid().'-'.$produkId. '-'.$gambar->getClientOriginalName());
+    }
+    public function searchOnlyProduk($keyword)
+    {
         
-        $data = [
-            'variant' => $variant,
-            'produk_id' => $produkId,
-            'harga' => $harga,
-            'foto' => $originalName
-        ];
-        DB::beginTransaction();
-        try{
-            $insertProdukVariant = DB::table('produk_variants')->insert($data);
-            if($insertProdukVariant > 0) {
-                $gambar->storeAs('image-variant', $originalName, 'public');
-            }
-            $lastInsertProdukVariantId = DB::getPdo()->lastInsertId();
-            $data2 = [
-                'jumlah' => $jumlah,
-                'variant_id' => $lastInsertProdukVariantId
-            ];
-
-            DB::table('stoks')->insert($data2);
-
-            DB::commit();
-            $flashMessage = [
-                'status' => "berhasil menambah data variant",
-                'alert' => "success"
-            ];
-            return redirect()->back()->with($flashMessage);
-        }catch(\Exception $e){
-            DB::rollback();
-            $flashMessage = [
-                'status' => "Gagal menambah data variant " . $e->getMessage(),
-                'alert' => "danger"
-            ];
-            return redirect()->back()->with($flashMessage);
-        }
     }
 
-    public function search(Request $request):Response
-    {
-        $keyword = $request->keyword;
-        $products = DB::table('produk_variants')
-            ->join('products', 'produk_variants.produk_id', '=', 'products.id')
-            ->join('stoks', 'produk_variants.id', '=', 'stoks.variant_id')
-            ->select('produk_variants.*', 'products.nama', 'products.detail', 'stoks.jumlah')
-            ->where('produk_variants.variant', 'LIKE', '%'.$keyword.'%')
-            ->orWhere('products.nama', 'LIKE', '%'.$keyword.'%')
-            ->get();
-        return response()->view('produk.detail-search', ['products' => $products]);
-    }
 }

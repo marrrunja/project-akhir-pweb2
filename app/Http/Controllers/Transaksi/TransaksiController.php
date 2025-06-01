@@ -51,67 +51,67 @@ class TransaksiController extends Controller
         }
     }
   public function makeOrder(Request $request)
-{
-    $userId = $request->session()->get('user_id');
-    $jumlah = $request->jumlah;
-    $hargaSatuan = $request->harga;
-    $totalHarga = $request->totalHarga;
-    $variantId = $request->id;
-    $tanggalSekarang = now()->format("Y-m-d");
+    {
+        $userId = $request->session()->get('user_id');
+        $jumlah = $request->jumlah;
+        $hargaSatuan = $request->harga;
+        $totalHarga = $request->totalHarga;
+        $variantId = $request->id;
+        $tanggalSekarang = now()->format("Y-m-d");
 
-    try {
-        $stok = Stok::where('variant_id', $variantId)->firstOrFail();
+        try {
+            $stok = Stok::where('variant_id', $variantId)->firstOrFail();
 
-        if ($stok->jumlah === 0 || $jumlah > $stok->jumlah) {
+            if ($stok->jumlah === 0 || $jumlah > $stok->jumlah) {
+                return response()->json([
+                    'pesan' => 'Stok belum mencukupi, silahkan kembali lagi ketika re stok',
+                    'status' => 'gagal'
+                ]);
+            }
+
+            // Simpan order baru
+            $order = new Order();
+            $order->tanggal_transaksi = $tanggalSekarang;
+            $order->pembeli_id = $userId;
+            $order->order_id = null; // akan diupdate setelah insert
+            $order->total_harga = $totalHarga;
+            $order->save();
+
+            $orderInsertId = $order->id;
+            $orderId = 'INV-' . now()->format('YmdHis') . '-' . $orderInsertId;
+
+            // Update order_id yang sudah digenerate
+            $order->order_id = $orderId;
+            $order->save();
+
+            // Buat item order
+            $orderItem = new OrderItem();
+            $orderItem->variant_id = $variantId;
+            $orderItem->order_id = $orderInsertId;
+            $orderItem->jumlah = $jumlah;
+            $orderItem->total_harga = $totalHarga;
+            $orderItem->save();
+
+            // Update stok
+            $jumlahBaru = $stok->jumlah - $jumlah;
+            $stok->update(['jumlah' => $jumlahBaru]);
+
+            // Response sukses
             return response()->json([
-                'pesan' => 'Stok belum mencukupi, silahkan kembali lagi ketika re stok',
-                'status' => 'gagal'
+                'pesan' => 'Berhasil',
+                'status' => 'berhasil',
+                'order_id' => $orderId
             ]);
+
+        } catch (\Exception $e) {
+            // Tangani error tak terduga
+            return response()->json([
+                'pesan' => 'Terjadi kesalahan saat memproses pesanan.',
+                'status' => 'error',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        // Simpan order baru
-        $order = new Order();
-        $order->tanggal_transaksi = $tanggalSekarang;
-        $order->pembeli_id = $userId;
-        $order->order_id = null; // akan diupdate setelah insert
-        $order->total_harga = $totalHarga;
-        $order->save();
-
-        $orderInsertId = $order->id;
-        $orderId = 'INV-' . now()->format('YmdHis') . '-' . $orderInsertId;
-
-        // Update order_id yang sudah digenerate
-        $order->order_id = $orderId;
-        $order->save();
-
-        // Buat item order
-        $orderItem = new OrderItem();
-        $orderItem->variant_id = $variantId;
-        $orderItem->order_id = $orderInsertId;
-        $orderItem->jumlah = $jumlah;
-        $orderItem->total_harga = $totalHarga;
-        $orderItem->save();
-
-        // Update stok
-        $jumlahBaru = $stok->jumlah - $jumlah;
-        $stok->update(['jumlah' => $jumlahBaru]);
-
-        // Response sukses
-        return response()->json([
-            'pesan' => 'Berhasil',
-            'status' => 'berhasil',
-            'order_id' => $orderId
-        ]);
-
-    } catch (\Exception $e) {
-        // Tangani error tak terduga
-        return response()->json([
-            'pesan' => 'Terjadi kesalahan saat memproses pesanan.',
-            'status' => 'error',
-            'error' => $e->getMessage()
-        ], 500);
     }
-}
 
     public function orderSuccess():RedirectResponse
     {
