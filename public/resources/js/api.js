@@ -5,6 +5,7 @@ let APIURL = appurl+ "/api/orderListByTanggal";
 
 let inputCari = document.getElementById("inputCari");
 let btnCari = document.getElementById("btnCari");
+let containerTableProduk = document.getElementById("content-produk");
 console.log(appurl);
 async function orderByTanggal() {
 	try {
@@ -17,21 +18,35 @@ async function orderByTanggal() {
 		console.log("Error ", err);
 	}
 }
-async function getDataPencarian()
+async function getDataSearchFromApi(keyword, element)
 {
 	try{
-		let response = await fetch(appurl+"/produk/search?keyword=" + inputCari.value);
-		let json = await response.json();
+		let response = await fetch(appurl+"/produk/search?keyword=" + keyword);
+		let text = await response.text();
 
 		if(!response.ok){
+			element.innerHTML = `Http error ${response.status}`;
 			throw new Error(`Http error ${response.status}`);
 		}
-		console.log(json);
-		console.log("Nothing");
-
+		if(response.status === 200){
+			element.innerHTML = text;
+		}
 
 	}catch(error){
 		console.log("Gagal fetch data " + error);
+	}
+}
+
+async function onButtonSearchClick()
+{
+	await getDataSearchFromApi(inputCari.value, containerTableProduk);
+	
+}
+
+async function onKeyDownEnterInput(e)
+{
+	if(e.key=="Enter"){
+		getDataSearchFromApi(inputCari.value, containerTableProduk);
 	}
 }
 
@@ -39,8 +54,9 @@ if(urutkan != null)
 	urutkan.addEventListener("change", orderByTanggal);
 
 if(btnCari != null){
-	btnCari.addEventListener("click", getDataPencarian);
+	btnCari.addEventListener("click", onButtonSearchClick);
 }
-	
+if(inputCari !=null)
+	inputCari.addEventListener("keydown", onKeyDownEnterInput);
 
 
