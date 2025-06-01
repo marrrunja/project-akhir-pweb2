@@ -160,7 +160,7 @@ class ProdukController extends Controller
     {
         $keyword = $request->keyword;
         $products = DB::table('products')->join('kategoris', 'products.kategori_id', 'kategoris.id')
-                    ->select('products.*','kategoris.kategori')
+                    ->select('products.nama','products.detail','products.foto','products.id','kategoris.kategori')
                     ->where('products.nama', 'LIKE', '%'. $keyword.'%')
                     ->orWhere('kategoris.kategori', 'LIKE', '%'. $keyword .'%')
                     ->get();
@@ -168,8 +168,7 @@ class ProdukController extends Controller
         $data = [
             'products' => $products
         ];
-
-        return response()->json($data);
+        return view('partial.product-search', $data)->render();
     }
 
 }

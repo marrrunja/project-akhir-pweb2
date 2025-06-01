@@ -25,10 +25,7 @@
             </div>
         </div>
         <div class="row">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-            <div class="col-12">
+            <div class="col-12" id="content-produk">
                 <table class="table">
                     <thead>
                         <th>#</th>

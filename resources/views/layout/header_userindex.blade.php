@@ -12,7 +12,7 @@
                 </a>
                 <!-- Search -->
                 <form class="search-form desktop-search-form" method="post"
-                    action="{{ env('BASE_URL') }}/produk/search">
+                    action="{{ env('BASE_URL') }}/variant/search">
                     @csrf
                     <div class="input-group">
                         <input type="text" name="keyword" class="form-control" placeholder="Search for products...">
@@ -164,7 +164,7 @@
     <!-- Mobile Search Form -->
     <div class="collapse" id="mobileSearch">
         <div class="container">
-            <form class="search-form" method="post" action="{{ env('BASE_URL') }}/produk/search">
+            <form class="search-form" method="post" action="{{ env('BASE_URL') }}/variant/search">
                 @csrf
                 <div class="input-group">
                     <input type="text" name="keyword" class="form-control" placeholder="Search for products...">
