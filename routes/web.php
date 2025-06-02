@@ -107,3 +107,7 @@ Route::get('/gaada', function(){
 Route::get('/profil', function () {
     return view('profil');
 });
+
+Route::get('/detail', function () {
+    return view('detail');
+});

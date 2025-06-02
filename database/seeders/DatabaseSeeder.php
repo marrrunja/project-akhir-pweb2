@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         $data = [
             // KategoriSeeder::class,
-            // StokSeeder::
+            // StokSeeder::class
             CartSeeder::class
         ];
 

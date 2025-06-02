@@ -124,7 +124,7 @@
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="/produk/index" class="{{ request()->is('produk/index') ? 'active':'' }}">Home</a></li>
-                    <li><a href="about.html">Produk</a><li>
+                    <li><a href="about.html">Produk</a></li>
                     <li><a href="category.html">Category</a></li>
                     <li><a href="checkout.html">History Pembelian</a></li>
                 </ul>
