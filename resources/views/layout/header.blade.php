@@ -131,8 +131,8 @@
         <div class="container-fluid container-xl position-relative">
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="/produk/index" class="{{ request()->is('produk/index') ? 'active':''}}">Home</a></li>
-                    <li><a href="#">Produk</a><li>
+                    <li><a href="/" class="{{ request()->is('/') ? 'active':''}}">Home</a></li>
+                    <li><a href="/produk/index" class="{{ request()->is('produk/index') ? 'active':''}}">Produk</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="checkout.html">History Pembelian</a></li>
                 </ul>

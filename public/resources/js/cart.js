@@ -199,10 +199,22 @@ document.getElementById('clear-cart-btn').addEventListener('click', function () 
     });
 });
 
-
-async function checkout()
+const btnCheckout = document.getElementById("btnCheckout");
+async function checkout(e)
 {
-    
+    e.preventDefault();
+    let data = {
+        userId:btnCheckout.dataset.id
+    }
+    const response = await fetch(appurl + "/checkout/cart",{
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+            'X-CSRF-TOKEN': token
+        },
+        body: JSON.stringify()
+    });
 }
+btnCheckout.addEventListener("click", checkout);
 
 

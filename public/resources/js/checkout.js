@@ -16,7 +16,7 @@ async function sendData()
     const data = {
         jumlah : [jumlah],
         totalHarga : total,
-        id:[btnBayar.dataset.id],
+        id:btnBayar.dataset.id,
         harga:hargaSatuan
     }
     try{
