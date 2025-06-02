@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Kategori;
-use App\Models\Produk\Stok;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Produk\Product;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;

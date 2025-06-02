@@ -5,10 +5,9 @@ namespace Tests\Feature\Transaksi;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Services\Transaksi\OrderService;
 class TransaksiControllerTest extends TestCase
 {
-    private OrderService $OrderService;
+  
     // berhasil ya
     // public function testKirimData(): void
     // {
@@ -21,9 +20,10 @@ class TransaksiControllerTest extends TestCase
     //     $response->assertStatus(200);
     // }
 
-    public function testAddOrders():void
+    public function testAddOrder():void
     {
-
+        $response = $this->withSession(['user_id' => 1, 'username' => 'Muammar']);
+        
     }
 
 

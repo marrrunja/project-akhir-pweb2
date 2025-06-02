@@ -49,80 +49,41 @@ class TransaksiController extends Controller
             return redirect()->back();
         }
     }
-    public function makeOrder(Request $request)
+    public function makeOrder(Request $request):JsonResponse
     {
-        $userId = $request->session()->get('user_id');
-        $jumlah = $request->jumlah;
-        $hargaSatuan = $request->harga;
-        $totalHarga = $request->totalHarga;
-        $variantId = $request->id;
-        $tanggalSekarang = now()->format("Y-m-d");
-        $stok = Stok::where('variant_id', $variantId)->firstOrFail();
-
-        if ($stok->jumlah === 0 || $jumlah > $stok->jumlah) {
+        $userId = (int)$request->session()->get('user_id');
+        $username = $request->session()->get('username');
+        $jumlah = (int)$request->jumlah;
+        $hargaSatuan = (int)$request->harga;
+        $totalHarga = (int)$request->totalHarga;
+        $variantId = (int)$request->id;
+        $data = [
+            'userId' => $userId,
+            'jumlah' => $jumlah,
+            'hargaSatuan' =>  $hargaSatuan,
+            'totalHarga' => $totalHarga,
+            'variantId' => $variantId,
+            'username' => $username
+        ];
+        $error = null;
+        $linkBayar = null;
+        if($this->orderService->addOrder($data, $error, $linkBayar)){
+            $data = [
+                'status' => 'berhasil',
+                'redirect_url' => $linkBayar
+            ];
+            return response()->json($data);
+        }else{
             return response()->json([
-                'pesan' => 'Stok belum mencukupi, silahkan kembali lagi ketika re stok',
-                'status' => 'gagal'
+                'pesan' => $error,
+                'status' => 'gagal',
+                'totalHarga' => $totalHarga,
+                'hargaSatuan' => $hargaSatuan
             ]);
         }
-
-        // Simpan order baru
-        $order = new Order();
-        $order->tanggal_transaksi = $tanggalSekarang;
-        $order->pembeli_id = $userId;
-        $order->order_id = null; // akan diupdate setelah insert
-        $order->total_harga = $totalHarga;
-        $order->save();
-
-        // generate id untuk order item, dengan last id insert pada order
-        $orderInsertId = $order->id;
-        $orderId = 'INV-' .now() .'-'.$orderInsertId;
-        $order->order_id = $orderId;
-        $order->save();
-
-        // Buat item order
-        $orderItem = new OrderItem();
-        $orderItem->variant_id = $variantId;
-        $orderItem->order_id = $orderInsertId;
-        $orderItem->jumlah = $jumlah;
-        $orderItem->total_harga = $totalHarga;
-        $orderItem->save();
-
-        // Update stok
-        $jumlahBaru = $stok->jumlah - $jumlah;
-        $stok->update(['jumlah' => $jumlahBaru]);
-
-        // Response sukses
         return response()->json([
-            'pesan' => 'Berhasil',
-            'status' => 'berhasil',
-            'order_id' => $orderId
-        ]);
-
-            // $params = [
-            //     'transaction_details' => [
-            //         'order_id' => $orderId,
-            //         'gross_amount' => $totalHarga
-            //     ],
-            //     'item_details' => [
-            //         [
-            //             'price' => $harga,
-            //             'quantity' => $jumlah,
-            //             'name' => $orderId
-            //         ],
-            //     ],
-            //     'customer_details'=> [
-            //         'first_name' => $request->session()->get('username'),
-            //         'email' => 'emailku@gmail.com'
-            //     ],
-            //     'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart']
-            // ];
-
-        $response = [
-            'pesan' => "Berhasil",
-            'status' => 'berhasil'
-        ];
-        echo json_encode($response);
+            'pesan' => 'Internal server error'
+        ], 500);
     }
 
     public function makeOrders(Request $request):JsonResponse
@@ -149,6 +110,5 @@ class TransaksiController extends Controller
     {
         $pesan = $request->pesan;
         return redirect('/produk/index')->with('status', 'Gagal memesan, ' . $pesan);
-        
     }
 }

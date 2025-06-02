@@ -26,7 +26,8 @@
 
 @section('body')
   <main class="main">
-
+    {{ Session::get('username') }}
+    {{ Session::get('user_id') }}
     <!-- Product List Section -->
     <section id="product-list" class="product-list section">
 

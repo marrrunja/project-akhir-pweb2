@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Services\Transaksi\OrderService;
 
+
 class OrderServiceTest extends TestCase
 {
     private OrderService $OrderService;
@@ -31,6 +32,39 @@ class OrderServiceTest extends TestCase
     {
         self::assertEquals($this->orderService->hello(), "Hello order service");
     }
+    public function testOrderFailed():void{
+        $error = null;
+        self::assertFalse($this->orderService->addOrder([], $error));
+        self::assertEquals("Data tidak boleh kosong", $error);
+    }
+    // public function testOrderSuccess():void
+    // {
+    //      $data = [
+    //         'userId' => '4',
+    //         'jumlah' => 1,
+    //         'hargaSatuan' =>  16000,
+    //         'totalHarga' => 16000,
+    //         'variantId' => 33,
+    //         'username' => 'Yoshioka_321'
+    //     ];
+    //     $error = null;
+    //     $linkBayar = null;
+    //     self::assertTrue($this->orderService->addOrder($data, $error, $linkBayar));
+    // }
+    public function testAddOrderWithStokNotEnugh():void{
+         $data = [
+            'userId' => '4',
+            'jumlah' => 1,
+            'hargaSatuan' =>  10000,
+            'totalHarga' => 10000,
+            'variantId' => 37,
+            'username' => 'Yoshioka_321'
+        ];
+        $error = null;
+        $linkBayar = null;
+        self::assertFalse($this->orderService->addOrder($data, $error, $linkBayar));
+        self::assertEquals("Maaf stok tidak mencukupi sekarang", $error);
+    }
     // public function testAddOrdersSuccess():void
     // {
     //     $data = [
@@ -54,6 +88,5 @@ class OrderServiceTest extends TestCase
         ];
         $error = null;
         self::assertFalse($this->orderService->addOrders($data, $error));
-        dump($error);
     }
 }

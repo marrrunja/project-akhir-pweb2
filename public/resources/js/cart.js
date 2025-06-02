@@ -204,6 +204,7 @@ document.getElementById('clear-cart-btn').addEventListener('click', function () 
 });
 
 const btnCheckout = document.getElementById("btnCheckout");
+
 async function checkout(e) {
     e.preventDefault();
     let totalHarga = Array.from(document.getElementById('summary-value').innerText);
@@ -229,7 +230,7 @@ async function checkout(e) {
 
         if (response.status === 200) {
             const responseServer = await response.json();
-            console.log(responseServer);
+            
         }
 
     } catch (error) {
