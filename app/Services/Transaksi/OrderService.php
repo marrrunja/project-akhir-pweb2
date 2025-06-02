@@ -3,12 +3,33 @@ namespace App\Services\Transaksi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use App\Models\Produk\Stok;
+use Illuminate\Support\Collection;
 class OrderService
 {
 
-	public function hello():string
+	private function insertIntoOrderTable($tanggal, $pembeliId, $totalHarga, ?int &$orderInsertId = null, ?string &$orderId = null):void
 	{
-		return "Hello order service";
+		DB::table('table_orders')->insert([
+        	'tanggal_transaksi' => $tanggal,
+        	'pembeli_id' => $pembeliId,
+        	'is_dibayar' => false,
+        	'total_harga' => $totalHarga,
+        ]);
+        $orderInsertId = DB::getPdo()->lastInsertId();
+        $orderId = 'INV-'.now()->format('Y-m-d') . '-' . $orderInsertId;
+	}
+
+	private function insertIntoOrderItems(Collection $carts, $orderInsertId):void
+	{
+		foreach($carts as $cart){
+			DB::table('order_items')->insert([
+				'variant_id' => $cart->variant_id,
+				'order_id' => $orderInsertId,
+				'jumlah' => $cart->qty,
+				'total_harga' => $cart->qty * $cart->harga
+			]);
+			DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$cart->qty, $cart->variant_id]);
+		}
 	}
 
 	public function addOrder(array $data, ?string &$error = null, ?string &$linkBayar = null):bool
@@ -27,14 +48,10 @@ class OrderService
         }
         DB::beginTransaction();
         try{
-        	 DB::table('table_orders')->insert([
-	        	'tanggal_transaksi' => $tanggalSekarang,
-	        	'pembeli_id' => $data['userId'],
-	        	'is_dibayar' => false,
-	        	'total_harga' => $data['totalHarga'],
-        	]);
-	        $orderInsertId = DB::getPdo()->lastInsertId();
-	        $orderId = 'INV-'.now()->format('Y-m-d') . '-' . $orderInsertId;
+        	$orderInsertId = null;
+        	$orderId = null;
+        	$this->insertIntoOrderTable($tanggalSekarang, $data['userId'], $data['totalHarga'], $orderInsertId, $orderId);
+
 	        DB::table('order_items')->insert([
 	        	'variant_id' => $data['variantId'],
 	        	'order_id' =>  $orderInsertId,
@@ -73,7 +90,6 @@ class OrderService
             $response = json_decode($response->body());
             if(!isset($response->redirect_url)){
             	$error = $response;
-            	// throw new \Exception('Gagal mendapatkan link pembayaran dari midtrans');
             	return false;
             }
             $linkBayar = $response->redirect_url;
@@ -91,6 +107,7 @@ class OrderService
         }
         return $isSuccess;
 	}
+
 
 	public function addOrders(array $data, ?string &$error = null):bool
 	{
@@ -110,28 +127,18 @@ class OrderService
 			->select('produk_variants.harga', 'carts.*')
 			->where('pembeli_id', '=', $userId)->get();
 
-			DB::table('table_orders')->insert([
-				'tanggal_transaksi' => now()->format('Y-m-d'),
-				'pembeli_id' => $userId,
-				'is_dibayar' => false,
-				'total_harga' => $totalHarga
-			]);
-			$orderInsertId = DB::getPdo()->lastInsertId();
-			$orderId = 'INV-' .now().'-'.$orderInsertId;
+			$orderInsertId = null;
+        	$orderId = null;
+        	$tanggalSekarang = now()->format('Y-m-d');
+
+        	$this->insertIntoOrderTable($tanggalSekarang, $data['userId'], $data['totalHarga'], $orderInsertId, $orderId);
+
 			DB::table('table_orders')->where('id', $orderInsertId)->update([
 				'order_id' => $orderId
 			]);
 
-			foreach($carts as $cart){
-				DB::table('order_items')->insert([
-					'variant_id' => $cart->variant_id,
-					'order_id' => $orderInsertId,
-					'jumlah' => $cart->qty,
-					'total_harga' => $cart->qty * $cart->harga
-				]);
-				$orderItemInsertId = DB::getPdo()->lastInsertId();
-				DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$cart->qty, $orderItemInsertId]);
-			}
+			$this->insertIntoOrderItems($carts, $orderInsertId);
+
 			DB::table('carts')->where('pembeli_id', $userId)->delete();
 			DB::commit();
 			$isSuccess = true;

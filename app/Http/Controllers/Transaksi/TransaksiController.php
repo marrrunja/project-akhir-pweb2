@@ -35,7 +35,7 @@ class TransaksiController extends Controller
         $jumlah = $request->jumlah;
         $userId = $request->session()->get('user_id');
         $produkVariant = ProdukVariant::where('id', '=', $id)->first();
-
+        
         if($produkVariant){
 
             $data = [
@@ -86,7 +86,7 @@ class TransaksiController extends Controller
         ], 500);
     }
 
-    public function makeOrders(Request $request):JsonResponse
+    public function makeOrders(Request $request)
     {
         $userId = $request->userId;
         $totalHarga = $request->totalHarga;

@@ -11,7 +11,6 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 class LoginControllerTest extends TestCase
 {
-    
     private LoginService $loginService;
     protected function setUp():void{
         parent::setUp();
