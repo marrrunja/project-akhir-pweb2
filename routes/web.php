@@ -39,7 +39,6 @@ Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.
 Route::post('/cart/delete', [CartController::class, 'destroy'])->name('cart.delete');
 Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
 
-
 // produk 
 Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);

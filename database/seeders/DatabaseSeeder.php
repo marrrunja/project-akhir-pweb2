@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\CartSeeder;
 use Database\Seeders\StokSeeder;
 use Database\Seeders\KategoriSeeder;
 
@@ -17,7 +18,8 @@ class DatabaseSeeder extends Seeder
     {
         $data = [
             // KategoriSeeder::class,
-            // StokSeeder::class
+            // StokSeeder::
+            CartSeeder::class
         ];
 
         $this->call($data);

@@ -30,4 +30,6 @@ class ApiController extends Controller
         ];
         return view('partial.tableOrder', $data)->render();
     }
+
+    public function 
 }

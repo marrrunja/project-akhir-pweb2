@@ -21,12 +21,10 @@
           </form>
           <!-- Actions -->
           <div class="header-actions d-flex align-items-center justify-content-end">
-
             <!-- Mobile Search Toggle -->
             <button class="header-action-btn mobile-search-toggle d-xl-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileSearch" aria-expanded="false" aria-controls="mobileSearch">
               <i class="bi bi-search"></i>
             </button>
-
             <!-- Account -->
             <div class="dropdown account-dropdown">
               <button class="header-action-btn" data-bs-toggle="dropdown">

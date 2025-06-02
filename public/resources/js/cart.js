@@ -200,4 +200,9 @@ document.getElementById('clear-cart-btn').addEventListener('click', function () 
 });
 
 
+async function checkout()
+{
+    
+}
+
 
