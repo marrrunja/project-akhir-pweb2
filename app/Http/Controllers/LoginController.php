@@ -31,7 +31,11 @@ class LoginController extends Controller
         if($this->loginService->login($username, $password, $id, $error)){
             $request->session()->put('username', $username);
             $request->session()->put('user_id', $id);
+<<<<<<< HEAD
             return redirect('/')->with('status', "");
+=======
+            return redirect('/');
+>>>>>>> d6b115ac763e3c3e6458e79a20d498c7281de0d5
         }
         return redirect()->back()->with('status', $error);
     }
