@@ -47,18 +47,6 @@
                     <i class="bi bi-bag-check me-2"></i>
                     <span>My Orders</span>
                   </a>
-                  <a class="dropdown-item d-flex align-items-center" href="wishlist.html">
-                    <i class="bi bi-heart me-2"></i>
-                    <span>My Wishlist</span>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="returns.html">
-                    <i class="bi bi-arrow-return-left me-2"></i>
-                    <span>Returns &amp; Refunds</span>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="settings.html">
-                    <i class="bi bi-gear me-2"></i>
-                    <span>Settings</span>
-                  </a>
                 </div>
                 <div class="dropdown-footer">
                   @if(!Session::has('user_id'))
