@@ -35,11 +35,11 @@
               </button>
               <div class="dropdown-menu">
                 <div class="dropdown-header">
-                  <h6>Welcome to <span class="sitename">FashionStore</span></h6>
-                  <p class="mb-0">Access account &amp; manage orders</p>
+                  <h6>Selamat datang di <span class="sitename">AdilaSnack</span></h6>
+                  <!-- <p class="mb-0">Access account &amp; manage orders</p> -->
                 </div>
                 <div class="dropdown-body">
-                  <a class="dropdown-item d-flex align-items-center" href="account.html">
+                  <a class="dropdown-item d-flex align-items-center" href="{{url('/profil')}}">
                     <i class="bi bi-person-circle me-2"></i>
                     <span>My Profile</span>
                   </a>
@@ -80,11 +80,11 @@
               <button class="header-action-btn" data-bs-toggle="dropdown">
                 <i class="bi bi-cart3"></i>
                 <span class="action-text d-none d-md-inline-block">Cart</span>
-                <span class="badge">3</span>
+                <!-- <span class="badge">3</span> -->
               </button>
               <div class="dropdown-menu cart-dropdown-menu">
                 <div class="dropdown-header">
-                  <h6>Shopping Cart (3)</h6>
+                  <!-- <h6>Shopping Cart (3)</h6> -->
                 </div>
                 <div class="dropdown-body">
                   <div class="cart-items">
@@ -118,10 +118,10 @@
                 <div class="dropdown-footer">
                   <div class="cart-total">
                     <span>Total:</span>
-                    <span class="cart-total-price">$279.97</span>
+                    <span class="cart-total-price">Rp.0</span>
                   </div>
                   <div class="cart-actions">
-                    <a href="{{ url('/cart') }}" class="btn btn-outline-primary">View Cart</a>
+                    <a href="{{ url('/cart') }}" class="btn btn-outline-primary">Lihat Keranjang</a>
                     <a href="checkout.html" class="btn btn-primary">Checkout</a>
                   </div>
                 </div>

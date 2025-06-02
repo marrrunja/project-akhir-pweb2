@@ -14,7 +14,7 @@
                   <!-- <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a> -->
                   <a href="https://www.instagram.com/geraiadila?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram" target="blank"><i class="bi bi-instagram"></i></a>
                   <!-- <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a> -->
-                  <a href="https://www.tiktok.com/@adilasnack?_t=ZS-8wqEFCySwT4&_r=1" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                  <a href="https://www.tiktok.com/@adilasnack?_t=ZS-8wqEFCySwT4&_r=1" aria-label="TikTok" target="blank"><i class="bi bi-tiktok"></i></a>
                   <!-- <a href="#" aria-label="Pinterest"><i class="bi bi-pinterest"></i></a> -->
                   <!-- <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a> -->
                 </div>

@@ -62,7 +62,7 @@
                     <div class="dropdown cart-dropdown">
                         <button class="header-action-btn" data-bs-toggle="dropdown">
                             <i class="bi bi-cart3"></i>
-                            <span class="action-text d-none d-md-inline-block">Cart</span>
+                            <span class="action-text d-none d-md-inline-block">Keranjang</span>
                             <!-- <span class="badge">3</span> -->
                         </button>
                         <div class="dropdown-menu cart-dropdown-menu">

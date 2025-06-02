@@ -102,3 +102,8 @@ Route::get('/gaada', function(){
 //         ->get();
 //     return view('cart.nothing', compact('carts'));
 // });
+
+// route nampilin halaman profil user
+Route::get('/profil', function () {
+    return view('profil');
+});
