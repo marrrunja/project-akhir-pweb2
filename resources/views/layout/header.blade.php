@@ -31,7 +31,7 @@
             <div class="dropdown account-dropdown">
               <button class="header-action-btn" data-bs-toggle="dropdown">
                 <i class="bi bi-person"></i>
-                <span class="action-text d-none d-md-inline-block">Account</span>
+                <span class="action-text d-none d-md-inline-block">{{session::get('username')}}</span>
               </button>
               <div class="dropdown-menu">
                 <div class="dropdown-header">
