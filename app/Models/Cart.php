@@ -23,5 +23,13 @@ class Cart extends Model
     {
         return $this->belongsTo(Pembeli::class);
     }
+    
+    public static function getAllCartWithUserId($id)
+    {
+         $carts = Cart::with(['variant.produk'])
+                    ->where('pembeli_id',$id)
+                    ->get();
+        return $carts;
+    }
 }
 

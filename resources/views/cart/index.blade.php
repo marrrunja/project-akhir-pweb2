@@ -76,7 +76,7 @@
                         <div class="product-meta">
                           <span class="product-color">{{ $item->variant->variant ?? 'Variant' }}</span>
                         </div>
-                        <button class="hilangkan-item" data-id="{{ $item->id }}" data-user="{{ Session::get('user_id') }}" type="button">
+                        <button class="remove-item" data-id="{{ $item->id }}" data-user="{{ Session::get('user_id') }}" type="button">
                           <i class="bi bi-trash"></i> Remove
                         </button>
                       </div>

@@ -10,6 +10,12 @@ use App\Models\Produk\ProdukVariant;
 
 class CartController extends Controller
 {
+    private CartService $cartService;
+    
+    public function __construct(CartService $cartService)
+    {
+        $this->cartService = $cartService;
+    }
     public function index(){
         $carts = Cart::all();
 
@@ -21,12 +27,6 @@ class CartController extends Controller
                     ->where('pembeli_id',$request->session()->get('user_id'))
                     ->get();
         return view('cart.index', compact('carts'));
-    }
-    private CartService $cartService;
-    
-    public function __construct(CartService $cartService)
-    {
-        $this->cartService = $cartService;
     }
 
     //method masuk keranjang
