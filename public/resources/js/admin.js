@@ -1,7 +1,7 @@
 const rowKonten = document.getElementById("rowKonten");
 let token = document.querySelector("meta[name=_token]").content;
 let appurl = document.querySelector("meta[name=_appurl]").content;
-let apiurl = appurl+'/api/produk/variants/edit';
+let apiurl = appurl + '/api/produk/variants/edit';
 let sibling = null;
 let contentAddVariant = false;
 let formUbah = document.getElementById("formUbah");
@@ -12,7 +12,7 @@ function insertAfter(newNode, existingNode) {
     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
 
-function createInputEditElement(variant, jumlah, harga,foto, token, id) {
+function createInputEditElement(variant, jumlah, harga, foto, token, id) {
     let tr = document.createElement("tr");
 
     let inputNama = `<input type="text" name="variant" value="${variant}" class="form-control">`;
@@ -62,7 +62,7 @@ async function showInputEditElement(target) {
     let parentElement = btnEdit.parentElement.parentElement;
     let data = await getDataFromApi(btnEdit.dataset.id);
 
-    let tr = createInputEditElement(data.variant, data.jumlah, data.harga, data.foto,token, data.id);
+    let tr = createInputEditElement(data.variant, data.jumlah, data.harga, data.foto, token, data.id);
 
     insertAfter(tr, parentElement);
 
@@ -91,13 +91,13 @@ function showDetailVariant(e) {
         e.stopPropagation();
     }
     if (e.target.classList.contains("btnUbah")) {
-        formUbah.setAttribute("action", appurl+"/variant/doEdit");
+        formUbah.setAttribute("action", appurl + "/variant/doEdit");
         formUbah.setAttribute("enctype", "multipart/form-data");
         e.stopPropagation();
     }
 }
-function makeInputAddVariantElement()
-{
+
+function makeInputAddVariantElement() {
     let containerAddProdukVariant = document.createElement("div");
     let containerBtn = document.createElement("div");
     containerAddProdukVariant.classList.add("d-flex");
@@ -105,38 +105,36 @@ function makeInputAddVariantElement()
     containerAddProdukVariant.classList.add("gap-3");
 
     let inputToken = `<input type="hidden" name="_token" value="${token}">`;
-    let inputVarian = `<input type="text" name="nama" placeholder="Nama variant" class="form-control" required>`;
-    let inputHarga = `<input type="number" name="harga" placeholder="Harga Produk Variant" class="form-control" required>`;
-    let inputStok = `<input type="number" name="stok" placeholder="Stok Produk Variant" class="form-control" required>`;
-    let inputGambar = `<input type="file" name="gambar" class="form-control" required>`;
+    let inputVarian = `<input type="text" name="variant[]" placeholder="Nama variant" class="form-control" required>`;
+    let inputHarga = `<input type="number" name="harga[]" placeholder="Harga Produk Variant" class="form-control" required>`;
+    let inputStok = `<input type="number" name="stok[]" placeholder="Stok Produk Variant" class="form-control" required>`;
+    let inputGambar = `<input type="file" name="gambar[]" class="form-control" required>`;
+
 
     let btnSubmit = `<button type="submit" class="btn btn-success mb-3 mt-2 me-2">Tambah</button>`;
     let btnBatal = `<button type="button" class="btn btn-danger btn-batal mb-3 mt-2">Batal</button>`;
-    
+
     containerAddProdukVariant.innerHTML = inputToken + inputVarian + inputHarga + inputStok + inputGambar;
     containerBtn.innerHTML = btnSubmit + btnBatal;
     formTambahProdukVariant.append(containerAddProdukVariant);
     formTambahProdukVariant.append(containerBtn);
     contentAddVariant = true;
 
+
     const btn = document.querySelector('.btn-batal');
-    btn.addEventListener("click", function(){
+    btn.addEventListener("click", function () {
         btn.parentElement.previousElementSibling.remove();
         btn.parentElement.remove();
         contentAddVariant = false;
     });
 }
 
-function addProdukVariant(e)
-{
-    if(contentAddVariant == true) return;
-    let apiData = appurl+"/variant/tambah/"+this.dataset.id;
+function addProdukVariant(e) {
+    if (contentAddVariant == true) return;
+    let apiData = appurl + "/variant/tambah/" + this.dataset.id;
     makeInputAddVariantElement();
     formTambahProdukVariant.setAttribute("action", apiData);
 }
 
 rowKonten.addEventListener("click", showDetailVariant);
 btnTambahProdukVariant.addEventListener("click", addProdukVariant);
-
-
-

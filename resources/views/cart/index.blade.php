@@ -171,7 +171,7 @@
                 </a>
               </div>
 
-              <div class="payment-methods">
+              <!-- <div class="payment-methods">
                 <p class="payment-title">We Accept</p>
                 <div class="payment-icons">
                   <i class="bi bi-credit-card"></i>
@@ -179,7 +179,7 @@
                   <i class="bi bi-wallet2"></i>
                   <i class="bi bi-bank"></i>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

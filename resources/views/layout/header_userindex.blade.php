@@ -124,11 +124,9 @@
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="/produk/index" class="{{ request()->is('produk/index') ? 'active':'' }}">Home</a></li>
-                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">Produk</a><li>
                     <li><a href="category.html">Category</a></li>
-                    <li><a href="product-details.html">Product Details</a></li>
-                    <li><a href="/cart" class="{{ request()->is('cart') ? 'active':'' }}">Cart</a></li>
-                    <li><a href="checkout.html">Checkout</a></li>
+                    <li><a href="checkout.html">History Pembelian</a></li>
                 </ul>
             </nav>
         </div>

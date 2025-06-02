@@ -66,7 +66,6 @@ class ProdukController extends Controller
 
         $foto = $request->file('foto');
         $gambar = $request->file('gambar');
-
         // mulai transaksi database/Database Transaction   
         DB::beginTransaction();
 
