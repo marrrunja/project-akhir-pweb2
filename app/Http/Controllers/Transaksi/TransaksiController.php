@@ -50,7 +50,7 @@ class TransaksiController extends Controller
             return redirect()->back();
         }
     }
-  public function makeOrder(Request $request)
+    public function makeOrder(Request $request)
     {
         $userId = $request->session()->get('user_id');
         $jumlah = $request->jumlah;
@@ -58,49 +58,47 @@ class TransaksiController extends Controller
         $totalHarga = $request->totalHarga;
         $variantId = $request->id;
         $tanggalSekarang = now()->format("Y-m-d");
+        $stok = Stok::where('variant_id', $variantId)->firstOrFail();
 
-        try {
-            $stok = Stok::where('variant_id', $variantId)->firstOrFail();
-
-            if ($stok->jumlah === 0 || $jumlah > $stok->jumlah) {
-                return response()->json([
-                    'pesan' => 'Stok belum mencukupi, silahkan kembali lagi ketika re stok',
-                    'status' => 'gagal'
-                ]);
-            }
-
-            // Simpan order baru
-            $order = new Order();
-            $order->tanggal_transaksi = $tanggalSekarang;
-            $order->pembeli_id = $userId;
-            $order->order_id = null; // akan diupdate setelah insert
-            $order->total_harga = $totalHarga;
-            $order->save();
-
-            // generate id untuk order item, dengan last id insert pada order
-            $orderInsertId = $order->id;
-            $orderId = 'INV-' .now() .'-'.$orderInsertId;
-            $order->order_id = $orderId;
-            $order->save();
-
-            // Buat item order
-            $orderItem = new OrderItem();
-            $orderItem->variant_id = $variantId;
-            $orderItem->order_id = $orderInsertId;
-            $orderItem->jumlah = $jumlah;
-            $orderItem->total_harga = $totalHarga;
-            $orderItem->save();
-
-            // Update stok
-            $jumlahBaru = $stok->jumlah - $jumlah;
-            $stok->update(['jumlah' => $jumlahBaru]);
-
-            // Response sukses
+        if ($stok->jumlah === 0 || $jumlah > $stok->jumlah) {
             return response()->json([
-                'pesan' => 'Berhasil',
-                'status' => 'berhasil',
-                'order_id' => $orderId
+                'pesan' => 'Stok belum mencukupi, silahkan kembali lagi ketika re stok',
+                'status' => 'gagal'
             ]);
+        }
+
+        // Simpan order baru
+        $order = new Order();
+        $order->tanggal_transaksi = $tanggalSekarang;
+        $order->pembeli_id = $userId;
+        $order->order_id = null; // akan diupdate setelah insert
+        $order->total_harga = $totalHarga;
+        $order->save();
+
+        // generate id untuk order item, dengan last id insert pada order
+        $orderInsertId = $order->id;
+        $orderId = 'INV-' .now() .'-'.$orderInsertId;
+        $order->order_id = $orderId;
+        $order->save();
+
+        // Buat item order
+        $orderItem = new OrderItem();
+        $orderItem->variant_id = $variantId;
+        $orderItem->order_id = $orderInsertId;
+        $orderItem->jumlah = $jumlah;
+        $orderItem->total_harga = $totalHarga;
+        $orderItem->save();
+
+        // Update stok
+        $jumlahBaru = $stok->jumlah - $jumlah;
+        $stok->update(['jumlah' => $jumlahBaru]);
+
+        // Response sukses
+        return response()->json([
+            'pesan' => 'Berhasil',
+            'status' => 'berhasil',
+            'order_id' => $orderId
+        ]);
 
             // $params = [
             //     'transaction_details' => [
@@ -121,12 +119,11 @@ class TransaksiController extends Controller
             //     'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart']
             // ];
 
-            $response = [
-                'pesan' => "Berhasil",
-                'status' => 'berhasil'
-            ];
-            echo json_encode($response);
-        }
+        $response = [
+            'pesan' => "Berhasil",
+            'status' => 'berhasil'
+        ];
+        echo json_encode($response);
     }
 
     public function orderSuccess():RedirectResponse

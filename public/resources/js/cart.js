@@ -159,7 +159,7 @@ function updateCartSummary() {
 
 document.getElementById('clear-cart-btn').addEventListener('click', function () {
     const userId = this.dataset.user;
-
+    
     Swal.fire({
         title: 'Hapus semua?',
         text: 'Seluruh isi keranjang akan terhapus. Yakin?',

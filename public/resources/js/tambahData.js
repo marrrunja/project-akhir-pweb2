@@ -9,6 +9,7 @@ function hilangkanElementPesan()
 {
 	pesan.lastElementChild.remove();
 }
+
 function scrollByLines(lines = 1) {
     const lineHeight = parseInt(getComputedStyle(document.body).lineHeight, 10) || 20;
     window.scrollBy({
@@ -16,7 +17,6 @@ function scrollByLines(lines = 1) {
         behavior: 'smooth'
     });
 }
-
 
 function tambahInputVariant()
 {
@@ -54,6 +54,7 @@ function tambahInputVariant()
 	container.append(div);
 	scrollByLines(1000);
 }
+
 function kurangiVariant()
 {
 	if(i === 1) return;

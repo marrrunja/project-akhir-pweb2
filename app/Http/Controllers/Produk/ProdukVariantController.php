@@ -105,8 +105,8 @@ class ProdukVariantController extends Controller
             $fotoBaru->storeAs('image-variant', $originalName, 'public');
         }
 
-
         $variant = DB::table('produk_variants')->where('id', $id);
+        
         $updateVariant = $variant->update(['variant' => $varian,'harga' => $harga, 'foto' => $originalName]);
 
         $updateStok = DB::table('stoks')->where('variant_id', $id)->update([

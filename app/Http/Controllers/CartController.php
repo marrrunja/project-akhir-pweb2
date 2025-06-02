@@ -10,6 +10,13 @@ use App\Models\Produk\ProdukVariant;
 
 class CartController extends Controller
 {
+    private CartService $cartService;
+    
+    public function __construct(CartService $cartService)
+    {
+        $this->cartService = $cartService;
+    }
+    
     public function index(){
         $carts = Cart::all();
 
@@ -21,12 +28,6 @@ class CartController extends Controller
                     ->where('pembeli_id',$request->session()->get('user_id'))
                     ->get();
         return view('cart.index', compact('carts'));
-    }
-    private CartService $cartService;
-    
-    public function __construct(CartService $cartService)
-    {
-        $this->cartService = $cartService;
     }
 
     //method masuk keranjang
@@ -89,13 +90,10 @@ class CartController extends Controller
                 'id' => 'required|exists:carts,id',
                 'qty' => 'required|integer|min:1',
         ]);
-
-            $cart = Cart::findOrFail($request->id);
-            $newQty = max(1, min($request->qty, $cart->variant->stok->jumlah));
-
-            $cart->qty = $newQty;
-            $cart->save();
-
+        $cart = Cart::findOrFail($request->id);
+        $newQty = max(1, min($request->qty, $cart->variant->stok->jumlah));
+        $cart->qty = $newQty;
+        $cart->save();
         return response()->json(['success'=> true, 'qty' => $request->qty, 'id'=>$request ->id]);
     }
 
@@ -116,12 +114,12 @@ class CartController extends Controller
     }
     
     public function clearCart(Request $request): JsonResponse
-{
-    $userId = $request->userId;
-    Cart::where('pembeli_id', $userId)->delete();
+    {
+        $userId = $request->userId;
+        Cart::where('pembeli_id', $userId)->delete();
 
-    return response()->json(['success' => true]);
-}
+        return response()->json(['success' => true]);
+    }
 
 
 

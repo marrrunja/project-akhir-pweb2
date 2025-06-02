@@ -35,7 +35,7 @@
 <section class="pt-5 pb-5">	
 	<div class="container">
 		<h1 class="mb-3">Halaman Produk Variant</h1>
-		<div class="row">
+		<div class="row gy-3 gy-md-0">
 			@foreach($variants as $variant)
 			<div class="col-12 col-md-6 col-xl-4">
 				<form method="post" action="{{ route('transaksi.order', $variant->id) }}">
@@ -127,7 +127,7 @@
 
 <!-- Main JS File -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('resources/js/order.js') }}"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script> -->
 @endpush
 

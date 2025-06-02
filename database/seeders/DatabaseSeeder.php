@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            KategoriSeeder::class,
+            // KategoriSeeder::class,
             // StokSeeder::class
         ];
 

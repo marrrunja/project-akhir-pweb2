@@ -14,10 +14,11 @@ class RegisterController extends Controller
     {
         $this->userService = $userService;
     }
-
+    
     public function index():Response {
         return response()->view('auth.register-view');
     }
+
     public function doRegister(Request $request):Response{
         $validatedData = $request->validate([
             'username' => ['required', 'max:20'],

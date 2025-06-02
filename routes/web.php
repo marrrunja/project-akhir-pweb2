@@ -34,7 +34,7 @@ Route::controller(RegisterController::class)->prefix('/register')->group(functio
 
 // cart
 Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
-Route::get('/cart', [CartController::class, 'index'])->middleware(SessionHasNotMiddleware::class)->name('cart.index');
+Route::get('/cart', [CartController::class, 'cart'])->middleware(SessionHasNotMiddleware::class)->name('cart.index');
 Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/delete', [CartController::class, 'destroy'])->name('cart.delete');
 Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
