@@ -14,7 +14,7 @@ const total = parseInt(array.filter((item) => item != '.')
 async function sendData()
 {
     const data = {
-        jumlah : [jumlah],
+        jumlah : jumlah,
         totalHarga : total,
         id:btnBayar.dataset.id,
         harga:hargaSatuan

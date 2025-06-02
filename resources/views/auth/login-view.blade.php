@@ -41,10 +41,7 @@
 </head>
 
 <body class="login-page">
-
     <header id="header" class="header position-relative">
-
-
         <!-- Main Header -->
         <div class="main-header">
             <div class="container-fluid container-xl">
@@ -59,8 +56,6 @@
                 </div>
             </div>
         </div>
-
-
         <!-- Announcement Bar -->
         <div class="announcement-bar py-2">
             <div class="container-fluid container-xl">

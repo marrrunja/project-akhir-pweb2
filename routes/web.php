@@ -62,7 +62,7 @@ Route::controller(TransaksiController::class)->prefix('/transaksi')->group(funct
     Route::post('/checkout', 'makeOrder');
     Route::get('/checkout/success', 'orderSuccess');
     Route::get('/checkout/fail', 'orderFail');
-    Route::post('/checkout/cart');
+    Route::post('/checkout/cart', 'makeOrders');
 });
 
 // controller admin

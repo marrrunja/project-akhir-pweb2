@@ -52,7 +52,6 @@
                 <h1 class="mt-2 mb-2">Uupsss... produk yang dicari tidak ada</h1>  
             </div>
             @endif
-
         </div>
     </div>
 </section>

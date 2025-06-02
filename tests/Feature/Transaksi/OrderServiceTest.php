@@ -31,4 +31,29 @@ class OrderServiceTest extends TestCase
     {
         self::assertEquals($this->orderService->hello(), "Hello order service");
     }
+    // public function testAddOrdersSuccess():void
+    // {
+    //     $data = [
+    //         'userId' => 4,
+    //         'totalHarga' => 13000
+    //     ];
+    //     $error = null;
+    //    self::assertTrue($this->orderService->addOrders($data, $error));
+    // }
+    public function testAddOrdersFailedEmptyData():void
+    {
+        $data = [];
+        $error = null;
+        self::assertFalse($this->orderService->addOrders($data, $error));
+    }
+    public function testAddOrdersFailedWithException():void
+    {
+        $data = [
+            'userId' => 90,
+            'totalHarga' => 1
+        ];
+        $error = null;
+        self::assertFalse($this->orderService->addOrders($data, $error));
+        dump($error);
+    }
 }

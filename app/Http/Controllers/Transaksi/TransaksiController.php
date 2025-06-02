@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Transaksi;
 
+use App\Models\Cart;
 use App\Models\Produk\Stok;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Transaksi\Order;
+use Illuminate\Http\JsonResponse;
 use App\Models\Transaksi\OrderItem;
 use App\Http\Controllers\Controller;
 use App\Models\Produk\ProdukVariant;
@@ -18,10 +20,7 @@ class TransaksiController extends Controller
     public function __construct(OrderService $orderService){
         $this->orderService = $orderService;
     }
-    public function addTransaction()
-    {
-        
-    }
+    
     public function index(Request $request,$id):Response|RedirectResponse
     {
         $validate = [
@@ -126,6 +125,22 @@ class TransaksiController extends Controller
         echo json_encode($response);
     }
 
+    public function makeOrders(Request $request):JsonResponse
+    {
+        $userId = $request->userId;
+        $totalHarga = $request->totalHarga;
+        $data = [
+            'userId' => $userId,
+            'totalHarga' => $totalHarga
+        ];
+        $error = null;
+       if($this->orderService->addOrders($data, $error)){
+        return redirect('/cart')->with('status', 'order berhasil');
+       }else{
+        return redirect('/cart')->with('status', $error);
+       }
+    }
+
     public function orderSuccess():RedirectResponse
     {
         return redirect('/produk/index')->with('status', 'Berhasil order!!');
@@ -134,5 +149,6 @@ class TransaksiController extends Controller
     {
         $pesan = $request->pesan;
         return redirect('/produk/index')->with('status', 'Gagal memesan, ' . $pesan);
+        
     }
 }
