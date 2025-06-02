@@ -57,6 +57,8 @@ class TransaksiController extends Controller
         $hargaSatuan = (int)$request->harga;
         $totalHarga = (int)$request->totalHarga;
         $variantId = (int)$request->id;
+
+        // masukkan semua variabel ke dalam array data
         $data = [
             'userId' => $userId,
             'jumlah' => $jumlah,
@@ -67,6 +69,8 @@ class TransaksiController extends Controller
         ];
         $error = null;
         $linkBayar = null;
+
+        // gunakan dependency injection order service
         if($this->orderService->addOrder($data, $error, $linkBayar)){
             $data = [
                 'status' => 'berhasil',
@@ -77,10 +81,9 @@ class TransaksiController extends Controller
             return response()->json([
                 'pesan' => $error,
                 'status' => 'gagal',
-                'totalHarga' => $totalHarga,
-                'hargaSatuan' => $hargaSatuan
             ]);
         }
+        
         return response()->json([
             'pesan' => 'Internal server error'
         ], 500);

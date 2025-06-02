@@ -31,6 +31,38 @@ class OrderService
 			DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$cart->qty, $cart->variant_id]);
 		}
 	}
+	private function initMidtrans(array $data, $orderId):array
+	{
+		$params = [
+            'transaction_details' => [
+                'order_id' => $orderId,
+                'gross_amount' => $data['totalHarga']
+            ],
+            'item_details' => [
+                [
+                    'price' => $data['hargaSatuan'],
+                    'quantity' => $data['jumlah'],
+                    'name' => $orderId
+                ],
+            ],
+            'customer_details'=> [
+                'first_name' => $data['username'],
+                'email' => 'adillasnack@gmail.com'
+            ],
+            'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart']
+        ];
+        $url = 'https://app.sandbox.midtrans.com/snap/v1/transactions';
+
+        $auth = base64_encode(env('MIDTRANS_SERVER_KEY'));
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'Authorization' => "Basic $auth"
+        ])->post($url, $params);
+        $response = json_decode($response->body(), true);
+
+        return $response;
+	}
 
 	public function addOrder(array $data, ?string &$error = null, ?string &$linkBayar = null):bool
 	{
@@ -61,38 +93,8 @@ class OrderService
 	        $lastInsertOrderItemsId = DB::getPdo()->lastInsertId();
 	        DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$data['jumlah'], $data['variantId']]);
 
-         	$params = [
-                'transaction_details' => [
-                    'order_id' => $orderId,
-                    'gross_amount' => $data['totalHarga']
-                ],
-                'item_details' => [
-                    [
-                        'price' => $data['hargaSatuan'],
-                        'quantity' => $data['jumlah'],
-                        'name' => $orderId
-                    ],
-                ],
-                'customer_details'=> [
-                    'first_name' => $data['username'],
-                    'email' => 'adillasnack@gmail.com'
-                ],
-                'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart']
-            ];
-            $url = 'https://app.sandbox.midtrans.com/snap/v1/transactions';
-
-            $auth = base64_encode(env('MIDTRANS_SERVER_KEY'));
-            $response = Http::withHeaders([
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json',
-                'Authorization' => "Basic $auth"
-            ])->post($url, $params);
-            $response = json_decode($response->body());
-            if(!isset($response->redirect_url)){
-            	$error = $response;
-            	return false;
-            }
-            $linkBayar = $response->redirect_url;
+            $response = $this->initMidtrans($data, $orderId);
+            $linkBayar = $response['redirect_url'];
 
             DB::table('table_orders')->where('id', '=', $orderInsertId)->update([
             	'order_id' => $orderId,
