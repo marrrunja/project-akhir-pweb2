@@ -82,7 +82,7 @@
                                     @foreach(\App\Models\Cart::getAllCartWithUserId(Session::get('user_id')) as $item)
                                     <div class="cart-item">
                                         <div class="cart-item-image">
-                                            <img src="assets/img/product/product-1.webp" alt="Product"
+                                            <img src="{{ asset('storage/image-variant/'.$item->variant->foto) }}" alt="Product"
                                                 class="img-fluid">
                                         </div>
                                         <div class="cart-item-content">
@@ -134,11 +134,7 @@
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="/" class="{{ request()->is('/') ? 'active':''}}">Home</a></li>
-<<<<<<< HEAD
                     <li><a href="/produk/index" class="{{ request()->is('produk/index') ? 'active':''}}">Produk</a></li>
-=======
-                    <li><a href="/produk/index" class="{{ request()->is('produk/index') ? 'active':''}}">Produk</a><//li>
->>>>>>> fc8b321f1ae64526649ffce17122bc92229dc8ea
                     <li><a href="#">About</a></li>
                     <li><a href="checkout.html">History Pembelian</a></li>
                 </ul>

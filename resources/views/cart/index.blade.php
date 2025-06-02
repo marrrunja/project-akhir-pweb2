@@ -156,7 +156,7 @@
 
               <div class="summary-total">
                 <span class="summary-label">Total</span>
-                <span class="summary-value">Rp{{ number_format($carts->sum(fn($item) => ($item->variant->harga ?? 0) * $item->qty)) }} </span>
+                <span class="summary-value" id="summary-value">Rp{{ number_format($carts->sum(fn($item) => ($item->variant->harga ?? 0) * $item->qty)) }} </span>
               </div>
 
               <div class="checkout-button">

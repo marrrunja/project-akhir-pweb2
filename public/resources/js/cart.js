@@ -203,9 +203,14 @@ const btnCheckout = document.getElementById("btnCheckout");
 async function checkout(e)
 {
     e.preventDefault();
+    let totalHarga = Array.from(document.getElementById('summary-value').innerText);
+    totalHarga = parseInt(totalHarga.filter(total => total !== "R" && total != "," && total !== "p")
+                            .reduce((str, item) => str += item));
     let data = {
-        userId:btnCheckout.dataset.id
+        userId:btnCheckout.dataset.id,
+        totalHarga:totalHarga
     }
+    console.log(data);
     const response = await fetch(appurl + "/checkout/cart",{
         method:"POST",
         headers: {

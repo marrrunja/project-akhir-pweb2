@@ -12,23 +12,23 @@ class CartSeeder extends Seeder
      */
     public function run(): void
     {
-            $data = [
-            [            
-                'pembeli_id' => 1,
-                'variant_id' => 3,
-                'qty' => 1
-            ],
-            $data = [            
-                'pembeli_id' => 1,
-                'variant_id' => 5,
-                'qty' => 1
-            ],
-            $data = [            
-                'pembeli_id' => 1,
-                'variant_id' => 6,
-                'qty' => 1
-            ]    
-            ];
-            Cart:insert($data);
+            // $data = [
+            // [            
+            //     'pembeli_id' => 1,
+            //     'variant_id' => 3,
+            //     'qty' => 1
+            // ],
+            // $data = [            
+            //     'pembeli_id' => 1,
+            //     'variant_id' => 5,
+            //     'qty' => 1
+            // ],
+            // $data = [            
+            //     'pembeli_id' => 1,
+            //     'variant_id' => 6,
+            //     'qty' => 1
+            // ]    
+            // ];
+            //Cart:insert($data);
     }
 }
