@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Transaksi;
 
+use App\Models\Cart;
 use App\Models\Produk\Stok;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Transaksi\Order;
+use Illuminate\Http\JsonResponse;
 use App\Models\Transaksi\OrderItem;
 use App\Http\Controllers\Controller;
 use App\Models\Produk\ProdukVariant;
@@ -18,10 +20,7 @@ class TransaksiController extends Controller
     public function __construct(OrderService $orderService){
         $this->orderService = $orderService;
     }
-    public function addTransaction()
-    {
-        
-    }
+    
     public function index(Request $request,$id):Response|RedirectResponse
     {
         $validate = [
@@ -36,7 +35,7 @@ class TransaksiController extends Controller
         $jumlah = $request->jumlah;
         $userId = $request->session()->get('user_id');
         $produkVariant = ProdukVariant::where('id', '=', $id)->first();
-
+        
         if($produkVariant){
 
             $data = [
@@ -50,83 +49,60 @@ class TransaksiController extends Controller
             return redirect()->back();
         }
     }
-  public function makeOrder(Request $request)
+    public function makeOrder(Request $request):JsonResponse
     {
-        $userId = $request->session()->get('user_id');
-        $jumlah = $request->jumlah;
-        $hargaSatuan = $request->harga;
-        $totalHarga = $request->totalHarga;
-        $variantId = $request->id;
-        $tanggalSekarang = now()->format("Y-m-d");
+        $userId = (int)$request->session()->get('user_id');
+        $username = $request->session()->get('username');
+        $jumlah = (int)$request->jumlah;
+        $hargaSatuan = (int)$request->harga;
+        $totalHarga = (int)$request->totalHarga;
+        $variantId = (int)$request->id;
 
-        try {
-            $stok = Stok::where('variant_id', $variantId)->firstOrFail();
+        // masukkan semua variabel ke dalam array data
+        $data = [
+            'userId' => $userId,
+            'jumlah' => $jumlah,
+            'hargaSatuan' =>  $hargaSatuan,
+            'totalHarga' => $totalHarga,
+            'variantId' => $variantId,
+            'username' => $username
+        ];
+        $error = null;
+        $linkBayar = null;
 
-            if ($stok->jumlah === 0 || $jumlah > $stok->jumlah) {
-                return response()->json([
-                    'pesan' => 'Stok belum mencukupi, silahkan kembali lagi ketika re stok',
-                    'status' => 'gagal'
-                ]);
-            }
-
-            // Simpan order baru
-            $order = new Order();
-            $order->tanggal_transaksi = $tanggalSekarang;
-            $order->pembeli_id = $userId;
-            $order->order_id = null; // akan diupdate setelah insert
-            $order->total_harga = $totalHarga;
-            $order->save();
-
-            // generate id untuk order item, dengan last id insert pada order
-            $orderInsertId = $order->id;
-            $orderId = 'INV-' .now() .'-'.$orderInsertId;
-            $order->order_id = $orderId;
-            $order->save();
-
-            // Buat item order
-            $orderItem = new OrderItem();
-            $orderItem->variant_id = $variantId;
-            $orderItem->order_id = $orderInsertId;
-            $orderItem->jumlah = $jumlah;
-            $orderItem->total_harga = $totalHarga;
-            $orderItem->save();
-
-            // Update stok
-            $jumlahBaru = $stok->jumlah - $jumlah;
-            $stok->update(['jumlah' => $jumlahBaru]);
-
-            // Response sukses
-            return response()->json([
-                'pesan' => 'Berhasil',
+        // gunakan dependency injection order service
+        if($this->orderService->addOrder($data, $error, $linkBayar)){
+            $data = [
                 'status' => 'berhasil',
-                'order_id' => $orderId
-            ]);
-
-            // $params = [
-            //     'transaction_details' => [
-            //         'order_id' => $orderId,
-            //         'gross_amount' => $totalHarga
-            //     ],
-            //     'item_details' => [
-            //         [
-            //             'price' => $harga,
-            //             'quantity' => $jumlah,
-            //             'name' => $orderId
-            //         ],
-            //     ],
-            //     'customer_details'=> [
-            //         'first_name' => $request->session()->get('username'),
-            //         'email' => 'emailku@gmail.com'
-            //     ],
-            //     'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart']
-            // ];
-
-            $response = [
-                'pesan' => "Berhasil",
-                'status' => 'berhasil'
+                'redirect_url' => $linkBayar
             ];
-            echo json_encode($response);
+            return response()->json($data);
+        }else{
+            return response()->json([
+                'pesan' => $error,
+                'status' => 'gagal',
+            ]);
         }
+        
+        return response()->json([
+            'pesan' => 'Internal server error'
+        ], 500);
+    }
+
+    public function makeOrders(Request $request)
+    {
+        $userId = $request->userId;
+        $totalHarga = $request->totalHarga;
+        $data = [
+            'userId' => $userId,
+            'totalHarga' => $totalHarga
+        ];
+        $error = null;
+       if($this->orderService->addOrders($data, $error)){
+        return redirect('/cart')->with('status', 'order berhasil');
+       }else{
+        return redirect('/cart')->with('status', $error);
+       }
     }
 
     public function orderSuccess():RedirectResponse

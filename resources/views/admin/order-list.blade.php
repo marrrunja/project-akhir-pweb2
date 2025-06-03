@@ -8,13 +8,13 @@
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="{{ asset('resources/css/admin.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ env('TYPE_URL') == 'http' ? asset('resources/css/admin.css') : secure_asset('resources/css/admin.css') }}">
+
 @endpush
 
 
 @section('body')
 <section class="pt-5 pb-5">
-    <a href="{{ env('APP_URL') }}:8000">Ke halaman utama</a>
     <div class="container">
         <h1>Daftar Order User</h1>
         <div class="row mb-3 mt-3">
@@ -61,5 +61,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous">
 </script>
-<script src="{{ asset('resources/js/api.js') }}"></script>
+<script src="{{ env('TYPE_URL') == 'http' ? asset('resources/js/api.js') : secure_asset('resources/js/api.js') }}"></script>
 @endpush

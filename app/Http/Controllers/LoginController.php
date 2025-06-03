@@ -32,7 +32,7 @@ class LoginController extends Controller
             $request->session()->put('username', $username);
             $request->session()->put('user_id', $id);
             return redirect('/');
-        }
+    }
         return redirect()->back()->with('status', $error);
     }
     public function logout(Request $request): RedirectResponse

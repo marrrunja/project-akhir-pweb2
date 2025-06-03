@@ -142,9 +142,9 @@
                                 @endforeach
 
                                 <div class="form-group mb-3">
-                                    <label for="email">Email Address</label>
-                                    <input type="email" class="form-control" name="email" id="email" required=""
-                                        placeholder="you@example.com">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" name="username" id="username"
+                                        placeholder="Contoh marr123">
                                 </div>
 
                                 <div class="form-group mb-3">

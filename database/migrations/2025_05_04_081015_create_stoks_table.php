@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->integer('jumlah');
             $table->foreignId('variant_id');
-            $table->foreign('variant_id', 'variant_id_fk')->references('id')->on('produk_variants');
+            $table->foreign('variant_id', 'variant_id_fk')->references('id')->on('produk_variants')
+                    ->onDelete('cascade');
             $table->timestamps();
         });
     }

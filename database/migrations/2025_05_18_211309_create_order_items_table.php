@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
               $table->foreignId("variant_id", "variant_order_item_fk")
                 ->references('id')
-                ->on('produk_variants');
+                ->on('produk_variants')->onDelete('cascade');
             $table->foreignId("order_id", "order_order_item_fk")
                 ->references('id')
-                ->on('table_orders');
+                ->on('table_orders')->onDelete('cascade');
             $table->integer('jumlah');
             $table->double('total_harga');
             $table->timestamps();

@@ -11,8 +11,8 @@ class Cart extends Model
     use HasFactory;
 
     protected $fillable = ['pembeli_id', 'variant_id', 'qty'];
-    protected $with     = ['variant', 'pembeli'];
-
+    protected $with = ['variant', 'pembeli'];
+    // update, localhost/user/1{}
     public function variant()
     {
         return $this->belongsTo(ProdukVariant::class);

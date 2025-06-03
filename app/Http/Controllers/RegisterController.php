@@ -13,13 +13,12 @@ class RegisterController extends Controller
     {
         $this->userService = $userService;
     }
-
-    public function index(): Response
-    {
+    
+    public function index():Response {
         return response()->view('auth.register-view');
     }
-    public function doRegister(Request $request): Response
-    {
+
+    public function doRegister(Request $request):Response{
         $validatedData = $request->validate([
             'username'  => ['required', 'max:20'],
             'password'  => ['required'],

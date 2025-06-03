@@ -79,7 +79,7 @@ class ProdukVariantController extends Controller
             return redirect()->back()->with($flashMessage);
         }
     }
-    public function doEdit(Request $request): RedirectResponse
+    public function doEdit(Request $request):RedirectResponse
     {
 
         // ambil semua request

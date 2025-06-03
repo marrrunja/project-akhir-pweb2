@@ -92,7 +92,10 @@ async function initCartHandler() {
                     "Content-Type": "application/json",
                     'X-CSRF-TOKEN': token
                 },
-                body: JSON.stringify({ qty: newQty, id: cartId })
+                body: JSON.stringify({
+                    qty: newQty,
+                    id: cartId
+                })
             });
             const data = await res.json();
             console.log(data);
@@ -105,8 +108,7 @@ async function initCartHandler() {
 
                 updateItemTotal(button, harga);
                 updateCartSummary();
-            }
-            else {
+            } else {
                 Swal.fire('Gagal!', 'Gagal mengubah kuantitas. Coba lagi ya!', 'warning');
             }
         } catch (err) {
@@ -177,7 +179,9 @@ document.getElementById('clear-cart-btn').addEventListener('click', function () 
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': token
                     },
-                    body: JSON.stringify({ userId: userId })
+                    body: JSON.stringify({
+                        userId: userId
+                    })
                 });
 
                 const data = await response.json();
@@ -199,5 +203,41 @@ document.getElementById('clear-cart-btn').addEventListener('click', function () 
     });
 });
 
+const btnCheckout = document.getElementById("btnCheckout");
+
+async function checkout(e) {
+    e.preventDefault();
+    let totalHarga = Array.from(document.getElementById('summary-value').innerText);
+    totalHarga = parseInt(totalHarga.filter(total => total !== "R" && total != "," && total !== "p")
+        .reduce((str, item) => str += item));
+
+    let data = {
+        userId: btnCheckout.dataset.id,
+        totalHarga: totalHarga
+    };
+
+    try {
+        const response = await fetch(appurl + "/transaksi/checkout/cart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify(data)
+        });
+
+        if(!response.ok) throw new Error("Error Http " + response.status)
+
+        if (response.status === 200) {
+            const responseServer = await response.json();
+            
+        }
+
+    } catch (error) {
+        console.log("Eror fetching data "+error);
+    }
 
 
+
+}
+btnCheckout.addEventListener("click", checkout);

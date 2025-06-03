@@ -41,5 +41,13 @@ class PaymentController extends Controller
         ])->post($url, $params);
         $response = json_decode($response->body());
         return redirect($response->redirect_url);
+            $auth = base64_encode(env('MIDTRANS_SERVER_KEY'));
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'Authorization' => "Basic $auth"
+            ])->post($url, $params);
+            $response = json_decode($response->body(), true);
+           return $response;
     }
 }
