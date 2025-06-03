@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use App\Models\Produk\Stok;
 use Illuminate\Support\Collection;
+use Carbon\Carbon;
 class OrderService
 {
 
@@ -14,6 +15,8 @@ class OrderService
         	'pembeli_id' => $pembeliId,
         	'is_dibayar' => false,
         	'total_harga' => $totalHarga,
+        	'created_at' => Carbon::now(),
+        	'updated_at' => Carbon::now()
         ]);
         $orderInsertId = DB::getPdo()->lastInsertId();
         $orderId = 'INV-'.now()->format('Y-m-d') . '-' . $orderInsertId;
@@ -26,7 +29,9 @@ class OrderService
 				'variant_id' => $cart->variant_id,
 				'order_id' => $orderInsertId,
 				'jumlah' => $cart->qty,
-				'total_harga' => $cart->qty * $cart->harga
+				'total_harga' => $cart->qty * $cart->harga,
+				'created_at' => Carbon::now(),
+				'updated_at' => Carbon::now()
 			]);
 			DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$cart->qty, $cart->variant_id]);
 		}
@@ -88,7 +93,9 @@ class OrderService
 	        	'variant_id' => $data['variantId'],
 	        	'order_id' =>  $orderInsertId,
 	        	'jumlah' => $data['jumlah'],
-	        	'total_harga' => $data['totalHarga']
+	        	'total_harga' => $data['totalHarga'],
+	        	'created_at' => Carbon::now(),
+	        	'created_at' => Carbon::now()
 	        ]);
 	        $lastInsertOrderItemsId = DB::getPdo()->lastInsertId();
 	        DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$data['jumlah'], $data['variantId']]);

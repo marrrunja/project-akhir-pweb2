@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Produk\ProdukVariant;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
-
+use Carbon\Carbon;
 class ProdukController extends Controller
 {
     public function index(): Response
@@ -75,7 +75,9 @@ class ProdukController extends Controller
                 'nama' => $namaProduk,
                 'kategori_id' => $kategori,
                 'detail' => $deskripsi,
-                'foto' => basename($namaFoto)
+                'foto' => basename($namaFoto),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ]);
 
             $lastInsertIdProduk = DB::getPdo()->lastInsertId();
@@ -88,7 +90,9 @@ class ProdukController extends Controller
                     'variant' => $request->variant[$i],
                     'produk_id' => $lastInsertIdProduk,
                     'harga' => $request->harga[$i],
-                    'foto' => $originalName
+                    'foto' => $originalName,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
                 ]);
                 if($insertProdukVariant > 0){
                     $gambar[$i]->storeAs('image-variant', $originalName, 'public');
@@ -96,7 +100,9 @@ class ProdukController extends Controller
                 $lastInsertProdukVariantId = DB::getPdo()->lastInsertId();
                 DB::table('stoks')->insert([
                     'jumlah' => $request->stok[$i],
-                    'variant_id' => $lastInsertProdukVariantId
+                    'variant_id' => $lastInsertProdukVariantId,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
                 ]);
             }
             DB::commit();
@@ -143,14 +149,15 @@ class ProdukController extends Controller
         }
         // update data
         $produk = DB::table('products')->where('id', '=', $id);
-        $insert = $produk->update([
+        $update = $produk->update([
             'nama' => $nama, 
             'detail' => $detail, 
             'kategori_id' => $kategori,
-            'foto' => $originalName
+            'foto' => $originalName,
+            'updated_at' => Carbon::now()
         ]);
 
-        if($insert > 0)
+        if($update > 0)
         {
             $flashMessage = [
                 'status' => 'berhasil mengupdate data',

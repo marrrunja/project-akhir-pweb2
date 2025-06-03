@@ -10,9 +10,17 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Produk\ProdukVariant;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class ProdukVariantController extends Controller
 {
+    private ProdukVariantService $produkVariantService;
+
+    public function __construct(ProdukVariantService $produkVariantService)
+    {
+        $this->produkVariantService = $produkVariantService;
+    }
+
     public function produkVariant(Request $request):Response|RedirectResponse
     {
         $id = $request->id;
@@ -43,13 +51,17 @@ class ProdukVariantController extends Controller
         $harga = $request->harga;
         $gambar = $request->file('gambar');
         $originalName = Str::replace(' ', '' ,Str::uuid().'-'.$produkId. '-'.$gambar->getClientOriginalName());
+
         
         $data = [
             'variant' => $variant,
             'produk_id' => $produkId,
             'harga' => $harga,
-            'foto' => $originalName
+            'foto' => $originalName,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
         ];
+
         DB::beginTransaction();
         try{
             $insertProdukVariant = DB::table('produk_variants')->insert($data);
@@ -59,7 +71,9 @@ class ProdukVariantController extends Controller
             $lastInsertProdukVariantId = DB::getPdo()->lastInsertId();
             $data2 = [
                 'jumlah' => $jumlah,
-                'variant_id' => $lastInsertProdukVariantId
+                'variant_id' => $lastInsertProdukVariantId,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ];
 
             DB::table('stoks')->insert($data2);
@@ -107,10 +121,11 @@ class ProdukVariantController extends Controller
 
         $variant = DB::table('produk_variants')->where('id', $id);
         
-        $updateVariant = $variant->update(['variant' => $varian,'harga' => $harga, 'foto' => $originalName]);
+        $updateVariant = $variant->update(['variant' => $varian,'harga' => $harga, 'foto' => $originalName, 'updated_at' => Carbon::now()]);
 
         $updateStok = DB::table('stoks')->where('variant_id', $id)->update([
-            'jumlah' => $jumlah
+            'jumlah' => $jumlah,
+            'updated_at' => Carbon::now()
         ]);
         
         $status = null;
