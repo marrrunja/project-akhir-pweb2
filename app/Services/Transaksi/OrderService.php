@@ -102,7 +102,7 @@ class OrderService
 	        	'jumlah' => $data['jumlah'],
 	        	'total_harga' => $data['totalHarga'],
 	        	'created_at' => Carbon::now(),
-	        	'created_at' => Carbon::now()
+	        	'updated_at' => Carbon::now()
 	        ]);
 	        $lastInsertOrderItemsId = DB::getPdo()->lastInsertId();
 	        DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$data['jumlah'], $data['variantId']]);
@@ -147,6 +147,11 @@ class OrderService
 			->join('produk_variants', 'carts.variant_id', '=', 'produk_variants.id')
 			->select('produk_variants.harga', 'carts.*')
 			->where('pembeli_id', '=', $userId)->get();
+
+			if(count($carts) === 0){
+				$error = 'Cart masih kosong';
+				return false;
+			}
 
 			$orderInsertId = null;
         	$orderId = null;
