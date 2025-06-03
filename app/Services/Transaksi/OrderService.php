@@ -94,11 +94,16 @@ class OrderService
 	        DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$data['jumlah'], $data['variantId']]);
 
             $response = $this->initMidtrans($data, $orderId);
+            if (!isset($response['redirect_url'])) {
+			    DB::rollback();
+			    $error = $response['status_message'] ?? 'Gagal membuat transaksi Midtrans';
+			    return false;
+			}
             $linkBayar = $response['redirect_url'];
 
             DB::table('table_orders')->where('id', '=', $orderInsertId)->update([
             	'order_id' => $orderId,
-            	'link_bayar' => $response->redirect_url ?? null
+            	'link_bayar' => $response['redirect_url'] ?? null
             ]);
         	DB::commit();
         	$isSuccess = true;

@@ -40,7 +40,7 @@ class PaymentController extends Controller
                 'Content-Type' => 'application/json',
                 'Authorization' => "Basic $auth"
             ])->post($url, $params);
-            $response = json_decode($response->body());
-            return redirect($response->redirect_url);
+            $response = json_decode($response->body(), true);
+           return $response;
     }
 }

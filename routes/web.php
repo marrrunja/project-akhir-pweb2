@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\ProdukVariantApiController;
 use App\Http\Controllers\Produk\ProdukVariantController;
 
 Route::get('/', [UserController::class, 'index']);
+Route::get('/profil', [UserController::class, 'profil'])->middleware(SessionHasNotMiddleware::class);
 
 Route::controller(LoginController::class)->prefix('/login')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasMiddleware::class);
@@ -96,17 +97,6 @@ Route::get('/gaada', function(){
     return view('index');
 });
 
-// Route::get('/cart/gaada',function(){
-//     $carts = Cart::with(['variant.produk'])
-//         ->where('pembeli_id', session('user_id'))
-//         ->get();
-//     return view('cart.nothing', compact('carts'));
-// });
-
-// route nampilin halaman profil user
-Route::get('/profil', function () {
-    return view('profil');
-});
 
 Route::get('/detail', function () {
     return view('detail');
