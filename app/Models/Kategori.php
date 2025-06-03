@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use App\Models\Product;
@@ -10,7 +9,8 @@ class Kategori extends Model
 {
     public $incrementing = false;
 
-    public function produk():HasMany{
+    public function produk(): HasMany
+    {
         return $this->hasMany(Product::class);
     }
 }

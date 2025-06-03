@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Providers;
 
 use App\Services\Produk\ProdukService;
 use App\Services\Produk\ProdukVariantService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider;
 
 class ProdukServiceProvider extends ServiceProvider implements DeferrableProvider
 {

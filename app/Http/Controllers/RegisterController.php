@@ -1,9 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\UserService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,22 +20,24 @@ class RegisterController extends Controller
 
     public function doRegister(Request $request):Response{
         $validatedData = $request->validate([
-            'username' => ['required', 'max:20'],
-            'password' => ['required'],
+            'username'  => ['required', 'max:20'],
+            'password'  => ['required'],
             'kecamatan' => ['required'],
-            'desa' => ['required'],
-            'alamat' => ['required', 'max:255']
+            'desa'      => ['required'],
+            'alamat'    => ['required', 'max:255'],
         ]);
-        if($validatedData){
-            $error = null;
+        if ($validatedData) {
+            $error    = null;
             $username = $request->username;
             $password = Hash::make($request->password);
-            $desa = $request->desa;
-            $jalan = $request->alamat;
-            if($this->userService->register($username, $password, $desa, $jalan, $error))
+            $desa     = $request->desa;
+            $jalan    = $request->alamat;
+            if ($this->userService->register($username, $password, $desa, $jalan, $error)) {
                 return response("Berhasil register");
-            else
+            } else {
                 return response($error);
+            }
+
         }
         return response("Gagal");
     }

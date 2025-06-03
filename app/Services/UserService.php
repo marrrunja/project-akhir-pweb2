@@ -1,22 +1,22 @@
 <?php
-
 namespace App\Services;
 
 use App\Models\Pembeli;
 
-class UserService{
-    public function register(string $username, string $password, string $alamat,string $jalan, ?string &$error = null):bool
+class UserService
+{
+    public function register(string $username, string $password, string $alamat, string $jalan,  ? string &$error = null) : bool
     {
         $user = Pembeli::where('username', '=', $username)->first();
-        if($user){
+        if ($user) {
             $error = "Username sudah ada";
             return false;
         }
         Pembeli::insert([
-            'username' => $username,
-            'password' => $password,
+            'username'  => $username,
+            'password'  => $password,
             'kode_desa' => $alamat,
-            'jalan' => $jalan
+            'jalan'     => $jalan,
         ]);
         return true;
     }

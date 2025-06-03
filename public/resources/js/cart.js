@@ -69,7 +69,7 @@ async function removeItemCart(e) {
     }
 }
 
-cartItem.addEventListener("click", removeItemCart);
+document.addEventListener("click", removeItemCart);
 
 
 document.addEventListener('DOMContentLoaded', async () => {

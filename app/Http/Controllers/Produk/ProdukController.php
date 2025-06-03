@@ -1,100 +1,105 @@
 <?php
-
 namespace App\Http\Controllers\Produk;
 
+use App\Http\Controllers\Controller;
+use App\Models\Produk\Product;
+use App\Models\Produk\ProdukVariant;
 use App\Models\Produk\Stok;
-use Illuminate\Support\Str;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Models\Produk\Product;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\Models\Produk\ProdukVariant;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+
+
 class ProdukController extends Controller
 {
     public function index(): Response
     {
         //DB::raw('SUM(price) as total_sales')
         $produk = DB::table('products')->get();
-        $data = [
-            'products' => $produk
+        $data   = [
+            'products' => $produk,
         ];
         return response()->view('produk.index', $data);
     }
-    public function produkVariant(Request $request): Response|RedirectResponse
+    public function produkVariant(Request $request): Response | RedirectResponse
     {
-        $id = $request->id;
+        $id       = $request->id;
         $variants = ProdukVariant::where('produk_id', $id)->get();
         if ($variants) {
             $data = [
-                'variants' => $variants
+                'variants' => $variants,
             ];
             return response()->view('produk.variant-produk', $data);
-        } else
+        } else {
             return redirect('/produk/index');
-    }
-  
+        }
 
+    }
 
     // method untuk menambahkan produk baru
     public function addProduk(Request $request)
     {
         $validate = [
             'namaProduk' => ['required'],
-            'kategori' => ['required'],
-            'deskripsi' => ['required'],
-            'foto' => ['required','mimes:jpeg,jpg,png', 'max:2048'],
-            'gambar.*' =>  'file|mimes:jpg,jpeg,png|max:2048',
+            'kategori'   => ['required'],
+            'deskripsi'  => ['required'],
+            'foto'       => ['required', 'mimes:jpeg,jpg,png', 'max:2048'],
+            'gambar.*'   => 'file|mimes:jpg,jpeg,png|max:2048',
         ];
         $pesanValidasi = [
             'namaProduk.required' => 'Nama produk tidak boleh kosong!',
-            'kategori.required' => 'Pilih kategori terlebih dahulu!',
-            'stok.min' => 'Stok minimal 1 buah!',
-            'deskripsi.required' => 'Silahkan masukkan deskripsi!',
-            'foto.mimes' => 'File harus foto jpg, jpeg, atau png!',
-            'foto.max' => '2000',
-            'foto.required' => 'Masukkan foto produk!'
+            'kategori.required'   => 'Pilih kategori terlebih dahulu!',
+            'stok.min'            => 'Stok minimal 1 buah!',
+            'deskripsi.required'  => 'Silahkan masukkan deskripsi!',
+            'foto.mimes'          => 'File harus foto jpg, jpeg, atau png!',
+            'foto.max'            => '2000',
+            'foto.required'       => 'Masukkan foto produk!',
         ];
         $request->validate($validate, $pesanValidasi);
 
         $namaProduk = $request->namaProduk;
-        $kategori = $request->kategori;
-        $deskripsi = $request->deskripsi;
+        $kategori   = $request->kategori;
+        $deskripsi  = $request->deskripsi;
 
-        $foto = $request->file('foto');
+        $foto   = $request->file('foto');
         $gambar = $request->file('gambar');
-        // mulai transaksi database/Database Transaction   
+        // mulai transaksi database/Database Transaction
         DB::beginTransaction();
 
         try {
             $namaFoto = $request->foto->store('images', 'public');
             DB::table('products')->insert([
-                'nama' => $namaProduk,
+                'nama'        => $namaProduk,
                 'kategori_id' => $kategori,
                 'detail' => $deskripsi,
                 'foto' => basename($namaFoto),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
+                'detail'      => $deskripsi,
+                'foto'        => basename($namaFoto),
             ]);
 
             $lastInsertIdProduk = DB::getPdo()->lastInsertId();
 
             $jumlahVariant = count($request->stok);
-            for($i = 0; $i < $jumlahVariant; $i++){
-                $originalName = Str::uuid().'-'.$lastInsertIdProduk. '-'.$gambar[$i]->getClientOriginalName();
+            for ($i = 0; $i < $jumlahVariant; $i++) {
+                $originalName        = Str::uuid() . '-' . $lastInsertIdProduk . '-' . $gambar[$i]->getClientOriginalName();
                 $insertProdukVariant = DB::table('produk_variants')->insert([
 
-                    'variant' => $request->variant[$i],
+                    'variant'   => $request->variant[$i],
                     'produk_id' => $lastInsertIdProduk,
                     'harga' => $request->harga[$i],
                     'foto' => $originalName,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
+                    'harga'     => $request->harga[$i],
+                    'foto'      => $originalName,
                 ]);
-                if($insertProdukVariant > 0){
+                if ($insertProdukVariant > 0) {
                     $gambar[$i]->storeAs('image-variant', $originalName, 'public');
                 }
                 $lastInsertProdukVariantId = DB::getPdo()->lastInsertId();
@@ -103,48 +108,48 @@ class ProdukController extends Controller
                     'variant_id' => $lastInsertProdukVariantId,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
+                    'jumlah'     => $request->stok[$i],
+                    'variant_id' => $lastInsertProdukVariantId,
                 ]);
             }
             DB::commit();
             return redirect()->back()->with('status', 'Berhasil menambah produk baru!!');
 
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->with('gagal', 'Gagal menambah produk baru '. $e->getMessage());
+            return redirect()->back()->with('gagal', 'Gagal menambah produk baru ' . $e->getMessage());
         }
     }
-    
+
     public function editProduk(Request $request)
     {
-        $id = $request->id;
+        $id         = $request->id;
         $categories = \App\Models\Kategori::all();
-        $produk = Product::where('id', $id)->first();
-        $data = [
-            'produk' => $produk,
-            'categories' => $categories
+        $produk     = Product::where('id', $id)->first();
+        $data       = [
+            'produk'     => $produk,
+            'categories' => $categories,
         ];
 
         return view('admin.edit-produk', $data);
     }
     public function doEdit(Request $request)
     {
-        $id = $request->id;
-        $nama = $request->nama;
-        $detail = $request->detail;
-        $kategori = $request->kategori;
-        $newImage = $request->file('gambar');
-        $oldImage = $request->gambarLama;
+        $id           = $request->id;
+        $nama         = $request->nama;
+        $detail       = $request->detail;
+        $kategori     = $request->kategori;
+        $newImage     = $request->file('gambar');
+        $oldImage     = $request->gambarLama;
         $originalName = '';
 
-
-        if($newImage == null){
+        if ($newImage == null) {
             $originalName = $oldImage;
-        }
-        else {
-            if(Storage::disk('public')->exists('images/'.$oldImage)){
-                Storage::disk('public')->delete('images/'.$oldImage);
+        } else {
+            if (Storage::disk('public')->exists('images/' . $oldImage)) {
+                Storage::disk('public')->delete('images/' . $oldImage);
             }
-            $originalName = Str::replace(' ', '', Str::uuid() . '-'. $kategori . '-' . $newImage->getClientOriginalName());
+            $originalName = Str::replace(' ', '', Str::uuid() . '-' . $kategori . '-' . $newImage->getClientOriginalName());
             $newImage->storeAs('images', $originalName, 'public');
         }
         // update data
@@ -159,16 +164,23 @@ class ProdukController extends Controller
 
         if($update > 0)
         {
+        $insert = $produk->update([
+            'nama'        => $nama,
+            'detail'      => $detail,
+            'kategori_id' => $kategori,
+            'foto'        => $originalName,
+        ]);
+
+        if ($insert > 0) {
             $flashMessage = [
                 'status' => 'berhasil mengupdate data',
-                'alert' => 'success',
+                'alert'  => 'success',
             ];
             return redirect()->back()->with($flashMessage);
-        }
-        else{
-             $flashMessage = [
+        } else {
+            $flashMessage = [
                 'status' => 'Tidak ada yang diupdate',
-                'alert' => 'primary',
+                'alert'  => 'primary',
             ];
             return redirect()->back()->with($flashMessage);
         }
@@ -176,15 +188,15 @@ class ProdukController extends Controller
     }
     public function searchOnlyProduk(Request $request)
     {
-        $keyword = $request->keyword;
+        $keyword  = $request->keyword;
         $products = DB::table('products')->join('kategoris', 'products.kategori_id', 'kategoris.id')
-                    ->select('products.nama','products.detail','products.foto','products.id','kategoris.kategori')
-                    ->where('products.nama', 'LIKE', '%'. $keyword.'%')
-                    ->orWhere('kategoris.kategori', 'LIKE', '%'. $keyword .'%')
-                    ->get();
+            ->select('products.nama', 'products.detail', 'products.foto', 'products.id', 'kategoris.kategori')
+            ->where('products.nama', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('kategoris.kategori', 'LIKE', '%' . $keyword . '%')
+            ->get();
 
         $data = [
-            'products' => $products
+            'products' => $products,
         ];
         return view('partial.product-search', $data)->render();
     }

@@ -1,17 +1,16 @@
 <?php
-
 namespace App\Models\Produk;
 
 use App\Models\Kategori;
 use App\Models\Produk\ProdukVariant;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-    protected $with = ['kategori'];
-    protected $table = 'products';
+    protected $with    = ['kategori'];
+    protected $table   = 'products';
     protected $guarded = ['id'];
 
     public function variant(): HasMany
