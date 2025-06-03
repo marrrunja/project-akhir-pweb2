@@ -78,9 +78,7 @@ class ProdukController extends Controller
                 'detail' => $deskripsi,
                 'foto' => basename($namaFoto),
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-                'detail'      => $deskripsi,
-                'foto'        => basename($namaFoto),
+                'updated_at' => Carbon::now(),
             ]);
 
             $lastInsertIdProduk = DB::getPdo()->lastInsertId();
@@ -89,15 +87,12 @@ class ProdukController extends Controller
             for ($i = 0; $i < $jumlahVariant; $i++) {
                 $originalName        = Str::uuid() . '-' . $lastInsertIdProduk . '-' . $gambar[$i]->getClientOriginalName();
                 $insertProdukVariant = DB::table('produk_variants')->insert([
-
                     'variant'   => $request->variant[$i],
                     'produk_id' => $lastInsertIdProduk,
                     'harga' => $request->harga[$i],
                     'foto' => $originalName,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
-                    'harga'     => $request->harga[$i],
-                    'foto'      => $originalName,
                 ]);
                 if ($insertProdukVariant > 0) {
                     $gambar[$i]->storeAs('image-variant', $originalName, 'public');
@@ -108,8 +103,6 @@ class ProdukController extends Controller
                     'variant_id' => $lastInsertProdukVariantId,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
-                    'jumlah'     => $request->stok[$i],
-                    'variant_id' => $lastInsertProdukVariantId,
                 ]);
             }
             DB::commit();
@@ -162,16 +155,7 @@ class ProdukController extends Controller
             'updated_at' => Carbon::now()
         ]);
 
-        if($update > 0)
-        {
-        $insert = $produk->update([
-            'nama'        => $nama,
-            'detail'      => $detail,
-            'kategori_id' => $kategori,
-            'foto'        => $originalName,
-        ]);
-
-        if ($insert > 0) {
+        if ($update > 0) {
             $flashMessage = [
                 'status' => 'berhasil mengupdate data',
                 'alert'  => 'success',

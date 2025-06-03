@@ -1,14 +1,15 @@
 <?php
 namespace App\Http\Controllers\Produk;
 
-use App\Http\Controllers\Controller;
-use App\Models\Produk\ProdukVariant;
-use Illuminate\Http\RedirectResponse;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\Produk\ProdukVariant;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
+use App\Services\Produk\ProdukVariantService;
 
 class ProdukVariantController extends Controller
 {
@@ -18,12 +19,6 @@ class ProdukVariantController extends Controller
     {
         $this->produkVariantService = $produkVariantService;
     }
-
-    public function produkVariant(Request $request):Response|RedirectResponse
-use Illuminate\Support\Str;
-
-class ProdukVariantController extends Controller
-{
     public function produkVariant(Request $request): Response | RedirectResponse
     {
         $id       = $request->id;
@@ -71,8 +66,6 @@ class ProdukVariantController extends Controller
             'foto' => $originalName,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
-            'harga'     => $harga,
-            'foto'      => $originalName,
         ];
 
         DB::beginTransaction();
@@ -82,15 +75,11 @@ class ProdukVariantController extends Controller
                 $gambar->storeAs('image-variant', $originalName, 'public');
             }
             $lastInsertProdukVariantId = DB::getPdo()->lastInsertId();
-<<<<<<< HEAD
             $data2 = [
                 'jumlah' => $jumlah,
                 'variant_id' => $lastInsertProdukVariantId,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
-            $data2      = [
-                'jumlah'     => $jumlah,
-                'variant_id' => $lastInsertProdukVariantId,
             ];
 
             DB::table('stoks')->insert($data2);
@@ -143,13 +132,8 @@ class ProdukVariantController extends Controller
         $updateStok = DB::table('stoks')->where('variant_id', $id)->update([
             'jumlah' => $jumlah,
             'updated_at' => Carbon::now()
-        $variant       = DB::table('produk_variants')->where('id', $id);
-        $updateVariant = $variant->update(['variant' => $varian, 'harga' => $harga, 'foto' => $originalName]);
-
-        $updateStok = DB::table('stoks')->where('variant_id', $id)->update([
-            'jumlah' => $jumlah,
         ]);
-
+     
         $status = null;
         $alert  = null;
         if ($updateVariant > 0 || $updateStok > 0) {
