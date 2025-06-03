@@ -1,7 +1,7 @@
 const cartItem = document.getElementById("cart");
 const appurl = document.querySelector("meta[name=_appurl]").content;
-const urlHapusCart = appurl+"/cart/delete";
-const urlUpdateCart = appurl+"/cart/update/{id}";
+const urlHapusCart = appurl + "/cart/delete";
+const urlUpdateCart = appurl + "/cart/update/{id}";
 let token = document.querySelector("meta[name=_token]").content;
 async function removeItemCart(e) {
     if (e.target.classList.contains("hilangkan-item")) {
@@ -69,7 +69,7 @@ async function removeItemCart(e) {
     }
 }
 
-cartItem.addEventListener("click", removeItemCart);
+document.addEventListener("click", removeItemCart);
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -92,7 +92,7 @@ async function initCartHandler() {
                     "Content-Type": "application/json",
                     'X-CSRF-TOKEN': token
                 },
-                body: JSON.stringify({ qty: newQty, id: cartId})
+                body: JSON.stringify({ qty: newQty, id: cartId })
             });
             const data = await res.json();
             console.log(data);
@@ -185,7 +185,7 @@ document.getElementById('clear-cart-btn').addEventListener('click', function () 
                     document.querySelectorAll('.cart-item').forEach(item => item.remove());
 
                     document.querySelectorAll('.summary-value').forEach(el => {
-                    el.textContent = 'Rp0';
+                        el.textContent = 'Rp0';
                     });
                     Swal.fire('Berhasil!', 'Semua item telah dihapus dari cart.', 'success');
                 } else {

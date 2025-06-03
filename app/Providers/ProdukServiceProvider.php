@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Providers;
 
 use App\Services\Produk\ProdukService;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider;
 
 class ProdukServiceProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -12,7 +11,7 @@ class ProdukServiceProvider extends ServiceProvider implements DeferrableProvide
     {
         $this->app->singleton(ProdukService::class, function ($app) {
             return new ProdukService();
-        }); 
+        });
     }
     public function provides(): array
     {

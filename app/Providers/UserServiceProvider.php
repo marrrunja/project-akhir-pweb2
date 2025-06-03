@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Providers;
 
 use App\Services\UserService;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider;
 
 class UserServiceProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -17,7 +16,7 @@ class UserServiceProvider extends ServiceProvider implements DeferrableProvider
             return new UserService();
         });
     }
-      /**
+    /**
      * Get the services provided by the provider.
      *
      * @return array<int, string>
