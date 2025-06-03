@@ -1,10 +1,12 @@
 <?php  
 namespace App\Services\Transaksi;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
+use App\Models\Pembeli;
 use App\Models\Produk\Stok;
 use Illuminate\Support\Collection;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+
 class OrderService
 {
 
@@ -38,6 +40,7 @@ class OrderService
 	}
 	private function initMidtrans(array $data, $orderId):array
 	{
+		$pembeli = Pembeli::where('username', $data['username'])->first();
 		$params = [
             'transaction_details' => [
                 'order_id' => $orderId,
@@ -52,7 +55,7 @@ class OrderService
             ],
             'customer_details'=> [
                 'first_name' => $data['username'],
-                'email' => 'adillasnack@gmail.com'
+                'email' => $pembeli->email
             ],
             'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart']
         ];
@@ -79,6 +82,10 @@ class OrderService
         $tanggalSekarang = now()->format('Y-m-d');
 
         $stok = Stok::where('variant_id', '=', $data['variantId'])->first();
+		if(!$stok){
+			$error = 'Variant tidak ditemukan';
+			return false;
+		}
         if($stok->jumlah === 0 || $stok->jumlah < $data['jumlah']){
         	$error = "Maaf stok tidak mencukupi sekarang";
         	return false;

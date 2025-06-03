@@ -158,6 +158,11 @@
                                         special character
                                     </small> -->
                                 </div>
+                                  <div class="form-group mb-3">
+                                    <label for="email">Username</label>
+                                    <input type="email" class="form-control" name="email" id="email"
+                                        placeholder="Contoh marr@gmail.com" required>
+                                </div>
                                 <div>
                                     <label class="form-group mb-3">Kecamatan</label>
                                     <select name="kecamatan" id="kecamatan" class="form-control">

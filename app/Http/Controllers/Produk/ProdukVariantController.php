@@ -50,7 +50,7 @@ class ProdukVariantController extends Controller
         $harga = $request->harga;
         $gambar = $request->file('gambar');
         $originalName = Str::replace(' ', '' ,Str::uuid().'-'.$produkId. '-'.$gambar->getClientOriginalName());
-
+        
         
         $produkId     = $request->id;
         $variant      = $request->nama;

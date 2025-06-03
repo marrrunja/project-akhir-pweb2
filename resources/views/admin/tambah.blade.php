@@ -109,7 +109,7 @@
         </form>
         <div class="row">
             <div class="col">
-                <a href="{{ \Illuminate\Support\Facades\URL::previous() }}">&laquo;Kembali ke halaman utama</a>
+                <a href="/admin/index">&laquo;Kembali ke halaman utama</a>
             </div>
         </div>
     </div>

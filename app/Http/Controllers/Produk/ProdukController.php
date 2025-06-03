@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
-
 class ProdukController extends Controller
 {
     public function index(): Response
@@ -27,7 +26,7 @@ class ProdukController extends Controller
     }
     public function produkVariant(Request $request): Response | RedirectResponse
     {
-        $id       = $request->id;
+        $id = $request->id;
         $variants = ProdukVariant::where('produk_id', $id)->get();
         if ($variants) {
             $data = [
@@ -41,7 +40,7 @@ class ProdukController extends Controller
     }
 
     // method untuk menambahkan produk baru
-    public function addProduk(Request $request)
+    public function addProduk(Request $request):RedirectResponse
     {
         $validate = [
             'namaProduk' => ['required'],

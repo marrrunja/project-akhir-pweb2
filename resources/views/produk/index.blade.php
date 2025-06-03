@@ -42,8 +42,13 @@
             </div>
           </div>
         </div>
-
+        <div class="row mb-4">
+          <div class="col-12">
+             <h1>Daftar produk yang tersedia</h1>
+          </div>
+        </div>
         <div class="row product-container isotope-container" data-aos="fade-up" data-aos-delay="200">
+         
           <!-- Product Item 1 -->
           @foreach($products as $product)
           <div class="col-md-6 col-lg-3 product-item isotope-item filter-clothing">
