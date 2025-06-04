@@ -144,14 +144,14 @@
                         <!-- Product Price -->
                         <div class="product-price-container">
                             <div class="price-wrapper">
-                                <span class="current-price">$249.99</span>
-                                <span class="original-price">$299.99</span>
+                                <span class="current-price">Rp.0</span>
+                                <!-- <span class="original-price">$299.99</span> -->
                             </div>
-                            <span class="discount-badge">Save 17%</span>
+                            <!-- <span class="discount-badge">Save 17%</span> -->
                             <div class="stock-info">
                                 <i class="bi bi-check-circle-fill"></i>
                                 <span>In Stock</span>
-                                <span class="stock-count">(24 items left)</span>
+                                <span class="stock-count"></span>
                             </div>
                         </div>
 

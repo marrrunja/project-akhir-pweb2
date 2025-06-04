@@ -41,12 +41,14 @@ Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.cle
 
 
 // produk 
+
 Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
     Route::post('/add', 'addProduk')->name('produk.tambah');
     Route::get('/edit/{id}', 'editProduk')->name('produk.edit');
     Route::post('edit/{id}', 'doEdit')->name('produk.doEdit');
     Route::get('/search', 'searchOnlyProduk');
+    Route::get('/detail/{id}', 'detailProduk');
 });
 
 // produk variant
@@ -108,6 +110,3 @@ Route::get('/profil', function () {
     return view('profil');
 });
 
-Route::get('/detail', function () {
-    return view('detail');
-});
