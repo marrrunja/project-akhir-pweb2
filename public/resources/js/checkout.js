@@ -5,12 +5,12 @@ const totalHarga = document.getElementById("hargaTotal").innerText;
 const URLENDPOINT = appurl+"/transaksi/checkout";
 const REDIRECTURL = appurl;
 const btnBayar = document.getElementById("btnBayar");
-const hargaSatuan = document.getElementById("hargaSatuan").innerText;
+let hargaSatuan = document.getElementById("hargaSatuan").innerText;
 
 const array = Array.from(totalHarga);
 const total = parseInt(array.filter((item) => item != '.')
                                 .reduce((str, item) => str += item));
-
+hargaSatuan = parseInt(Array.from(hargaSatuan).filter((item) => item != '.').reduce((str, item) => str += item));
 async function sendData()
 {
     const data = {
@@ -19,6 +19,7 @@ async function sendData()
         id:btnBayar.dataset.id,
         harga:hargaSatuan
     }
+    console.log(data);
     try{
         const response = await fetch(URLENDPOINT, {
             method:'POST',
@@ -29,11 +30,18 @@ async function sendData()
             body:JSON.stringify(data)
         });
 
+        if(!response.ok){
+            throw new Error("HTTP ERROR " + response.status);
+        }
+
         const responseServer = await response.json();
-        if(response.status === 200 && responseServer.status === 'berhasil')
-            document.location.href = REDIRECTURL +"/transaksi/checkout/success";
-        else
+        console.log(responseServer);
+        if(response.status === 200 && responseServer.status === 'berhasil'){
+            document.location.href = responseServer.redirect_url;
+        }
+        else{
             document.location.href = REDIRECTURL +"/transaksi/checkout/fail?pesan="+responseServer.pesan;
+        }
     }catch(error){
         console.error("Error fetching data "+error)
     }

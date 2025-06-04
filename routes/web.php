@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\ProdukVariantApiController;
 use App\Http\Controllers\Produk\ProdukVariantController;
 
 Route::get('/', [UserController::class, 'index']);
+Route::get('/profil', [UserController::class, 'profil'])->middleware(SessionHasNotMiddleware::class);
 
 Route::controller(LoginController::class)->prefix('/login')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasMiddleware::class);
@@ -34,11 +35,10 @@ Route::controller(RegisterController::class)->prefix('/register')->group(functio
 
 // cart
 Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
-Route::get('/cart', [CartController::class, 'index'])->middleware(SessionHasNotMiddleware::class)->name('cart.index');
+Route::get('/cart', [CartController::class, 'cart'])->middleware(SessionHasNotMiddleware::class)->name('cart.index');
 Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/delete', [CartController::class, 'destroy'])->name('cart.delete');
 Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
-
 
 // produk 
 
@@ -65,6 +65,7 @@ Route::controller(TransaksiController::class)->prefix('/transaksi')->group(funct
     Route::post('/checkout', 'makeOrder');
     Route::get('/checkout/success', 'orderSuccess');
     Route::get('/checkout/fail', 'orderFail');
+    Route::post('/checkout/cart', 'makeOrders');
 });
 
 // controller admin
@@ -98,15 +99,4 @@ Route::get('/gaada', function(){
     return view('index');
 });
 
-// Route::get('/cart/gaada',function(){
-//     $carts = Cart::with(['variant.produk'])
-//         ->where('pembeli_id', session('user_id'))
-//         ->get();
-//     return view('cart.nothing', compact('carts'));
-// });
-
-// route nampilin halaman profil user
-Route::get('/profil', function () {
-    return view('profil');
-});
 

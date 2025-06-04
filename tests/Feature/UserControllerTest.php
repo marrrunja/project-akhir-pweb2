@@ -8,9 +8,14 @@ use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {
-    public function testIndex(): void
+    public function testIndexWithoutSession(): void
     {
-        $this->get('/')
-            ->assertSeeText("Selamat datang user");
+        $this->get('/produk/index')->assertRedirect('/login/index');
+    }
+    public function testIndexWithSession(): void
+    {
+        $this->withSession(['user_id' => '1', 'username' => 'Muammar'])
+            ->get('/produk/index')
+            ->assertSeeText("Daftar produk yang tersedia");
     }
 }

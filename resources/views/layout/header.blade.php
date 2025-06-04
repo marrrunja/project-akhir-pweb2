@@ -34,7 +34,7 @@
                     <div class="dropdown account-dropdown">
                         <button class="header-action-btn" data-bs-toggle="dropdown">
                             <i class="bi bi-person"></i>
-                            <span class="action-text d-none d-md-inline-block">{{session::get('username')}}</span>
+                            <span class="action-text d-none d-md-inline-block">{{ session::get('username') }}</span>
                         </button>
                         <div class="dropdown-menu">
                             <div class="dropdown-header">
@@ -42,7 +42,7 @@
                                 <!-- <p class="mb-0">Access account &amp; manage orders</p> -->
                             </div>
                             <div class="dropdown-body">
-                                <a class="dropdown-item d-flex align-items-center" href="{{url('/profil')}}">
+                                <a class="dropdown-item d-flex align-items-center" href="{{ url('/profil') }}">
                                     <i class="bi bi-person-circle me-2"></i>
                                     <span>My Profile</span>
                                 </a>
@@ -52,14 +52,14 @@
                                 </a>
                             </div>
                             <div class="dropdown-footer">
-                                @if(!Session::has('user_id'))
-                                <a href="/login/index" class="btn btn-primary w-100 mb-2">Sign In</a>
-                                <a href="/register/index" class="btn btn-outline-primary w-100">Register</a>
+                                @if (!Session::has('user_id'))
+                                    <a href="/login/index" class="btn btn-primary w-100 mb-2">Sign In</a>
+                                    <a href="/register/index" class="btn btn-outline-primary w-100">Register</a>
                                 @else
-                                <form method="post" action="/login/logout">
-                                    @csrf
-                                    <button type="submit" class="btn btn-primary w-100">Logout</button>
-                                </form>
+                                    <form method="post" action="/login/logout">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary w-100">Logout</button>
+                                    </form>
                                 @endif
                             </div>
                         </div>
@@ -79,51 +79,54 @@
                             </div>
                             <div class="dropdown-body">
                                 <div class="cart-items">
-                                    <!-- Cart Item 1 -->
-                                    {{-- @foreach($carts as $item)
-                    <div class="cart-item">
-                      <div class="cart-item-image">
-                        <img src="assets/img/product/product-1.webp" alt="Product" class="img-fluid">
-                      </div>
-                      <div class="cart-item-content">
-                        <h6 class="cart-item-title">{{ $item->variant->produk->nama}}</h6>
-                                    <div class="product-meta">
-                                        <span class="product-color">{{ $item->variant->variant ?? 'Variant' }}</span>
-                                    </div>
-                                    <div class="cart-item-meta">
-                                        <span class="current-price">
-                                            {{ $item->qty }}
-                                        </span> ×
-                                        <span class="item-total">
-                                            Rp{{ number_format(($item->variant->harga ?? 0) * $item->qty) }}
-                                        </span>
-                                    </div>
+                                    @foreach (\App\Models\Cart::getAllCartWithUserId(Session::get('user_id')) as $item)
+                                        <div class="cart-item">
+                                            <div class="cart-item-image">
+                                                <img class="card-img-top"
+                                                    src="{{ asset('storage/image-variant/' . $item->variant->foto) }}"
+                                                    alt="Card image cap">
+                                            </div>
+                                            <div class="cart-item-content">
+                                                <h6 class="cart-item-title">{{ $item->variant->produk->nama }}</h6>
+                                                <div class="product-meta">
+                                                    <span
+                                                        class="product-color">{{ $item->variant->variant ?? 'Variant' }}</span>
+                                                </div>
+                                                <div class="cart-item-meta">
+                                                    <span class="current-price">
+                                                        {{ $item->qty }}
+                                                    </span> ×
+                                                    <span class="item-total">
+                                                        Rp{{ number_format(($item->variant->harga ?? 0) * $item->qty) }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <button class="remove-item" data-id="{{ $item->id }}"
+                                                data-user="{{ Session::get('user_id') }}" type="button">
+                                                <i class="bi bi-trash"></i> Remove
+                                            </button>
+                                        </div>
+                                    @endforeach
+
                                 </div>
-                                <button class="hilangkan-item" data-id="{{ $item->id }}"
-                                    data-user="{{ Session::get('user_id') }}" type="button">
-                                    <i class="bi bi-trash"></i> Remove
-                                </button>
                             </div>
-                            @endforeach --}}
+                            <div class="dropdown-footer">
+                                <div class="cart-total">
+                                    <span>Total:</span>
+                                    <span class="cart-total-price">Rp.0</span>
+                                </div>
+                                <div class="cart-actions">
+                                    <a href="{{ url('/cart') }}" class="btn btn-outline-primary">Lihat Keranjang</a>
+                                    <a href="checkout.html" class="btn btn-primary">Checkout</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="dropdown-footer">
-                        <div class="cart-total">
-                            <span>Total:</span>
-                            <span class="cart-total-price">Rp.0</span>
-                        </div>
-                        <div class="cart-actions">
-                            <a href="{{ url('/cart') }}" class="btn btn-outline-primary">Lihat Keranjang</a>
-                            <a href="checkout.html" class="btn btn-primary">Checkout</a>
-                        </div>
-                    </div>
+                    <!-- Mobile Navigation Toggle -->
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list me-0"></i>
                 </div>
             </div>
-            <!-- Mobile Navigation Toggle -->
-            <i class="mobile-nav-toggle d-xl-none bi bi-list me-0"></i>
         </div>
-    </div>
-    </div>
     </div>
 
     <!-- Navigation -->
@@ -131,8 +134,8 @@
         <div class="container-fluid container-xl position-relative">
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="/produk/index" class="{{ request()->is('produk/index') ? 'active':''}}">Home</a></li>
-                    <li><a href="#">Produk</a></li>
+                    <li><a href="/" class="{{ request()->is('/') ? 'active':''}}">Home</a></li>
+                    <li><a href="/produk/index" class="{{ request()->is('produk/index') ? 'active':''}}">Produk</a><//li>
                     <li><a href="#">About</a></li>
                     <li><a href="checkout.html">History Pembelian</a></li>
                 </ul>

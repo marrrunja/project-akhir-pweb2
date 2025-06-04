@@ -18,7 +18,6 @@
     <link href="../../../../templatesbadmin2/css/sb-admin-2.min.css" rel="stylesheet">
 
     <style>
-        /* Hover effect untuk card */
         .card-hover {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
@@ -49,7 +48,6 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 

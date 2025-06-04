@@ -3,16 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Kategori;
-use App\Models\Produk\Stok;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Produk\Product;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Produk\ProdukVariant;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller

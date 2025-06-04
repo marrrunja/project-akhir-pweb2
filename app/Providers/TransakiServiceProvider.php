@@ -10,13 +10,9 @@ class TransakiServiceProvider extends ServiceProvider implements DeferrableProvi
 {
     public function register(): void
     {
-        $this->app->singleton(OrderService::class, function ($app) {
-            return new OrderService($app->make(OrderItemService::class));
+        $this->app->singleton(OrderService::class, function($app) {
+            return new OrderService();
         });
-        $this->app->singleton(OrderItemService::class, function ($app) {
-            return new OrderItemService();
-        });
-
     }
 
     /**

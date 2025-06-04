@@ -142,9 +142,9 @@
                                 @endforeach
 
                                 <div class="form-group mb-3">
-                                    <label for="email">Email Address</label>
-                                    <input type="email" class="form-control" name="email" id="email" required=""
-                                        placeholder="you@example.com">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" name="username" id="username"
+                                        placeholder="Contoh marr123">
                                 </div>
 
                                 <div class="form-group mb-3">
@@ -157,6 +157,11 @@
                                         Must be at least 8 characters long and include uppercase, lowercase, number, and
                                         special character
                                     </small> -->
+                                </div>
+                                  <div class="form-group mb-3">
+                                    <label for="email">Username</label>
+                                    <input type="email" class="form-control" name="email" id="email"
+                                        placeholder="Contoh marr@gmail.com" required>
                                 </div>
                                 <div>
                                     <label class="form-group mb-3">Kecamatan</label>
