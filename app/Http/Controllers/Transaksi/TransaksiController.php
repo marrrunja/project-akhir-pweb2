@@ -86,9 +86,8 @@ class TransaksiController extends Controller
             return response()->json([
                 'pesan' => $error,
                 'status' => 'gagal',
-            ]);
+            ], 422);
         }
-        
         return response()->json([
             'pesan' => 'Internal server error'
         ], 500);
@@ -129,7 +128,7 @@ class TransaksiController extends Controller
     }
 
     public function success(Request $request):Response{
-        
+        return "Order sukses";
     }
 
     public function orderSuccess():RedirectResponse

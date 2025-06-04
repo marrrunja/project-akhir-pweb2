@@ -62,11 +62,11 @@ Route::post('/variant/doEdit', [ProdukVariantController::class, 'doEdit']);
 // transaksi
 Route::controller(TransaksiController::class)->prefix('/transaksi')->group(function(){
     Route::post('/index/{id}', 'index')->name('transaksi.order');
-    Route::post('/checkout', 'makeOrder');
-    Route::get('/checkout/success', 'orderSuccess');
-    Route::get('/checkout/fail', 'orderFail');
-    Route::post('/checkout/cart', 'makeOrders');
-    Route::get('/finish', 'success');
+    Route::post('/checkout', 'makeOrder')->middleware(SessionHasNotMiddleware::class);
+    Route::get('/checkout/success', 'orderSuccess')->middleware(SessionHasNotMiddleware::class);
+    Route::get('/checkout/fail', 'orderFail')->middleware(SessionHasNotMiddleware::class);
+    Route::post('/checkout/cart', 'makeOrders')->middleware(SessionHasNotMiddleware::class);
+    Route::get('/finish', 'success')->middleware(SessionHasNotMiddleware::class);
 });
 
 // controller admin
