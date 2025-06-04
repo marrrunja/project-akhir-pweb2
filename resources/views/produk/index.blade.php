@@ -71,7 +71,7 @@
                   <span class="current-price">{{ Str::limit($product->detail, 10) }}</span>
                 </div>
                 <div class="product-price">
-                  <a href="{{ route('produk.variant', $product->id) }}" class="current-price">Lihat variant &raquo;</a>
+                  <a href="/produk/detail/{{ $product->id }}" class="current-price">Detail &raquo;</a>
                 </div>
               </div>
             </div>

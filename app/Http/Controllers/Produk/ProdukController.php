@@ -184,5 +184,10 @@ class ProdukController extends Controller
         ];
         return view('partial.product-search', $data)->render();
     }
-
+    public function detailProduk(Request $request)
+    {
+        $id = $request->id;
+        $produk = Product::where('id', $id)->first();
+        return view('detail',compact('produk'));
+    }
 }
