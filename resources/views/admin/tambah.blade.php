@@ -89,7 +89,7 @@
                                     placeholder="Contoh, 10">
                             </div>
                             <div class="mb-3">
-                                <label for="gambar1">Foto produk</label>
+                                <label for="gambar1" class="form-label">Foto produk</label>
                                 <input type="file" name="gambar[]" id="gambar1" class="form-control" multiple>
                             </div>
                         </fieldset>

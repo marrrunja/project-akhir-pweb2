@@ -20,10 +20,23 @@ class TransaksiControllerTest extends TestCase
     //     $response->assertStatus(200);
     // }
 
-    public function testAddOrder():void
+    // public function testAddOrder():void
+    // {
+    //     $response = $this->withSession(['user_id' => 1, 'username' => 'Muammar']);
+    // }
+    public function testOrderFailed()
     {
-        $response = $this->withSession(['user_id' => 1, 'username' => 'Muammar']);
-        
+    //         const data = {
+    //     jumlah : jumlah,
+    //     totalHarga : total,
+    //     id:btnBayar.dataset.id,
+    //     harga:hargaSatuan
+    // }   
+        $this->withSession(['username' => 'Muammar', 'user_id' => 1])
+            ->post('/transaksi/checkout', [
+                []
+            ])->assertStatus(302)
+            ->assertRedirect('/');
     }
 
 

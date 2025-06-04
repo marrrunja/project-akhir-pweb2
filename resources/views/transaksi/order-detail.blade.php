@@ -40,5 +40,6 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('resources/js/checkout.js') }}"></script>
+<script src="{{ env('TYPE_URL') == 'http' ? asset('resources/js/checkout.js') : secure_asset('resources/js/checkout.js') }}"></script>
+
 @endpush

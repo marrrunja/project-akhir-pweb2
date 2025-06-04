@@ -43,7 +43,7 @@ function tambahInputVariant()
                                 <input type="number" id="stok${i}" name="stok[]" class="form-control" id="stok" placeholder="Contoh, 10" required>
                             </div>
                             <div class="mb-3">
-                                <label for="gambar${i}">Foto produk</label>
+                                <label for="gambar${i}" class="form-label">Foto produk</label>
                                 <input type="file" name="gambar[]" id="gambar${i}" class="form-control" multiple>
                             </div>
                         </fieldset>

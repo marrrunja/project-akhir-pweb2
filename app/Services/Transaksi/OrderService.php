@@ -40,7 +40,7 @@ class OrderService
 	}
 	private function initMidtrans(array $data, $orderId):array
 	{
-		$pembeli = Pembeli::where('username', $data['username'])->first();
+		$pembeli = Pembeli::where('username', '=',$data['username'])->first();
 		$params = [
             'transaction_details' => [
                 'order_id' => $orderId,
@@ -57,7 +57,10 @@ class OrderService
                 'first_name' => $data['username'],
                 'email' => $pembeli->email
             ],
-            'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart']
+            'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart'],
+            'callbacks' => [
+		        'finish' => url('/transaksi/finish'),// Ganti sesuai dengan URL kamu
+			],
         ];
         $url = 'https://app.sandbox.midtrans.com/snap/v1/transactions';
 
@@ -136,7 +139,7 @@ class OrderService
 			$error = "Data tidak boleh kosong!!";
 			return false;
 		}
-		$isSuccess = true;
+		$isSuccess = false;
 		$userId = $data['userId'];
 		$totalHarga = $data['totalHarga'];
 

@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Transaksi;
 
-use App\Models\Cart;
-use App\Models\Produk\Stok;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Models\Transaksi\Order;
 use Illuminate\Http\JsonResponse;
-use App\Models\Transaksi\OrderItem;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Produk\ProdukVariant;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
 use App\Services\Transaksi\OrderService;
 
@@ -37,7 +36,6 @@ class TransaksiController extends Controller
         $produkVariant = ProdukVariant::where('id', '=', $id)->first();
         
         if($produkVariant){
-
             $data = [
                 'jumlah' => $jumlah,
                 'produkVariant' => $produkVariant,
@@ -51,6 +49,13 @@ class TransaksiController extends Controller
     }
     public function makeOrder(Request $request):JsonResponse
     {
+        $validate = [
+            'jumlah' => 'required',
+            'harga' => 'required',
+            'totalHarga' => 'required',
+            'id' => 'required'
+        ];
+        $request->validate($validate);
         $userId = (int)$request->session()->get('user_id');
         $username = $request->session()->get('username');
         $jumlah = (int)$request->jumlah;
@@ -103,6 +108,28 @@ class TransaksiController extends Controller
        }else{
         return redirect('/cart')->with('status', $error);
        }
+    }
+
+    public function webhook(Request $request)
+    {
+        Log::info("Webhook dari midtrans");
+        $auth = base64_encode(env('MIDTRANS_SERVER_KEY'));
+        $midtransResponse = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'Authorization' => "Basic $auth"
+        ])->get("https://api.sandbox.midtrans.com/v2/$request->order_id/status");
+
+        $response = json_decode($midtransResponse->body());
+        if ($response->transaction_status === 'settlement') {
+            DB::statement("UPDATE table_orders SET is_dibayar = ? WHERE order_id = ?", [1, $response->order_id]);
+            Log::info("Berhasil update produk dengan order id $response->order_id");
+        }
+        return response()->json(['message' => 'Webhook processed']);
+    }
+
+    public function success(Request $request):Response{
+        
     }
 
     public function orderSuccess():RedirectResponse

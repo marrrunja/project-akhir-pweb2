@@ -46,6 +46,13 @@
           <div class="col-12">
              <h1>Daftar produk yang tersedia</h1>
           </div>
+          @if(Session::has('status'))
+          <div class="col-12 col-md-10 col-xl-6">
+            <div class="alert alert-danger">
+              {{ Session::get('status') }}
+            </div>
+          </div>
+          @endif
         </div>
         <div class="row product-container isotope-container" data-aos="fade-up" data-aos-delay="200">
          

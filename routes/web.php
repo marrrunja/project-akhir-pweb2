@@ -64,6 +64,7 @@ Route::controller(TransaksiController::class)->prefix('/transaksi')->group(funct
     Route::get('/checkout/success', 'orderSuccess');
     Route::get('/checkout/fail', 'orderFail');
     Route::post('/checkout/cart', 'makeOrders');
+    Route::get('/finish', 'success');
 });
 
 // controller admin
@@ -100,4 +101,10 @@ Route::get('/gaada', function(){
 
 Route::get('/detail', function () {
     return view('detail');
+});
+
+Route::get('/coba/id', function(){
+    \Illuminate\Support\Facades\DB::statement('UPDATE table_orders SET is_dibayar = ? WHERE order_id = ?',[ 1,'INV-2025-06-04-20']);
+    \Illuminate\Support\Facades\Log::info("Coba aja sih bro");
+    return "Udah";
 });
