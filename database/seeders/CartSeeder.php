@@ -14,21 +14,27 @@ class CartSeeder extends Seeder
     public function run(): void
     {
         $data = [
+            // [
+            //     'pembeli_id' => 1,
+            //     'variant_id' => 1,
+            //     'qty' => 3
+            // ],
             [
-                'pembeli_id' => 1,
-                'variant_id' => 29,
-                'qty' => 2
+                'pembeli_id' => 2,
+                'variant_id' => 2,
+                'qty' => 3
             ],
             [
-                'pembeli_id' => 1,
-                'variant_id' => 33,
+                'pembeli_id' => 2,
+                'variant_id' => 1,
                 'qty' => 2
             ],
-            [
-                'pembeli_id' => 1,
-                'variant_id' => 38,
-                'qty' => 2
-            ]
+            
+            // [
+            //     'pembeli_id' => 1,
+            //     'variant_id' => 2,
+            //     'qty' => 2
+            // ]
         ];
         Cart::insert($data);
     }

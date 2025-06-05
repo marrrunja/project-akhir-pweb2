@@ -79,15 +79,17 @@
                                 data-bs-toggle="dropdown" style="cursor:pointer;"></i>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item hover" href="#">
+                                    <a class="dropdown-item hover" href="/transaksi/user/detail/{{ $order->id }}">
                                         Lihat detail
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item hover" href="{{ $order->link_bayar }}">
                                         Link pembayaran
-
                                     </a>
+                                </li>
+                                <li>
+                                    <span class="dropdown-item hover">Batalkan pesanan</span>
                                 </li>
                             </ul>
                         </td>
@@ -96,10 +98,8 @@
                 </tbody>
             </table>
         </div>
-
     </section>
     <!-- /Starter Section Section -->
-
 </main>
 @endsection
 

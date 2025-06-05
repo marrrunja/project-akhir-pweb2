@@ -105,10 +105,10 @@ function makeInputAddVariantElement() {
     containerAddProdukVariant.classList.add("gap-3");
 
     let inputToken = `<input type="hidden" name="_token" value="${token}">`;
-    let inputVarian = `<input type="text" name="variant[]" placeholder="Nama variant" class="form-control" required>`;
-    let inputHarga = `<input type="number" name="harga[]" placeholder="Harga Produk Variant" class="form-control" required>`;
-    let inputStok = `<input type="number" name="stok[]" placeholder="Stok Produk Variant" class="form-control" required>`;
-    let inputGambar = `<input type="file" name="gambar[]" class="form-control" required>`;
+    let inputVarian = `<input type="text" name="variant" placeholder="Nama variant" class="form-control" required>`;
+    let inputHarga = `<input type="number" name="harga" placeholder="Harga Produk Variant" class="form-control" required>`;
+    let inputStok = `<input type="number" name="stok" placeholder="Stok Produk Variant" class="form-control" required>`;
+    let inputGambar = `<input type="file" name="gambar" class="form-control" required>`;
 
 
     let btnSubmit = `<button type="submit" class="btn btn-success mb-3 mt-2 me-2">Tambah</button>`;

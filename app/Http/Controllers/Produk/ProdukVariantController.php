@@ -38,7 +38,7 @@ class ProdukVariantController extends Controller
     public function addProdukVariant(Request $request)
     {
         $validate = [
-            'nama'   => 'required',
+            'variant'   => 'required',
             'stok'   => 'required',
             'harga'  => 'required',
             'gambar' => 'required',
@@ -46,20 +46,11 @@ class ProdukVariantController extends Controller
         $request->validate($validate);
 
         $produkId = $request->id;
-        $variant = $request->nama;
+        $variant = $request->variant;
         $jumlah = $request->stok;
         $harga = $request->harga;
         $gambar = $request->file('gambar');
         $originalName = Str::replace(' ', '' ,Str::uuid().'-'.$produkId. '-'.$gambar->getClientOriginalName());
-        
-        
-        $produkId     = $request->id;
-        $variant      = $request->nama;
-        $jumlah       = $request->stok;
-        $harga        = $request->harga;
-        $gambar       = $request->file('gambar');
-        $originalName = Str::replace(' ', '', Str::uuid() . '-' . $produkId . '-' . $gambar->getClientOriginalName());
-
         $data = [
             'variant'   => $variant,
             'produk_id' => $produkId,

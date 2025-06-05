@@ -33,6 +33,7 @@ class TransaksiController extends Controller
         $request->validate($validate, $pesanValidasi);
         $jumlah = $request->jumlah;
         $userId = $request->session()->get('user_id');
+
         $produkVariant = ProdukVariant::where('id', '=', $id)->first();
         
         if($produkVariant){
@@ -77,6 +78,7 @@ class TransaksiController extends Controller
 
         // gunakan dependency injection order service
         if($this->orderService->addOrder($data, $error, $linkBayar)){
+            Log::info("User dengan id $userId berhasil melakukan pemesanan");
             $data = [
                 'status' => 'berhasil',
                 'redirect_url' => $linkBayar
@@ -97,12 +99,15 @@ class TransaksiController extends Controller
     {
         $userId = $request->userId;
         $totalHarga = $request->totalHarga;
+        $username = $request->session()->get('username');
         $data = [
             'userId' => $userId,
-            'totalHarga' => $totalHarga
+            'totalHarga' => $totalHarga,
+            'username' => $username
         ];
         $error = null;
        if($this->orderService->addOrders($data, $error)){
+        Log::info("User dengan user id $userId berhasil order pesanan dari cart");
         return redirect('/cart')->with('status', 'order berhasil');
        }else{
         return redirect('/cart')->with('status', $error);
@@ -111,7 +116,6 @@ class TransaksiController extends Controller
 
     private function initWebhook($orderId)
     {
-
         $auth = base64_encode(env('MIDTRANS_SERVER_KEY'));
         $midtransResponse = Http::withHeaders([
             'Accept' => 'application/json',
@@ -119,24 +123,37 @@ class TransaksiController extends Controller
             'Authorization' => "Basic $auth"
             ])->get("https://api.sandbox.midtrans.com/v2/$orderId/status");
             
-            $response = json_decode($midtransResponse->body());
-            return $response;
-        }
+        $response = json_decode($midtransResponse->body());
+        return $response;
+    }
         
     public function webhook(Request $request)
     {
         Log::info("Webhook dari midtrans");
         $response = initWebhook($request->order_id);
         if ($response->transaction_status === 'settlement') {
-            DB::statement("UPDATE table_orders SET is_dibayar = ? WHERE order_id = ?", [1, $response->order_id]);
-            
-            $query = "UPDATE stoks SET jumlah = jumlah - (SELECT jumlah FROM order_items
-                        WHERE order_id = (SELECT id FROM table_orders WHERE order_id = ?))
-                        WHERE variant_id = (SELECT variant_id FROM order_items
-                        WHERE order_id = (SELECT id FROM table_orders WHERE order_id = ?))";
-
-            DB::statement($query, [$response->order_id, $response->order_id]);
-            Log::info("Berhasil update produk dengan order id $response->order_id");
+            DB::beginTransaction();
+            try{
+                DB::statement("UPDATE table_orders SET is_dibayar = ? WHERE order_id = ?", [1, $response->order_id]);
+                $query = "UPDATE stoks
+                        JOIN order_items ON stoks.variant_id = order_items.variant_id
+                        JOIN table_orders ON order_items.order_id = table_orders.id
+                        SET stoks.jumlah = stoks.jumlah - order_items.jumlah
+                        WHERE table_orders.order_id = ? AND stoks.jumlah >= order_items.jumlah
+                        ";
+                $update = DB::update($query, [$response->order_id]);
+                if($update <= 0) {
+                    DB::rollback();
+                    Log::info("Order id $response->order_id, gagal melakukan pembelian karna order id tidak valid atau stok tidak mencukupi");
+                    return response()->json(['message' => 'Gagal melakukan chechkout karna order id atau stok tidak mencukupi'], 402);
+                }
+                DB::commit();
+                Log::info("Berhasil update produk dengan order id $response->order_id");
+                return response()->json(['message' => 'Berhasil melakukan order ' . $response->order_id]);
+            }catch(\Exception $e){
+                DB::rollback();
+                return response()->json(['message' => 'Pembelian gagal' . $e->getMessage()]);
+            }
         }
         return response()->json(['message' => 'Webhook processed']);
     }
