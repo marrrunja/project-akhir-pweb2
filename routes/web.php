@@ -13,6 +13,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Produk\ProdukController;
 use App\Http\Middleware\Auth\SessionHasMiddleware;
+use App\Http\Controllers\Transaksi\OrderController;
 use App\Http\Middleware\Auth\SessionHasNotMiddleware;
 use App\Http\Controllers\Transaksi\TransaksiController;
 use App\Http\Controllers\Api\ProdukVariantApiController;
@@ -84,6 +85,11 @@ Route::get('/api/orderListByTanggal', [ApiController::class, 'urutkanDataByTangg
 Route::get('api/produk/variants/edit',[ProdukVariantApiController::class, 'editProdukVariant']);
 
 
+// route untuk menangani tampilan order seperti history dan lain lain
+Route::controller(OrderController::class)->prefix('/order')->group(function(){
+    Route::get('/index', 'index');
+});
+
 Route::get('/payment/view', [PaymentController::class, 'index']);
 Route::get('/tanggal',function(){
     echo now()->format('Y-m-d');
@@ -105,8 +111,3 @@ Route::get('/detail', function () {
     return view('detail');
 });
 
-Route::get('/coba/id', function(){
-    \Illuminate\Support\Facades\DB::statement('UPDATE table_orders SET is_dibayar = ? WHERE order_id = ?',[ 1,'INV-2025-06-04-20']);
-    \Illuminate\Support\Facades\Log::info("Coba aja sih bro");
-    return "Udah";
-});

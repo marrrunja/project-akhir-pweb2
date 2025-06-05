@@ -81,7 +81,7 @@ class TransaksiController extends Controller
                 'status' => 'berhasil',
                 'redirect_url' => $linkBayar
             ];
-            return response()->json($data);
+            return response()->json($data, 200);
         }else{
             return response()->json([
                 'pesan' => $error,
@@ -109,19 +109,33 @@ class TransaksiController extends Controller
        }
     }
 
-    public function webhook(Request $request)
+    private function initWebhook($orderId)
     {
-        Log::info("Webhook dari midtrans");
+
         $auth = base64_encode(env('MIDTRANS_SERVER_KEY'));
         $midtransResponse = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'Authorization' => "Basic $auth"
-        ])->get("https://api.sandbox.midtrans.com/v2/$request->order_id/status");
-
-        $response = json_decode($midtransResponse->body());
+            ])->get("https://api.sandbox.midtrans.com/v2/$orderId/status");
+            
+            $response = json_decode($midtransResponse->body());
+            return $response;
+        }
+        
+    public function webhook(Request $request)
+    {
+        Log::info("Webhook dari midtrans");
+        $response = initWebhook($request->order_id);
         if ($response->transaction_status === 'settlement') {
             DB::statement("UPDATE table_orders SET is_dibayar = ? WHERE order_id = ?", [1, $response->order_id]);
+            
+            $query = "UPDATE stoks SET jumlah = jumlah - (SELECT jumlah FROM order_items
+                        WHERE order_id = (SELECT id FROM table_orders WHERE order_id = ?))
+                        WHERE variant_id = (SELECT variant_id FROM order_items
+                        WHERE order_id = (SELECT id FROM table_orders WHERE order_id = ?))";
+
+            DB::statement($query, [$response->order_id, $response->order_id]);
             Log::info("Berhasil update produk dengan order id $response->order_id");
         }
         return response()->json(['message' => 'Webhook processed']);

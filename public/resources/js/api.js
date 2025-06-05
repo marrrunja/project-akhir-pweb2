@@ -40,8 +40,7 @@ async function getDataSearchFromApi(keyword, element)
 
 function onButtonSearchClick()
 {
-	getDataSearchFromApi(inputCari.value, containerTableProduk);
-	
+	getDataSearchFromApi(inputCari.value, containerTableProduk);	
 }
 
 function onKeyDownEnterInput(e)

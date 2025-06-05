@@ -1,4 +1,5 @@
-<?php  
+<?php
+  
 namespace App\Services\Transaksi;
 use Carbon\Carbon;
 use App\Models\Pembeli;
@@ -38,6 +39,7 @@ class OrderService
 			DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$cart->qty, $cart->variant_id]);
 		}
 	}
+
 	private function initMidtrans(array $data, $orderId):array
 	{
 		$pembeli = Pembeli::where('username', '=',$data['username'])->first();
@@ -109,7 +111,8 @@ class OrderService
 	        	'updated_at' => Carbon::now()
 	        ]);
 	        $lastInsertOrderItemsId = DB::getPdo()->lastInsertId();
-	        DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$data['jumlah'], $data['variantId']]);
+			// stok baru di update, saat user menyelesaikan pembayaran
+	        // DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$data['jumlah'], $data['variantId']]);
 
             $response = $this->initMidtrans($data, $orderId);
             if (!isset($response['redirect_url'])) {

@@ -44,7 +44,7 @@
         </div>
         <div class="row mb-4">
           <div class="col-12">
-             <h1>Daftar produk yang tersedia</h1>
+             <h1 class="fw-bold">Daftar produk yang tersedia</h1>
           </div>
           @if(Session::has('status'))
           <div class="col-12 col-md-10 col-xl-6">
