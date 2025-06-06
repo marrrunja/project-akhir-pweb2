@@ -16,7 +16,8 @@ use App\Services\Transaksi\OrderService;
 class TransaksiController extends Controller
 {
     private OrderService $orderService;
-    public function __construct(OrderService $orderService){
+    public function __construct(OrderService $orderService)
+    {
         $this->orderService = $orderService;
     }
     
@@ -130,11 +131,23 @@ class TransaksiController extends Controller
     public function webhook(Request $request)
     {
         Log::info("Webhook dari midtrans");
-        $response = initWebhook($request->order_id);
+        $response = $this->initWebhook($request->order_id);
         if ($response->transaction_status === 'settlement') {
             DB::beginTransaction();
             try{
+                // update is dibayar menjadi satu ketika pembayaran sudah lunas
                 DB::statement("UPDATE table_orders SET is_dibayar = ? WHERE order_id = ?", [1, $response->order_id]);
+                $variantIds = DB::table('order_items')
+                    ->join('table_orders', 'order_items.order_id', '=', 'table_orders.id')
+                    ->where('table_orders.order_id','=',$response->order_id)
+                    ->pluck('order_items.variant_id');
+
+                // lock update nya untuk mencegah reace condition
+                DB::table('stoks')
+                    ->whereIn('variant_id', $variantIds)
+                    ->lockForUpdate()
+                    ->get();
+
                 $query = "UPDATE stoks
                         JOIN order_items ON stoks.variant_id = order_items.variant_id
                         JOIN table_orders ON order_items.order_id = table_orders.id
@@ -145,20 +158,20 @@ class TransaksiController extends Controller
                 if($update <= 0) {
                     DB::rollback();
                     Log::info("Order id $response->order_id, gagal melakukan pembelian karna order id tidak valid atau stok tidak mencukupi");
-                    return response()->json(['message' => 'Gagal melakukan chechkout karna order id atau stok tidak mencukupi'], 402);
+                    return response()->json(['message' => 'Gagal melakukan chechkout karna order id atau stok tidak mencukupi'], 422);
                 }
                 DB::commit();
                 Log::info("Berhasil update produk dengan order id $response->order_id");
-                return response()->json(['message' => 'Berhasil melakukan order ' . $response->order_id]);
+                return response()->json(['message' => 'Berhasil melakukan order ' . $response->order_id],200);
             }catch(\Exception $e){
                 DB::rollback();
-                return response()->json(['message' => 'Pembelian gagal' . $e->getMessage()]);
+                return response()->json(['message' => 'Pembelian gagal' . $e->getMessage()],422);
             }
         }
         return response()->json(['message' => 'Webhook processed']);
     }
 
-    public function success(Request $request):Response{
+    public function success(Request $request){
         return "Order sukses";
     }
 

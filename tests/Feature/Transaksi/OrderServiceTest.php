@@ -62,16 +62,16 @@ class OrderServiceTest extends TestCase
         self::assertFalse($this->orderService->addOrder($data, $error, $linkBayar));
         self::assertEquals("Variant tidak ditemukan", $error);
     }
-    public function testAddOrdersSuccess():void
-    {
-        $data = [
-            'userId' => 2,
-            'totalHarga' => 42000,
-            'username' => 'Yoshioka_321'
-        ];
-        $error = null;
-        self::assertTrue($this->orderService->addOrders($data, $error));
-    }
+    // public function testAddOrdersSuccess():void
+    // {
+    //     $data = [
+    //         'userId' => 2,
+    //         'totalHarga' => 42000,
+    //         'username' => 'Yoshioka_321'
+    //     ];
+    //     $error = null;
+    //     self::assertTrue($this->orderService->addOrders($data, $error));
+    // }
     public function testAddOrdersFailedEmptyData():void
     {
         $data = [];

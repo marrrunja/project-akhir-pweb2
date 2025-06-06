@@ -111,3 +111,17 @@ Route::get('/detail', function () {
     return view('detail');
 });
 
+
+Route::get('/coba/race', function(){
+    $currentStok = DB::table('stoks')
+        ->join('produk_variants', 'stoks.variant_id', '=', 'produk_variants.id')
+        ->join('order_items', 'produk_variants.id', '=', 'order_items.variant_id')
+        ->join('table_orders', 'order_items.order_id', '=', 'table_orders.id')
+        ->select('stoks.jumlah')
+        ->where('table_orders.order_id', '=', 'INV-2025-06-05-62')
+        ->lockForUpdate()
+        ->get();
+    dd($currentStok);
+
+});
+

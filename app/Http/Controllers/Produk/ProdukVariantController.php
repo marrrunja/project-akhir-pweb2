@@ -20,6 +20,7 @@ class ProdukVariantController extends Controller
     {
         $this->produkVariantService = $produkVariantService;
     }
+
     public function produkVariant(Request $request): Response | RedirectResponse
     {
         $id       = $request->id;
@@ -32,7 +33,6 @@ class ProdukVariantController extends Controller
         } else {
             return redirect('/produk/index');
         }
-
     }
 
     public function addProdukVariant(Request $request)
@@ -95,12 +95,12 @@ class ProdukVariantController extends Controller
     {
 
         // ambil semua request
-        $id           = $request->id;
-        $harga        = $request->harga;
-        $jumlah       = $request->jumlah;
-        $varian       = $request->variant;
-        $fotoLama     = $request->foto;
-        $fotoBaru     = $request->file('gambar');
+        $id = $request->id;
+        $harga = $request->harga;
+        $jumlah = $request->jumlah;
+        $varian = $request->variant;
+        $fotoLama = $request->foto;
+        $fotoBaru = $request->file('gambar');
         $originalName = '';
 
         // jika foto barunya null(tidak ada) maka isi original name dengan foto lama
@@ -131,15 +131,18 @@ class ProdukVariantController extends Controller
         if ($updateVariant > 0 || $updateStok > 0) {
             $status = "Berhasil update data";
             $alert  = "success";
+            $flashMessage = [
+                'status' => $status,
+                'alert'  => $alert,
+            ];
+            return redirect()->back()->with($flashMessage);
         } else {
-            $status = "Tidak ada yang diupdate";
-            $alert  = "warning";
+            $flashMessage = [
+                'status' => "Tidak ada yang diupdate",
+                'alert' => 'warning'
+            ];
+            return redirect()->back()->with($flashMessage);
         }
-        $flashMessage = [
-            'status' => $status,
-            'alert'  => $alert,
-        ];
-        return redirect()->back()->with($flashMessage);
     }
 
     public function search(Request $request): Response

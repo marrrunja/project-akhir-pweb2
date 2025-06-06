@@ -37,7 +37,6 @@ class OrderService
 				'created_at' => Carbon::now(),
 				'updated_at' => Carbon::now()
 			]);
-			DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$cart->qty, $cart->variant_id]);
 		}
 	}
 
