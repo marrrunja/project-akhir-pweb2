@@ -42,7 +42,8 @@
             <nav class="breadcrumbs">
                 <ol>
                     <li><a href="/">Home</a></li>
-                    <li class="current">History Pembelian</li>
+                    <li><a href="/order/index">Order History</a></li>
+                    <li class="current">Detail Order</li>
                 </ol>
             </nav>
         </div>
@@ -58,63 +59,58 @@
             <p>Klik lihat detail untuk melihat detail setiap pesanan</p>
         </div><!-- End Section Title -->
 
-        <div class="container" data-aos="fade-up">
-            @if(Session::has('status'))
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-6 col-xl-6">
-                    <div class="alert alert-primary">
-                        {{ Session::get('status') }}
+        <div class="container" data-aos="fade-up" id="content">
+            <!-- Header untuk perangkat menengah ke atas -->
+            <div
+                class="row mb-2 px-3 py-2 bg-ungu text-white rounded shadow-sm fw-semibold text-center d-none d-md-flex">
+                <div class="col-md-3">Foto</div>
+                <div class="col-md-2">Nama Produk</div>
+                <div class="col-md-2">Jumlah</div>
+                <div class="col-md-2">Harga Satuan</div>
+                <div class="col-md-2">Total Harga</div>
+            </div>
+
+            @foreach($items as $item)
+            <!-- Card responsive untuk tiap item -->
+            <div id="row-{{ $item->id }}" class="row justify-content-center px-3 py-3 mb-3 bg-white border rounded shadow-sm align-items-center">
+                <!-- Mobile View -->
+                <div class="d-block d-md-none">
+                    <div class="d-flex mb-2">
+                        <div class="me-3">
+                            <img src="{{ asset('storage/image-variant/'.$item->foto) }}" alt="Foto Produk"
+                                class="img-fluid rounded" style="max-width: 100px;">
+                        </div>
+                        <div>
+                            <div><strong>{{ $item->nama }}</strong> <br><small
+                                    class="text-muted">{{ $item->variant }}</small></div>
+                            <div>Jumlah: <strong>{{ $item->jumlah }}</strong></div>
+                            <div>Harga: Rp{{ number_format($item->harga, 0, ',', '.') }}</div>
+                            <div>Total: Rp{{ number_format($item->total_harga, 0, ',', '.') }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop View -->
+                <div class="d-none d-md-flex text-center align-items-center">
+                    <div class="col-md-3">
+                        <img src="{{ asset('storage/image-variant/'.$item->foto) }}" alt="Foto Produk"
+                            class="img-fluid rounded" style="max-width: 100px;">
+                    </div>
+                    <div class="col-md-2">
+                        <strong>{{ $item->nama }}</strong><br><small class="text-muted">{{ $item->variant }}</small>
+                    </div>
+                    <div class="col-md-2">
+                        {{ $item->jumlah }}
+                    </div>
+                    <div class="col-md-2">
+                        Rp{{ number_format($item->harga, 0, ',', '.') }}
+                    </div>
+                    <div class="col-md-2">
+                        Rp{{ number_format($item->total_harga, 0, ',', '.') }}
                     </div>
                 </div>
             </div>
-            @endif
-            <div class="row d-flex justify-content-center mb-2">
-                <div class="col text-center">
-                    Total {{ count($orders) }} pesanan
-                </div>
-            </div>
-            <table class="table table-stripped">
-                <thead>
-                    <tr>
-                        <th class="text-center py-4">Order Id</th>
-                        <th class="text-center py-4">Tanggal Transaksi</th>
-                        <th class="text-center py-4">Total Harga</th>
-                        <th class="text-center py-4">Status</th>
-                        <th class="text-center py-4">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="body-table">
-                    @foreach($orders as $order)
-                    <tr>
-                        <td class="py-4 text-center">{{ $order->order_id }}</td>
-                        <td class="py-4 text-center">{{ $order->tanggal_transaksi }}</td>
-                        <td class="py-4 text-center">Rp {{ $order->total_harga }}</td>
-                        <td class="py-4 text-center">{{ $order->is_dibayar == 1 ? "Sudah dibayar" : "Belum dibayar" }}
-                        </td>
-                        <td class="py-4 text-center" class="dropdown">
-                            <i class="bi bi-three-dots-vertical text-ungu-utama fw-bold" data-bs-toggle="dropdown"
-                                style="cursor:pointer;"></i>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item hover" href="/order/detail/{{ $order->id }}">
-                                        Lihat detail
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item hover" href="{{ $order->link_bayar }}">
-                                        Link pembayaran
-                                    </a>
-                                </li>
-                                <li>
-                                    <span class="text-danger dropdown-item hapus" data-id="{{ $order->id }}">Hapus orderan</span>
-                                </li>
-                            </ul>
-
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            @endforeach
         </div>
     </section>
     <!-- /Starter Section Section -->

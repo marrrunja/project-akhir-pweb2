@@ -128,7 +128,7 @@ class TransaksiController extends Controller
         return $response;
     }
         
-    public function webhook(Request $request)
+    public function webhook(Request $request):JsonResponse
     {
         Log::info("Webhook dari midtrans");
         $response = $this->initWebhook($request->order_id);
@@ -142,7 +142,7 @@ class TransaksiController extends Controller
                     ->where('table_orders.order_id','=',$response->order_id)
                     ->pluck('order_items.variant_id');
 
-                // lock update nya untuk mencegah reace condition
+                // lock update nya untuk mencegah race condition
                 DB::table('stoks')
                     ->whereIn('variant_id', $variantIds)
                     ->lockForUpdate()

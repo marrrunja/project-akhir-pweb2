@@ -6,6 +6,7 @@
     @yield('meta')
     <title>@yield('title')</title>
     @stack('styles')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     @include('layout.header')

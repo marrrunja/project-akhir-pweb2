@@ -2,28 +2,67 @@
 
 namespace App\Http\Controllers\Produk;
 
-use App\Http\Controllers\Controller;
-use App\Models\Produk\Product;
-use App\Models\Produk\ProdukVariant;
+use Carbon\Carbon;
 use App\Models\Produk\Stok;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\Produk\Product;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\Produk\ProdukVariant;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
-use Illuminate\Support\Str;
 
 class ProdukController extends Controller
 {
     public function index(): Response
     {
         //DB::raw('SUM(price) as total_sales')
-        $produk = DB::table('products')->get();
+        $produk = DB::table('products')
+        ->join('kategoris', 'products.kategori_id', '=', 'kategoris.id')
+        ->select('products.id', 'products.nama', 'products.detail', 'products.foto', 'kategoris.kategori', 'kategoris.id')
+        ->get();
         $data   = [
             'products' => $produk,
         ];
         return response()->view('produk.index', $data);
+    }
+    public function detailProdukModal(Request $request)
+    {
+        $id = $request->id;
+        $produk = DB::table('products')
+        ->join('kategoris', 'products.kategori_id', '=', 'kategoris.id')
+        ->select('products.id', 'products.nama', 'products.detail', 'products.foto', 'kategoris.kategori', 'kategoris.id')
+        ->where('products.id', '=', $id)
+        ->first();
+        $data   = [
+            'produk' => $produk,
+        ];
+
+        return view('partial.detail-produk', $data)->render();
+    }
+    public function getProdukByKategoriId(Request $request)
+    {
+        $id = $request->kategori;
+        
+        $produk = DB::table('products')
+        ->join('kategoris', 'products.kategori_id', '=', 'kategoris.id')
+        ->select('products.id', 'products.nama', 'products.detail', 'products.foto', 'kategoris.kategori', 'kategoris.id');
+        if($id != 'null'){
+            $produk = $produk->where('products.kategori_id', '=', $id)->get();
+        }
+        else {
+            $produk = $produk->get();
+        }
+
+        $data   = [
+            'products' => $produk,
+        ];
+
+        return view('partial.produk-by-kategori-id', $data)->render();
+
     }
     public function produkVariant(Request $request): Response | RedirectResponse
     {

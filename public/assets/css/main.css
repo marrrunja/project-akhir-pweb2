@@ -13010,3 +13010,26 @@ section,
   color: color-mix(in srgb, var(--default-color), transparent 60%);
   font-size: 14px;
 }
+
+
+#kolom-filter ul li{
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 30px;
+  list-style: none;
+  padding: 8px 20px;
+  background-color: #f4f4f4;
+  transition: all 0.3s ease;
+}
+#kolom-filter ul li.active{
+  background-color:  #8c0d4f;
+  color: white;
+}
+#kolom-filter ul li:hover{
+  background-color: #f3e6ed;
+  color:#8c0d4f;
+}
+#kolom-filter ul{
+  gap: 1rem;
+
+}

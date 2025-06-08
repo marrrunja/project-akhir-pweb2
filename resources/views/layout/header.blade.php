@@ -158,7 +158,6 @@
                         "effect": "slide",
                         "direction": "vertical"
                     }
-
                 </script>
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">Dapatkan produk berkualitas di adillasnack</div>
@@ -182,3 +181,6 @@
         </div>
     </div>
 </header>
+
+
+
