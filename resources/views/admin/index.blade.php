@@ -7,25 +7,6 @@
     <link href="../../../../templatesbadmin2/css/sb-admin-2.min.css" rel="stylesheet">
 @endpush
 
-@push('script')
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-@endpush
-
 @section('body')
     <div id="wrapper" class="d-flex">
         <div class="d-none d-md-block">
@@ -46,10 +27,9 @@
                         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                             <!-- Sidebar Toggle -->
+                            <!-- tolong ngab amar, pas mode tablet/andro, di klik ngg muncul navbar -->
                             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                                 <i class="fa fa-bars"></i>
-
-
                             </button>
 
                             <!-- Welcome Text -->
@@ -183,3 +163,25 @@
 
                 </div>
 @endsection
+
+            @push('scripts')
+                <!-- Bootstrap core JavaScript-->
+                <script src="vendor/jquery/jquery.min.js"></script>
+                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+                <!-- Core plugin JavaScript-->
+                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+                <!-- Custom scripts for all pages-->
+                <script src="js/sb-admin-2.min.js"></script>
+
+                <!-- Page level plugins -->
+                <script src="vendor/chart.js/Chart.min.js"></script>
+
+                <!-- Page level custom scripts -->
+                <script src="js/demo/chart-area-demo.js"></script>
+                <script src="js/demo/chart-pie-demo.js"></script>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="../../../../templatesbadmin2/js/sb-admin-2.min.js"></script>
+            @endpush

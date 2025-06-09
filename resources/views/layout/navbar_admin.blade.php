@@ -14,9 +14,8 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="">
-            <!-- link nya di isi route yang mana -->
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+        <a class="nav-link" href="/admin/index"">
+            <i class=" fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
 
@@ -61,10 +60,4 @@
     <!-- Sidebar Toggler (Centered Vertically) -->
     <div class="d-flex justify-content-center">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../../../templatesbadmin2/js/sb-admin-2.min.js"></script>
-
-</ul>
+    </div></ul>
