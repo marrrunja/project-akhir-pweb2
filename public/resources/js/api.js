@@ -188,3 +188,6 @@ if(kategori != null){
         });
     }
 }
+
+
+console.log("hello world");
