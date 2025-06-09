@@ -65,7 +65,7 @@
                         </ul>
                     </div>
                 </div>
-               
+
             </div>
             <!-- <div class="row">
                  <div class="col-12 text-center d-flex justify-content-center" id="kolom-filter">
@@ -89,7 +89,8 @@
                 </div>
                 @endif
             </div>
-            <div class="row product-container isotope-container" id="list-produk" data-aos="fade-up" data-aos-delay="200">
+            <div class="row product-container isotope-container" id="list-produk" data-aos="fade-up"
+                data-aos-delay="200">
                 <!-- Product Item 1 -->
                 @foreach($products as $product)
                 <div class="col-md-6 col-lg-3 product-item isotope-item filter-clothing">
@@ -105,10 +106,11 @@
                             <h5 class="product-title"><a
                                     href="{{ route('produk.variant', $product->id) }}">{{ $product->nama }}</a></h5>
                             <div class="product-price">
-                                <span class="">{{ Str::limit($product->detail, 10) }}</span>
+                                <span class="">{{ Str::limit($product->detail, 25) }}</span>
                             </div>
                             <div class="product-price">
-                                <a href="/produk/detail/{{ $product->id }}" class="current-price btn-modal" data-id="{{ $product->id }}" data-bs-toggle="modal"
+                                <a href="/produk/detail/{{ $product->id }}" class="current-price btn-modal"
+                                    data-id="{{ $product->id }}" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">Detail produk
                                     &raquo;</a>
                             </div>
@@ -116,11 +118,31 @@
                     </div>
                 </div><!-- End Product Item -->
                 @endforeach
+
             </div>
         </div>
     </section><!-- /Product List Section -->
 </main>
+<!-- <section class="pb-5">
+    <div class="container">
+        <div class="row gap-2">
+            @foreach($products as $product)
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="card border-0 shadow position-relative card-produk">
+                    <span class="badge position-absolute">{{ $product->kategori }}</span>
+                    <img src="{{ asset('storage/images/'.$product->foto) }}" class="card-img-top" alt="">
+                    <div class="card-body">
+                       <h5><a
+                                    href="{{ route('produk.variant', $product->id) }}">{{ $product->nama }}</a></h5>
+                        
+                    </div>
+                </div>
 
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section> -->
 <!-- modal -->
 <!-- Button trigger modal -->
 <!-- Modal -->

@@ -163,7 +163,7 @@ if (bodyTable != null)
 if(listProduk != null)
     listProduk.addEventListener("click", showDetailProduk);
 
-let data;
+let data = null;
 if(kategori != null){
     for(let i = 0; i < kategori.length; i++){
         kategori[i].addEventListener("click",async function(){
@@ -184,7 +184,6 @@ if(kategori != null){
                     data = await getProdukByKategoriId(null);
                     listProduk.innerHTML= data;
                     break;
-
             }
         });
     }
