@@ -79,33 +79,32 @@
                             </div>
                             <div class="dropdown-body">
                                 <div class="cart-items">
-                                    @foreach (\App\Models\Cart::getAllCartWithUserId(Session::get('user_id')) as $item)
-                                        <div class="cart-item">
-                                            <div class="cart-item-image">
-                                                <img class="card-img-top"
-                                                    src="{{ asset('storage/image-variant/' . $item->variant->foto) }}"
-                                                    alt="Card image cap">
-                                            </div>
-                                            <div class="cart-item-content">
-                                                <h6 class="cart-item-title">{{ $item->variant->produk->nama }}</h6>
-                                                <div class="product-meta">
-                                                    <span
-                                                        class="product-color">{{ $item->variant->variant ?? 'Variant' }}</span>
-                                                </div>
-                                                <div class="cart-item-meta">
-                                                    <span class="current-price">
-                                                        {{ $item->qty }}
-                                                    </span> ×
-                                                    <span class="item-total">
-                                                        Rp{{ number_format(($item->variant->harga ?? 0) * $item->qty) }}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <button class="remove-item" data-id="{{ $item->id }}"
-                                                data-user="{{ Session::get('user_id') }}" type="button">
-                                                <i class="bi bi-trash"></i> Remove
-                                            </button>
+                                    @foreach(\App\Models\Cart::getAllCartWithUserId(Session::get('user_id')) as $item)
+                                    <div class="cart-item">
+                                        <div class="cart-item-image">
+                                            <img src="{{ asset('storage/image-variant/'.$item->variant->foto) }}" alt="Product"
+                                                class="img-fluid">
                                         </div>
+                                        <div class="cart-item-content">
+                                            <h6 class="cart-item-title">{{ $item->variant->produk->nama}}</h6>
+                                            <div class="product-meta">
+                                                <span
+                                                    class="product-color">{{ $item->variant->variant ?? 'Variant' }}</span>
+                                            </div>
+                                            <div class="cart-iteaam-meta">
+                                                <span class="current-price">
+                                                    {{ $item->qty }}
+                                                </span> ×
+                                                <span class="item-total">
+                                                    Rp{{ number_format(($item->variant->harga ?? 0) * $item->qty) }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <button class="remove-item" data-id="{{ $item->id }}"
+                                            data-user="{{ Session::get('user_id') }}" type="button">
+                                            <i class="bi bi-trash"></i> Remove
+                                        </button>
+                                    </div>
                                     @endforeach
 
                                 </div>
@@ -135,7 +134,7 @@
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="/" class="{{ request()->is('/') ? 'active':''}}">Home</a></li>
-                    <li><a href="/produk/index" class="{{ request()->is('produk/index') ? 'active':''}}">Produk</a><//li>
+                    <li><a href="/produk/index" class="{{ request()->is('produk/index') ? 'active':''}}">Produk</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="checkout.html">History Pembelian</a></li>
                 </ul>
