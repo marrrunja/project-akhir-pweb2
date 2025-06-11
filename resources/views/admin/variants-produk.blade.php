@@ -54,6 +54,15 @@
                             <button class="btn btn-primary mb-3 mt-2" data-id="{{ $id }}" id="btnTambahProdukVariant">[+]
                                 Tambah Variant</button>
                         </div>
+                        <div class="row">
+                            <div class="col-12 col-xl-5">
+                                @if(Session::has('status') && Session::has('alert'))
+                                    <div class="alert alert-{{ Session::get('alert') }}">{{ Session::get('status') }}</div>
+                                @endif
+                                <form action="" method="POST" id="form-tambah" enctype="multipart/form-data"></form>
+
+                            </div>
+                        </div>
                         <form action="" id="formUbah" method="post">
                             <div class="row" id="rowKonten">
                                 <div class="table-responsive" id="content-row">
