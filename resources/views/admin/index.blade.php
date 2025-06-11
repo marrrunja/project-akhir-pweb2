@@ -1,206 +1,187 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout.layout-admin')
+@section('title', 'homeAdmin')
 
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard Admin</title>
-
-    <!-- Font Awesome -->
+@push('styles')
     <link href="../../../../templatesbadmin2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700,900" rel="stylesheet">
-
-    <!-- Custom styles -->
     <link href="../../../../templatesbadmin2/css/sb-admin-2.min.css" rel="stylesheet">
+@endpush
 
-    <style>
-        .card-hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
+@section('body')
+    <div id="wrapper" class="d-flex">
+        <div class="d-none d-md-block">
+            @include('layout.navbar_admin')
+        </div>
 
-        .card-hover:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
-        }
+        {{-- Konten utama di samping navbar --}}
+        <div class="container-fluid">
+            <!-- Page Wrapper -->
+            <div id="wrapper">
+                <!-- Content Wrapper -->
+                <div id="content-wrapper" class="d-flex flex-column">
 
-        /* Hover effect tombol */
-        .btn-hover {
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
+                    <!-- Main Content -->
+                    <div id="content">
 
-        .btn-hover:hover {
-            filter: brightness(110%);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
+                        <!-- Topbar -->
+                        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-        .me-2 {
-            margin-right: 0.5rem;
-        }
-    </style>
-</head>
+                            <!-- Sidebar Toggle -->
+                            <!-- tolong ngab amar, pas mode tablet/andro, di klik ngg muncul navbar -->
+                            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                                <i class="fa fa-bars"></i>
+                            </button>
 
-<body id="page-top">
+                            <!-- Welcome Text -->
+                            <div class="mr-auto ml-2 my-2">
+                                <span class="small text-gray-800 fw-bold">
+                                    Selamat Datang di <strong>Dashboard Admin</strong>
+                                </span>
+                            </div>
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            <div id="content">
+                            <!-- Navbar -->
+                            <ul class="navbar-nav ml-auto">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                                <li class="nav-item d-flex align-items-center">
+                                    <a href="#" class="btn btn-sm btn-danger shadow-sm me-3">
+                                        <!-- link nya dinisi route yang mana -->
+                                        <i class="fas fa-sign-out-alt fa-sm text-white-50 me-2"></i> Logout
+                                    </a>
+                                </li>
+                                <div class="topbar-divider d-none d-sm-block"></div>
 
-                    <!-- Sidebar Toggle -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                                <!-- User Info -->
+                                <li class="nav-item dropdown no-arrow">
+                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                        <img class="img-profile rounded-circle"
+                                            src="../../../../templatesbadmin2/img/undraw_profile.svg">
+                                    </a>
+                                </li>
+                            </ul>
 
-                    <!-- Welcome Text -->
-                    <div class="d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0">
-                        <span class="small text-gray-800 fw-bold">
-                            Selamat Datang di <strong>Dashboard Admin</strong>
-                        </span>
-                    </div>
+                        </nav>
+                        <!-- End of Topbar -->
 
-                    <!-- Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <div class="topbar-divider d-none d-sm-block"></div>
+                        <!-- Content Row -->
+                        <div class="row">
 
-                        <!-- User Info -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="../../../../templatesbadmin2/img/undraw_profile.svg">
-                            </a>
-                        </li>
-                    </ul>
-
-                </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid min-vh-80">
-
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800 fw-bold">Silahkan Pilih Menu Yang Tersedia</h1>
-                        <a href="logout.php" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm btn-hover">
-                            <i class="fas fa-sign-out-alt fa-sm text-white-50 me-2"></i> Logout
-                        </a>
-                    </div>
-
-                    <!-- Menu Cards -->
-                    <div class="row gx-4 gy-4">
-
-                        <!-- Tambah Produk -->
-                        <div class="col-12 col-md-4 mb-4">
-                            <div class="card border-left-primary shadow-sm h-100 d-flex flex-column">
-                                <div class="card-body d-flex flex-column justify-content-between text-center">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-xs font-weight-bold text-primary text-uppercase mb-3">
-                                            Tambah Produk
-                                        </h6>
-                                        <p class="mb-4 text-gray-700 fw-semibold">
-                                            Klik tombol di bawah untuk menambah produk baru.
-                                        </p>
+                            <!-- Earnings (Monthly) Card Example -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-primary shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                    Earnings (Monthly)</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="mt-auto">
-                                        <a href="{{ route('admin.tambah') }}"
-                                            class="btn btn-primary btn-lg shadow-sm w-100">
-                                            <i class="fas fa-plus fa-sm me-2"></i> Tambah Produk
-                                        </a>
+                                </div>
+                            </div>
+
+                            <!-- Earnings (Monthly) Card Example -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    Earnings (Annual)</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Earnings (Monthly) Card Example -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-info shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                    Tasks
+                                                </div>
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="progress progress-sm mr-2">
+                                                            <div class="progress-bar bg-info" role="progressbar"
+                                                                style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                                aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pending Requests Card Example -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-warning shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                    Pending Requests</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
 
-                        <!-- Lihat Produk -->
-                        <div class="col-12 col-md-4 mb-4">
-                            <div class="card border-left-success shadow-sm h-100 d-flex flex-column">
-                                <div class="card-body d-flex flex-column justify-content-between text-center">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-xs font-weight-bold text-success text-uppercase mb-3">
-                                            Lihat Produk
-                                        </h6>
-                                        <p class="mb-4 text-gray-700 fw-semibold">
-                                            Klik tombol di bawah untuk melihat daftar produk.
-                                        </p>
-                                    </div>
-                                    <div class="mt-auto">
-                                        <a href="{{ route('admin.manage') }}"
-                                            class="btn btn-success btn-lg shadow-sm w-100">
-                                            <i class="fas fa-box-open fa-sm me-2"></i> Lihat Produk
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Laporan Penjualan -->
-                        <div class="col-12 col-md-4 mb-4">
-                            <div class="card border-left-warning shadow-sm h-100 d-flex flex-column">
-                                <div class="card-body d-flex flex-column justify-content-between text-center">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-xs font-weight-bold text-warning text-uppercase mb-3">
-                                            Lihat Laporan Penjualan
-                                        </h6>
-                                        <p class="mb-4 text-gray-700 fw-semibold">
-                                            Klik tombol di bawah untuk melihat laporan penjualan.
-                                        </p>
-                                    </div>
-                                    <div class="mt-auto">
-                                        <a href="{{ route('admin.order') }}"
-                                            class="btn btn-warning btn-lg shadow-sm w-100">
-                                            <i class="fas fa-chart-line fa-sm me-2"></i> Lihat Laporan
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        <!-- End Row -->
 
                     </div>
-                    <!-- End Row -->
+                    <!-- /.container-fluid -->
 
                 </div>
-                <!-- /.container-fluid -->
+@endsection
 
-                @extends('layout.layout-admin')
-                @section('title', 'Halaman home admin')
-
-
-                @push('styles')
-                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-                        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
-                        crossorigin="anonymous">
-                    <link rel="stylesheet" type="text/css" href="{{ asset('resources/css/admin.css') }}">
-                @endpush
-
-                @section('body')
-
-                <!-- End of Page Wrapper -->
-
-                <!-- Scroll to Top Button-->
-                <a class="scroll-to-top rounded" href="#page-top">
-                    <i class="fas fa-angle-up"></i>
-                </a>
-
-                <!-- Scripts -->
+            @push('scripts')
+                <!-- Bootstrap core JavaScript-->
                 <script src="vendor/jquery/jquery.min.js"></script>
                 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+                <!-- Core plugin JavaScript-->
                 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+                <!-- Custom scripts for all pages-->
                 <script src="js/sb-admin-2.min.js"></script>
 
-</body>
+                <!-- Page level plugins -->
+                <script src="vendor/chart.js/Chart.min.js"></script>
 
-</html>
+                <!-- Page level custom scripts -->
+                <script src="js/demo/chart-area-demo.js"></script>
+                <script src="js/demo/chart-pie-demo.js"></script>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="../../../../templatesbadmin2/js/sb-admin-2.min.js"></script>
+            @endpush

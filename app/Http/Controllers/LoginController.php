@@ -26,10 +26,13 @@ class LoginController extends Controller
         ]);
         $error    = null;
         $id       = null;
-        $username = $request->username;
-        $password = $request->password;
-        if ($this->loginService->login($username, $password, $id, $error)) {
-            $request->session()->put('username', $username);
+
+        $data = [
+            'username' => $request->username,
+            'password' =>  $request->password,
+        ];
+        if ($this->loginService->login($data, $id, $error)) {
+            $request->session()->put('username', $data['username']);
             $request->session()->put('user_id', $id);
             return redirect('/');
     }

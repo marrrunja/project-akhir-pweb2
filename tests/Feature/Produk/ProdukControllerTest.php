@@ -36,4 +36,11 @@ class ProdukControllerTest extends TestCase
     //         ])->assertStatus(302)
     //         ->assertSessionHas(['status' => 'Berhasil menambah produk baru!!']);
     // }
+
+    public function testGetProdukByIdModal():void
+    {
+        $this->withSession(['username' => 'Muammar', 'password' => 'irfan321'])
+            ->get('/produk/detail/modal')
+            ->assertSeeText("Hello");
+    }
 }

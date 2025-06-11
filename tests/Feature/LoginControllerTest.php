@@ -31,7 +31,11 @@ class LoginControllerTest extends TestCase
     {
         $login = $this->app->make(LoginService::class);
         $error = null;
-        self::assertTrue($login->login("Muammar", "123", $error));
+        $data = [
+            'username' => 'Muammar',
+            'password' => 'irfan321'
+        ];
+        self::assertTrue($login->login($data, $error));
     }
     public function testLoginWithWrongUsername():void
     {
@@ -40,7 +44,7 @@ class LoginControllerTest extends TestCase
             'password' => 'fdffdf'
         ])
             ->assertRedirect()
-            ->assertSessionHas('status', 'Username tidak valid');
+            ->assertSessionHas('status', 'Username atau Password salah');
     }
     public function testLoginWithWrongPassword():void
     {
@@ -49,16 +53,15 @@ class LoginControllerTest extends TestCase
             'password' => 'fdf'
         ])
             ->assertRedirect('/')
-            ->assertSessionHas('status', 'Password salah');   
+            ->assertSessionHas('status', 'Username atau Password salah');   
     }
     public function testLoginSuccess():void
     {
         $this->post('/login/index/post',[
             'username' => 'Muammar',
-            'password' => '123'
+            'password' => 'irfan321'
         ])
             ->assertRedirect('/')
-            ->assertSessionHas('status', 'Login Berhasil')
             ->assertSessionHas('username', 'Muammar');
 
     }

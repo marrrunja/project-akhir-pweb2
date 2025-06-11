@@ -1,0 +1,13 @@
+.text-ungu-utama{
+    color:  #8c0d4f !important;
+}
+.hover{
+	text-decoration: none;
+}
+.hover:hover{
+	text-decoration: underline !important;
+	transition: .3s;
+}
+.bg-ungu{
+	background-color: #8c0d4f;
+}

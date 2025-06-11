@@ -6,18 +6,14 @@
     @yield('meta')
     <title>@yield('title')</title>
     @stack('styles')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="index-page">
-    @if(Session::has('user_id'))
-        @include('layout.header')
-    @else
-        @include('layout.header_userindex')
-    @endif
+<body>
+    @include('layout.header')
     @yield('body')
     @include('layout.footer')
     @stack('scripts')
     <!-- SweetAlert2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

@@ -1,10 +1,14 @@
-<?php  
+<?php
+  
 namespace App\Services\Transaksi;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
+use App\Models\Pembeli;
 use App\Models\Produk\Stok;
 use Illuminate\Support\Collection;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Models\Produk\ProdukVariant;
+use Illuminate\Support\Facades\Http;
+
 class OrderService
 {
 
@@ -33,28 +37,45 @@ class OrderService
 				'created_at' => Carbon::now(),
 				'updated_at' => Carbon::now()
 			]);
-			DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$cart->qty, $cart->variant_id]);
 		}
 	}
-	private function initMidtrans(array $data, $orderId):array
+
+	private function initMidtrans(array|Collection $data,$username,$totalHarga, $orderId):array
 	{
+		$pembeli = Pembeli::where('username', '=',$username)->first();
+		$items = [];
+		if(count($data) == 1){
+			foreach($data as $value){
+				$items[] = [
+					'price' => $value['hargaSatuan'],
+					'quantity' => $value['jumlah'],
+					'name' => $orderId
+				];
+			}
+		}else{
+			foreach($data as $row){
+				$variant = ProdukVariant::where('id', '=', $row->variant_id)->first();
+				$items[] = [
+					'price' => $variant->harga,
+					'quantity' => $row->qty,
+					'name' => $orderId
+ 				];
+			}
+		}
 		$params = [
             'transaction_details' => [
                 'order_id' => $orderId,
-                'gross_amount' => $data['totalHarga']
+                'gross_amount' => $totalHarga
             ],
-            'item_details' => [
-                [
-                    'price' => $data['hargaSatuan'],
-                    'quantity' => $data['jumlah'],
-                    'name' => $orderId
-                ],
-            ],
+            'item_details' => $items,
             'customer_details'=> [
-                'first_name' => $data['username'],
-                'email' => 'adillasnack@gmail.com'
+                'first_name' => $username,
+                'email' => $pembeli->email
             ],
-            'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart']
+            'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart'],
+            'callbacks' => [
+		        'finish' => url('/transaksi/finish'),// Ganti sesuai dengan URL kamu
+			],
         ];
         $url = 'https://app.sandbox.midtrans.com/snap/v1/transactions';
 
@@ -69,6 +90,7 @@ class OrderService
         return $response;
 	}
 
+
 	public function addOrder(array $data, ?string &$error = null, ?string &$linkBayar = null):bool
 	{
         if(count($data) === 0){
@@ -79,6 +101,10 @@ class OrderService
         $tanggalSekarang = now()->format('Y-m-d');
 
         $stok = Stok::where('variant_id', '=', $data['variantId'])->first();
+		if(!$stok){
+			$error = 'Variant tidak ditemukan';
+			return false;
+		}
         if($stok->jumlah === 0 || $stok->jumlah < $data['jumlah']){
         	$error = "Maaf stok tidak mencukupi sekarang";
         	return false;
@@ -95,12 +121,18 @@ class OrderService
 	        	'jumlah' => $data['jumlah'],
 	        	'total_harga' => $data['totalHarga'],
 	        	'created_at' => Carbon::now(),
-	        	'created_at' => Carbon::now()
+	        	'updated_at' => Carbon::now()
 	        ]);
 	        $lastInsertOrderItemsId = DB::getPdo()->lastInsertId();
-	        DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$data['jumlah'], $data['variantId']]);
-
-            $response = $this->initMidtrans($data, $orderId);
+			// stok baru di update, saat user menyelesaikan pembayaran
+	        // DB::statement("UPDATE stoks set jumlah = jumlah - ? WHERE variant_id = ?", [$data['jumlah'], $data['variantId']]);
+			$items = [
+				[
+					'hargaSatuan' => $data['hargaSatuan'],
+					'jumlah' => $data['jumlah']
+				]	
+			];
+            $response = $this->initMidtrans($items,$data['username'], $data['totalHarga'] ,$orderId);
             if (!isset($response['redirect_url'])) {
 			    DB::rollback();
 			    $error = $response['status_message'] ?? 'Gagal membuat transaksi Midtrans';
@@ -129,9 +161,10 @@ class OrderService
 			$error = "Data tidak boleh kosong!!";
 			return false;
 		}
-		$isSuccess = true;
+		$isSuccess = false;
 		$userId = $data['userId'];
 		$totalHarga = $data['totalHarga'];
+		$username = $data['username'];
 
 		DB::beginTransaction();
 
@@ -141,17 +174,33 @@ class OrderService
 			->select('produk_variants.harga', 'carts.*')
 			->where('pembeli_id', '=', $userId)->get();
 
+			if(count($carts) === 0){
+				$error = 'Cart masih kosong';
+				return false;
+			}
+
 			$orderInsertId = null;
         	$orderId = null;
         	$tanggalSekarang = now()->format('Y-m-d');
 
         	$this->insertIntoOrderTable($tanggalSekarang, $data['userId'], $data['totalHarga'], $orderInsertId, $orderId);
-
 			DB::table('table_orders')->where('id', $orderInsertId)->update([
 				'order_id' => $orderId
 			]);
-
+			
 			$this->insertIntoOrderItems($carts, $orderInsertId);
+			$response = $this->initMidtrans($carts, $username, $totalHarga, $orderId);
+
+			if (!isset($response['redirect_url'])) {
+			    DB::rollback();
+			    $error = $response['status_message'] ?? 'Gagal membuat transaksi Midtrans';
+			    return false;
+			}
+            $linkBayar = $response['redirect_url'];
+            DB::table('table_orders')->where('id', '=', $orderInsertId)->update([
+            	'order_id' => $orderId,
+            	'link_bayar' => $response['redirect_url'] ?? null
+            ]);
 
 			DB::table('carts')->where('pembeli_id', $userId)->delete();
 			DB::commit();

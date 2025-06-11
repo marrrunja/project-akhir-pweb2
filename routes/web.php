@@ -8,11 +8,11 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Produk\ProdukController;
 use App\Http\Middleware\Auth\SessionHasMiddleware;
+use App\Http\Controllers\Transaksi\OrderController;
 use App\Http\Middleware\Auth\SessionHasNotMiddleware;
 use App\Http\Controllers\Transaksi\TransaksiController;
 use App\Http\Controllers\Api\ProdukVariantApiController;
@@ -41,12 +41,16 @@ Route::post('/cart/delete', [CartController::class, 'destroy'])->name('cart.dele
 Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
 
 // produk 
+
 Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
     Route::post('/add', 'addProduk')->name('produk.tambah');
     Route::get('/edit/{id}', 'editProduk')->name('produk.edit');
     Route::post('edit/{id}', 'doEdit')->name('produk.doEdit');
     Route::get('/search', 'searchOnlyProduk');
+    Route::get('/detail/nomodal/{id}', 'detailProduk');
+    Route::get('/detail/modal', 'detailProdukModal');
+    Route::get('/kategori', 'getProdukByKategoriId');
 });
 
 // produk variant
@@ -60,10 +64,11 @@ Route::post('/variant/doEdit', [ProdukVariantController::class, 'doEdit']);
 // transaksi
 Route::controller(TransaksiController::class)->prefix('/transaksi')->group(function(){
     Route::post('/index/{id}', 'index')->name('transaksi.order');
-    Route::post('/checkout', 'makeOrder');
-    Route::get('/checkout/success', 'orderSuccess');
-    Route::get('/checkout/fail', 'orderFail');
-    Route::post('/checkout/cart', 'makeOrders');
+    Route::post('/checkout', 'makeOrder')->middleware(SessionHasNotMiddleware::class);
+    Route::get('/checkout/success', 'orderSuccess')->middleware(SessionHasNotMiddleware::class);
+    Route::get('/checkout/fail', 'orderFail')->middleware(SessionHasNotMiddleware::class);
+    Route::post('/checkout/cart', 'makeOrders')->middleware(SessionHasNotMiddleware::class);
+    Route::get('/finish', 'success')->middleware(SessionHasNotMiddleware::class);
 });
 
 // controller admin
@@ -81,7 +86,13 @@ Route::get('/api/orderListByTanggal', [ApiController::class, 'urutkanDataByTangg
 Route::get('api/produk/variants/edit',[ProdukVariantApiController::class, 'editProdukVariant']);
 
 
-Route::get('/payment/view', [PaymentController::class, 'index']);
+// route untuk menangani tampilan order seperti history dan lain lain
+Route::controller(OrderController::class)->prefix('/order')->group(function(){
+    Route::get('/index', 'index');
+    Route::get('/detail/{id}', 'detailOrder');
+    Route::post('/hapus', 'deleteOrder');
+});
+
 Route::get('/tanggal',function(){
     echo now()->format('Y-m-d');
 });
@@ -96,8 +107,21 @@ Route::post('/check', function(Request $request){
 Route::get('/gaada', function(){
     return view('index');
 });
+// Route::get('/detail', function () {
+//     return view('detail');
+// });
 
 
-Route::get('/detail', function () {
-    return view('detail');
-});
+// Route::get('/coba/race', function(){
+//     $currentStok = DB::table('stoks')
+//         ->join('produk_variants', 'stoks.variant_id', '=', 'produk_variants.id')
+//         ->join('order_items', 'produk_variants.id', '=', 'order_items.variant_id')
+//         ->join('table_orders', 'order_items.order_id', '=', 'table_orders.id')
+//         ->select('stoks.jumlah')
+//         ->where('table_orders.order_id', '=', 'INV-2025-06-05-62')
+//         ->lockForUpdate()
+//         ->get();
+//     dd($currentStok);
+
+// });
+

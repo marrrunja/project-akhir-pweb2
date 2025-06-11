@@ -89,7 +89,7 @@
                                     placeholder="Contoh, 10">
                             </div>
                             <div class="mb-3">
-                                <label for="gambar1">Foto produk</label>
+                                <label for="gambar1" class="form-label">Foto produk</label>
                                 <input type="file" name="gambar[]" id="gambar1" class="form-control" multiple>
                             </div>
                         </fieldset>
@@ -109,7 +109,7 @@
         </form>
         <div class="row">
             <div class="col">
-                <a href="{{ \Illuminate\Support\Facades\URL::previous() }}">&laquo;Kembali ke halaman utama</a>
+                <a href="/admin/index">&laquo;Kembali ke halaman utama</a>
             </div>
         </div>
     </div>

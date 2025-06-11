@@ -32,7 +32,16 @@ class RegisterController extends Controller
             $password = Hash::make($request->password);
             $desa     = $request->desa;
             $jalan    = $request->alamat;
-            if ($this->userService->register($username, $password, $desa, $jalan, $error)) {
+            $email = $request->email;
+            $data = [
+                'username' => $username,
+                'password' => $password,
+                'email' => $email,
+                'alamat' => $desa,
+                'jalan' => $jalan
+            ];
+
+            if ($this->userService->register($data, $error)) {
                 return response("Berhasil register");
             } else {
                 return response($error);

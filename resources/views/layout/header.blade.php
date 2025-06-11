@@ -29,12 +29,11 @@
                         aria-controls="mobileSearch">
                         <i class="bi bi-search"></i>
                     </button>
-
                     <!-- Account -->
                     <div class="dropdown account-dropdown">
                         <button class="header-action-btn" data-bs-toggle="dropdown">
                             <i class="bi bi-person"></i>
-                            <span class="action-text d-none d-md-inline-block">{{ session::get('username') }}</span>
+                            <span class="action-text d-none d-md-inline-block">{{ Session::get('username') }}</span>
                         </button>
                         <div class="dropdown-menu">
                             <div class="dropdown-header">
@@ -53,13 +52,13 @@
                             </div>
                             <div class="dropdown-footer">
                                 @if (!Session::has('user_id'))
-                                    <a href="/login/index" class="btn btn-primary w-100 mb-2">Sign In</a>
-                                    <a href="/register/index" class="btn btn-outline-primary w-100">Register</a>
+                                <a href="/login/index" class="btn btn-primary w-100 mb-2">Sign In</a>
+                                <a href="/register/index" class="btn btn-outline-primary w-100">Register</a>
                                 @else
-                                    <form method="post" action="/login/logout">
-                                        @csrf
-                                        <button type="submit" class="btn btn-primary w-100">Logout</button>
-                                    </form>
+                                <form method="post" action="/login/logout">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary w-100">Logout</button>
+                                </form>
                                 @endif
                             </div>
                         </div>
@@ -79,19 +78,20 @@
                             </div>
                             <div class="dropdown-body">
                                 <div class="cart-items">
-                                    @foreach(\App\Models\Cart::getAllCartWithUserId(Session::get('user_id')) as $item)
+                                    @foreach (\App\Models\Cart::getAllCartWithUserId(Session::get('user_id')) as $item)
                                     <div class="cart-item">
                                         <div class="cart-item-image">
-                                            <img src="{{ asset('storage/image-variant/'.$item->variant->foto) }}" alt="Product"
-                                                class="img-fluid">
+                                            <img class="card-img-top"
+                                                src="{{ asset('storage/image-variant/' . $item->variant->foto) }}"
+                                                alt="Card image cap">
                                         </div>
                                         <div class="cart-item-content">
-                                            <h6 class="cart-item-title">{{ $item->variant->produk->nama}}</h6>
+                                            <h6 class="cart-item-title">{{ $item->variant->produk->nama }}</h6>
                                             <div class="product-meta">
                                                 <span
                                                     class="product-color">{{ $item->variant->variant ?? 'Variant' }}</span>
                                             </div>
-                                            <div class="cart-iteaam-meta">
+                                            <div class="cart-item-meta">
                                                 <span class="current-price">
                                                     {{ $item->qty }}
                                                 </span> ×
@@ -134,9 +134,10 @@
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="/" class="{{ request()->is('/') ? 'active':''}}">Home</a></li>
-                    <li><a href="/produk/index" class="{{ request()->is('produk/index') ? 'active':''}}">Produk</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="checkout.html">History Pembelian</a></li>
+                    <li><a href="/produk/index" class="{{ request()->is('produk/index') ? 'active':''}}">Produk</a>
+                        <//li> <li><a href="#">About</a></li>
+                    <li><a href="/order/index" class="{{ request()->is('order/index') ? 'active':''}}">History
+                            Pembelian</a></li>
                 </ul>
             </nav>
         </div>
@@ -157,14 +158,10 @@
                         "effect": "slide",
                         "direction": "vertical"
                     }
-
                 </script>
-                <!-- <div class="swiper-wrapper">
-            <div class="swiper-slide">🚚 Free shipping on orders over $50</div>
-            <div class="swiper-slide">💰 30 days money back guarantee</div>
-            <div class="swiper-slide">🎁 20% off on your first order - Use code: FIRST20</div>
-            <div class="swiper-slide">⚡ Flash Sale! Up to 70% off on selected items</div>
-          </div> -->
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">Dapatkan produk berkualitas di adillasnack</div>
+                </div>
             </div>
         </div>
     </div>
@@ -184,3 +181,6 @@
         </div>
     </div>
 </header>
+
+
+

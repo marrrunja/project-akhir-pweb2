@@ -21,21 +21,25 @@ function createInputEditElement(variant, jumlah, harga, foto, token, id) {
     let inputJumlah = `<input type="number" name="jumlah" value="${jumlah}" class="form-control">`;
     let inputTokenCsrf = `<input type="hidden" name="_token" value="${token}">`;
     let inputIdHidden = `<input type="hidden" name="id" value="${id}">`;
-    let inputFoto = '<input type="file" name="gambar" class="form-control">';
+    let inputFoto = '<input type="file" name="gambar" class="form-control d-none" id="gambar">';
 
+
+    let tdKosong = document.createElement('td');
     let tdVariant = document.createElement('td');
     let tdHarga = document.createElement('td');
     let tdJumlah = document.createElement('td');
     let tdFile = document.createElement("td");
+    let labelFile = `<label for="gambar" class="form-label btn btn-primary">Edit Jika Perlu</label>` ;
 
-    tdVariant.setAttribute("colspan", "2");
+    tdKosong.setAttribute("colspan", "2");
 
     tdVariant.innerHTML = inputNama + inputTokenCsrf + inputFotoHidden;
     tdVariant.innerHTML += inputIdHidden;
     tdHarga.innerHTML = inputHarga;
     tdJumlah.innerHTML = inputJumlah;
-    tdFile.innerHTML = inputFoto;
+    tdFile.innerHTML = labelFile;
 
+    tr.append(tdKosong);
     tr.append(tdVariant);
     tr.append(tdHarga);
     tr.append(tdJumlah);
@@ -73,6 +77,7 @@ async function showInputEditElement(target) {
     sibling = 1;
     let tdButton = document.createElement('td');
     tdButton.classList.add("d-flex");
+    tdButton.classList.add("py-3");
     tdButton.classList.add("gap-2");
     tdButton.innerHTML = button;
     tr.append(tdButton);
@@ -105,10 +110,10 @@ function makeInputAddVariantElement() {
     containerAddProdukVariant.classList.add("gap-3");
 
     let inputToken = `<input type="hidden" name="_token" value="${token}">`;
-    let inputVarian = `<input type="text" name="variant[]" placeholder="Nama variant" class="form-control" required>`;
-    let inputHarga = `<input type="number" name="harga[]" placeholder="Harga Produk Variant" class="form-control" required>`;
-    let inputStok = `<input type="number" name="stok[]" placeholder="Stok Produk Variant" class="form-control" required>`;
-    let inputGambar = `<input type="file" name="gambar[]" class="form-control" required>`;
+    let inputVarian = `<input type="text" name="variant" placeholder="Nama variant" class="form-control" required>`;
+    let inputHarga = `<input type="number" name="harga" placeholder="Harga Produk Variant" class="form-control" required>`;
+    let inputStok = `<input type="number" name="stok" placeholder="Stok Produk Variant" class="form-control" required>`;
+    let inputGambar = `<input type="file" name="gambar" class="form-control" required>`;
 
 
     let btnSubmit = `<button type="submit" class="btn btn-success mb-3 mt-2 me-2">Tambah</button>`;

@@ -3,7 +3,7 @@ const appurl = document.querySelector("meta[name=_appurl]").content;
 const jumlah = document.getElementById("jumlah").innerText;
 const totalHarga = document.getElementById("hargaTotal").innerText;
 const URLENDPOINT = appurl+"/transaksi/checkout";
-const REDIRECTURL = appurl;
+const REDIRECTURL = appurl + "/transaksi/checkout/fail";
 const btnBayar = document.getElementById("btnBayar");
 let hargaSatuan = document.getElementById("hargaSatuan").innerText;
 
@@ -40,7 +40,7 @@ async function sendData()
             document.location.href = responseServer.redirect_url;
         }
         else{
-            document.location.href = REDIRECTURL +"/transaksi/checkout/fail?pesan="+responseServer.pesan;
+            document.location.href = REDIRECTURL +"?pesan="+responseServer.pesan;
         }
     }catch(error){
         console.error("Error fetching data "+error)

@@ -13,6 +13,7 @@ return new class extends Migration
             $table->id();
             $table->string("username",50)->unique();
             $table->string("password",255);
+            $table->string('email');
             $table->string('kode_desa');
             $table->string('jalan');
             $table->boolean('is_active')->default(true);

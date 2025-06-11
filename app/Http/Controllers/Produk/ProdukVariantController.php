@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Produk;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,7 @@ class ProdukVariantController extends Controller
     {
         $this->produkVariantService = $produkVariantService;
     }
+
     public function produkVariant(Request $request): Response | RedirectResponse
     {
         $id       = $request->id;
@@ -31,13 +33,12 @@ class ProdukVariantController extends Controller
         } else {
             return redirect('/produk/index');
         }
-
     }
 
     public function addProdukVariant(Request $request)
     {
         $validate = [
-            'nama'   => 'required',
+            'variant'   => 'required',
             'stok'   => 'required',
             'harga'  => 'required',
             'gambar' => 'required',
@@ -45,20 +46,11 @@ class ProdukVariantController extends Controller
         $request->validate($validate);
 
         $produkId = $request->id;
-        $variant = $request->nama;
+        $variant = $request->variant;
         $jumlah = $request->stok;
         $harga = $request->harga;
         $gambar = $request->file('gambar');
         $originalName = Str::replace(' ', '' ,Str::uuid().'-'.$produkId. '-'.$gambar->getClientOriginalName());
-
-        
-        $produkId     = $request->id;
-        $variant      = $request->nama;
-        $jumlah       = $request->stok;
-        $harga        = $request->harga;
-        $gambar       = $request->file('gambar');
-        $originalName = Str::replace(' ', '', Str::uuid() . '-' . $produkId . '-' . $gambar->getClientOriginalName());
-
         $data = [
             'variant'   => $variant,
             'produk_id' => $produkId,
@@ -103,12 +95,12 @@ class ProdukVariantController extends Controller
     {
 
         // ambil semua request
-        $id           = $request->id;
-        $harga        = $request->harga;
-        $jumlah       = $request->jumlah;
-        $varian       = $request->variant;
-        $fotoLama     = $request->foto;
-        $fotoBaru     = $request->file('gambar');
+        $id = $request->id;
+        $harga = $request->harga;
+        $jumlah = $request->jumlah;
+        $varian = $request->variant;
+        $fotoLama = $request->foto;
+        $fotoBaru = $request->file('gambar');
         $originalName = '';
 
         // jika foto barunya null(tidak ada) maka isi original name dengan foto lama
@@ -139,15 +131,18 @@ class ProdukVariantController extends Controller
         if ($updateVariant > 0 || $updateStok > 0) {
             $status = "Berhasil update data";
             $alert  = "success";
+            $flashMessage = [
+                'status' => $status,
+                'alert'  => $alert,
+            ];
+            return redirect()->back()->with($flashMessage);
         } else {
-            $status = "Tidak ada yang diupdate";
-            $alert  = "warning";
+            $flashMessage = [
+                'status' => "Tidak ada yang diupdate",
+                'alert' => 'warning'
+            ];
+            return redirect()->back()->with($flashMessage);
         }
-        $flashMessage = [
-            'status' => $status,
-            'alert'  => $alert,
-        ];
-        return redirect()->back()->with($flashMessage);
     }
 
     public function search(Request $request): Response

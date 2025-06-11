@@ -28,51 +28,49 @@ class OrderServiceTest extends TestCase
         self::assertSame($this->orderService, $orderService);
         self::assertSame($orderService2, $orderService);
     }
-    public function testClosure():void
-    {
-        self::assertEquals($this->orderService->hello(), "Hello order service");
-    }
     public function testOrderFailed():void{
         $error = null;
         self::assertFalse($this->orderService->addOrder([], $error));
         self::assertEquals("Data tidak boleh kosong", $error);
     }
-    // public function testOrderSuccess():void
-    // {
-    //      $data = [
-    //         'userId' => '4',
-    //         'jumlah' => 1,
-    //         'hargaSatuan' =>  16000,
-    //         'totalHarga' => 16000,
-    //         'variantId' => 33,
-    //         'username' => 'Yoshioka_321'
-    //     ];
-    //     $error = null;
-    //     $linkBayar = null;
-    //     self::assertTrue($this->orderService->addOrder($data, $error, $linkBayar));
-    // }
-    public function testAddOrderWithStokNotEnugh():void{
+    public function testOrderSuccess():void
+    {
+         $data = [
+            'userId' => '2',
+            'jumlah' => 1,
+            'hargaSatuan' =>  6000,
+            'totalHarga' => 6000,
+            'variantId' => 1,
+            'username' => 'Yoshioka_321'
+        ];
+        $error = null;
+        $linkBayar = null;
+        self::assertTrue(true);
+        self::assertTrue($this->orderService->addOrder($data, $error, $linkBayar));
+    }
+    public function testAddOrderFailNotFoundVariant():void{
          $data = [
             'userId' => '4',
             'jumlah' => 1,
             'hargaSatuan' =>  10000,
             'totalHarga' => 10000,
-            'variantId' => 37,
+            'variantId' => 1000,
             'username' => 'Yoshioka_321'
         ];
         $error = null;
         $linkBayar = null;
         self::assertFalse($this->orderService->addOrder($data, $error, $linkBayar));
-        self::assertEquals("Maaf stok tidak mencukupi sekarang", $error);
+        self::assertEquals("Variant tidak ditemukan", $error);
     }
     // public function testAddOrdersSuccess():void
     // {
     //     $data = [
-    //         'userId' => 4,
-    //         'totalHarga' => 13000
+    //         'userId' => 2,
+    //         'totalHarga' => 42000,
+    //         'username' => 'Yoshioka_321'
     //     ];
     //     $error = null;
-    //    self::assertTrue($this->orderService->addOrders($data, $error));
+    //     self::assertTrue($this->orderService->addOrders($data, $error));
     // }
     public function testAddOrdersFailedEmptyData():void
     {
@@ -84,7 +82,8 @@ class OrderServiceTest extends TestCase
     {
         $data = [
             'userId' => 90,
-            'totalHarga' => 1
+            'totalHarga' => 1,
+            'username' => 'gaada'
         ];
         $error = null;
         self::assertFalse($this->orderService->addOrders($data, $error));
