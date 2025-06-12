@@ -7,7 +7,7 @@ const btnHasil = document.getElementsByClassName("btnHasil");
 const pesan = document.getElementsByClassName("pesan");
 const btnCart = document.getElementsByClassName("btnCart");
 const cartItems = document.querySelector('.cart-items');
-console.log(cartItems);
+
 
 for (let i = 0; i < btnTambah.length; i++) {
     btnTambah[i].addEventListener("click", function () {

@@ -15,7 +15,7 @@
             <td class="py-4">{{ $product->detail }}</td>
             <td class="py-4">{{ $product->kategori }}</td>
             <td class="py-4"><img src="{{ asset('storage/images/' . $product->foto) }}" width="100"></td>
-            <td class="d-flex gap-3 py-5">
+            <td class="py-4">
                 <a href="{{ route('admin.detailProduk', $product->id) }}" class="btn btn-primary">Lihat variant produk</a>
                 <a href="{{ route('produk.edit', $product->id) }}" class="btn btn-warning">Edit</a>
             </td>

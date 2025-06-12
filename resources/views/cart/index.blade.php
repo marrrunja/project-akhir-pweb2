@@ -174,7 +174,7 @@
                         </div>
 
                         <div class="checkout-button">
-                            <a href="/" class="btn btn-accent w-100" id="btnCheckout"
+                            <a href="" class="btn btn-accent w-100" id="btnCheckout"
                                 data-id="{{ Session::get('user_id') }}">
                                 Proceed to Checkout <i class="bi bi-arrow-right"></i>
                             </a>

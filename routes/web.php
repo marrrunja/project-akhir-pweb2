@@ -54,7 +54,7 @@ Route::controller(ProdukController::class)->prefix('/produk')->group(function(){
 });
 
 // produk variant
-Route::post('/variant/search', [ProdukVariantController::class, 'search'])->middleware(SessionHasNotMiddleware::class);
+Route::get('/variant/search', [ProdukVariantController::class, 'search'])->middleware(SessionHasNotMiddleware::class);
 
 Route::get('/variant/{id}', [ProdukVariantController::class, 'produkVariant'])->middleware(SessionHasNotMiddleware::class)->name('produk.variant');
 

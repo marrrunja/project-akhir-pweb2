@@ -7,7 +7,7 @@
     <title>@yield('title')</title>
     @stack('styles')
 </head>
-<body>
+<body id="page-top">
     @yield('body')
     @stack('scripts')
 </body>
