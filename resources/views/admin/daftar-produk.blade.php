@@ -34,14 +34,14 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 col-md-10 col-xl-5">
-                            <div class="input-group mb-3 mt-2">
+                           
                                 <input type="text" name="keyword" id="inputCari"
-                                    class="form-control border-primary border-2"
+                                    class="form-control mb-3 border-primary border-2"
                                     placeholder="Cari nama produk atau kategori...."
                                     aria-label="Cari nama produk atau kategori...." aria-describedby="button-addon2">
-                                <button class="btn btn-primary border-primary border-2" type="button" id="btnCari"><i
-                                        class="bi bi-search"></i></button>
-                            </div>
+                                <!-- <button class="btn btn-primary border-primary border-2" type="button" id="btnCari"><i
+                                        class="bi bi-search"></i></button> -->
+                            
                         </div>
                     </div>
                     <div class="table-responsive" id="content-produk">
@@ -59,13 +59,13 @@
                             <tbody>
                                 @foreach($products as $product)
                                     <tr>
-                                        <th>{{ $loop->iteration }}</th>
-                                        <td>{{ $product->nama }}</td>
-                                        <td>{{ $product->detail }}</td>
-                                        <td>{{ $product->kategori }}</td>
-                                        <td><img src="{{ asset('storage/images/' . $product->foto) }}" width="100"></td>
+                                        <th class="py-4">{{ $loop->iteration }}</th>
+                                        <td class="py-4">{{ $product->nama }}</td>
+                                        <td class="py-4">{{ $product->detail }}</td>
+                                        <td class="py-4">{{ $product->kategori }}</td>
+                                        <td class="py-4"><img src="{{ asset('storage/images/' . $product->foto) }}" width="100"></td>
                                         <td
-                                            class="d-flex flex-wrap flex-md-nowrap align-items-center gap-2 justify-content-center">
+                                            class="d-flex py-4 flex-wrap flex-md-nowrap align-items-center gap-2 justify-content-center">
                                             <a href="{{ route('admin.detailProduk', $product->id) }}"
                                                 class="btn btn-primary ">Lihat variant produk</a>
                                             <a href="{{ route('produk.edit', $product->id) }}" class="btn btn-warning">Edit</a>

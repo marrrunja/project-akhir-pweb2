@@ -30,7 +30,7 @@ class CartController extends Controller
     }
 
     //method masuk keranjang
-    public function store(Request $request)
+    public function store(Request $request):JsonResponse
     {
         $request->validate([
             'variant_id' => 'required|exists:produk_variants,id',
@@ -41,17 +41,19 @@ class CartController extends Controller
         if (! $userId) {
             return redirect()->back()->withErrors('User belum login');
         }
-
+        
         $variantId = $request->variant_id;
         $qty       = $request->qty;
         $error     = null;
-
+        
         // Cek stok produk variant
         $variant      = ProdukVariant::with('stok')->find($variantId);
         $stokTersedia = $variant->stok ? $variant->stok->count() : 0;
 
         if ($stokTersedia < $qty) {
-            return redirect()->back()->withErrors('Stok tidak mencukupi.');
+            return response()->json([
+                "message" => "Stok tidak mencukupi"
+            ]);
         }
 
         // Kurangi stok sesuai qty
@@ -74,11 +76,10 @@ class CartController extends Controller
                     'qty'        => $qty,
                 ]);
             }
+            return response()->json(['message' => "Berhasil tambah ke cart"]);
         } else {
-            return redirect()->back()->withErrors($error);
+             return response()->json(['message' => "Gagal tambah ke cart"]);
         }
-
-        return redirect('cart');
     }
 
     // method update jumlah di cart

@@ -177,24 +177,29 @@ if(listProduk != null)
 
 let data = null;
 if(kategori != null){
+    let judulKategori = document.getElementById("judul-kategori");
     for(let i = 0; i < kategori.length; i++){
         kategori[i].addEventListener("click",async function(){
             switch(kategori[i].innerText){
                 case "Makanan":
                     data = await getProdukByKategoriId(1);
                     listProduk.innerHTML = data;
+                    judulKategori.innerText = "Makanan";
                     break;
                 case "Minuman":
                     data = await getProdukByKategoriId(2);
                     listProduk.innerHTML = data;
+                    judulKategori.innerText = "Minuman";
                     break;
                 case "Souvenir":
                     data = await getProdukByKategoriId(3);
+                    judulKategori.innerText = "Souvenir";
                     listProduk.innerHTML = data;
                     break;
                 default:
                     data = await getProdukByKategoriId(null);
                     listProduk.innerHTML= data;
+                    judulKategori.innerText = "Produk";
                     break;
             }
         });

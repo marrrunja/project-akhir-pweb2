@@ -2,9 +2,10 @@
 namespace App\Models;
 
 use App\Models\Pembeli;
+use Illuminate\Support\Facades\DB;
 use App\Models\Produk\ProdukVariant;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Cart extends Model
 {
@@ -29,5 +30,10 @@ class Cart extends Model
             ->where('pembeli_id', $id)
             ->get();
         return $carts;
+    }
+    public static function getCountCartsByUserId($id)
+    {
+        $carts = DB::table('carts')->where('pembeli_id', '=', $id)->get();
+        return count($carts);
     }
 }

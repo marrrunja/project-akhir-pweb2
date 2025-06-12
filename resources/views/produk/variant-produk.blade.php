@@ -43,50 +43,95 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 <link href="{{ env('TYPE_URL') == 'http' ? asset('assets/css/main.css') : secure_asset('assets/css/main.css') }}"
     rel="stylesheet">
+<link rel="stylesheet" href="{{ custom_asset('resources/css/user.css') }}">
 <!-- {{-- <link rel="stylesheet" type="text/css" href="{{ asset('resources/css/style.css') }}"> --}} -->
 @endpush
 
 @section('meta')
 <meta name="_token" content="{{ csrf_token() }}">
+<meta name="_appurl" content="{{ env('BASE_URL') }}">
 @endsection
 
 @section('body')
-<section class="pt-5 pb-5">
-    <div class="container">
-        <h1 class="mb-4 fw-bold">Halaman Produk Variant</h1>
-        <div class="row gy-3 gy-md-0">
-            @foreach($variants as $variant)
-            <div class="col-12 col-md-6 col-xl-4">
-                <form method="post" action="{{ route('transaksi.order', $variant->id) }}">
-                    @csrf
-                    @method('POST')
-                    <div class="card border-0 shadow">
-                        <img src="{{ asset('storage/image-variant/'.$variant->foto) }}" class="card-img-top">
-                        <div class="card-body">
-                            @error('jumlah') <div class="fw-semibold text-danger">{{ $message }}</div> @enderror
-                            @error('harga') <div class="fw-semibold text-danger">{{ $message }}</div> @enderror
-                            <h5 class="card-title">{{ $variant->variant }}</h5>
-                            <h6 class="card-subtitle mb-2 text-body-secondary">{{ $variant->produk->nama }}</h6>
-                          
-                            <div class="card-subtitle text-secondary">Sisa: {{ $variant->stok->jumlah }}</div>
-                            <div class="mt-3 mb-3">
-                                <button type="button" class="btn btn-success btnTambah">+</button>
-                                <input type="hidden" name="jumlah" id="jumlah" data-max="{{ $variant->stok->jumlah }}"
-                                    value="0">
-                                <button type="button" class="btn btn-primary btnHasil">0</button>
-                                <button type="button" class="btn btn-success btnKurang">-</button>
-                                <div class="text-secondary text-danger mt-2 pesan d-none fw-semibold"></div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Rp.
-                                {{ number_format($variant->harga, 0, ",", ".") }}</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            @endforeach
+<main class="main">
+    <!-- Page Title -->
+    <div class="page-title light-background">
+        <div class="container">
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/produk/index">Produk</a></li>
+                    <li class="current">Produk Variant</li>
+                </ol>
+            </nav>
         </div>
     </div>
-</section>
+    <!-- End Page Title -->
+
+    <!-- Starter Section Section -->
+    <section id="starter-section" class="starter-section section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Daftar Produk variant</h2>
+            <p>Klik lihat detail untuk melihat detail setiap pesanan</p>
+        </div><!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up">
+            @if(Session::has('status'))
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-6 col-xl-6">
+                    <div class="alert alert-primary">
+                        {{ Session::get('status') }}
+                    </div>
+                </div>
+            </div>
+            @endif
+            <div class="row gy-3 gy-md-0">
+                @foreach($variants as $variant)
+                <div class="col-12 col-md-6 col-xl-3">
+                    <form method="post" action="{{ route('transaksi.order', $variant->id) }}">
+                        @csrf
+                        @method('POST')
+                        <div class="card">
+                            <img src="{{ asset('storage/image-variant/'.$variant->foto) }}" class="card-img-top">
+                            <div class="card-body">
+                                @error('jumlah') <div class="fw-semibold text-danger">{{ $message }}</div> @enderror
+                                @error('harga') <div class="fw-semibold text-danger">{{ $message }}</div> @enderror
+                                <h5 class="card-title">{{ $variant->variant }}</h5>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{ $variant->produk->nama }}</h6>
+
+                                <div class="card-subtitle text-secondary">Sisa: {{ $variant->stok->jumlah }}</div>
+                                <div class="mt-3 mb-3">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success btnTambah">+</button>
+                                        <input type="hidden" name="jumlah" id="jumlah"
+                                            data-max="{{ $variant->stok->jumlah }}" value="0">
+                                            <button type="button" disabled class="btn btn-outline-success btnHasil">0</button>
+                                            <button type="button" class="btn btn-success btnKurang">-</button>
+                                        
+                                    </div>
+                                    <div class="text-secondary text-danger mt-2 pesan d-none fw-semibold"></div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-outline-success">Rp.
+                                        {{ number_format($variant->harga, 0, ",", ".") }}</button>
+                                    <button type="button" data-id="{{ $variant->id }}" class="btn btn-outline-success btnCart">
+                                        <i class="bi bi-cart-fill me-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                @endforeach
+            </div>
+
+        </div>
+        
+    </section>
+    <!-- /Starter Section Section -->
+</main>
 @endsection
 
 

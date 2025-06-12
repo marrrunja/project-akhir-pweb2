@@ -22,7 +22,7 @@ class ProdukController extends Controller
         //DB::raw('SUM(price) as total_sales')
         $produk = DB::table('products')
         ->join('kategoris', 'products.kategori_id', '=', 'kategoris.id')
-        ->select('products.id', 'products.nama', 'products.detail', 'products.foto', 'kategoris.kategori', 'kategoris.id')
+        ->select('products.id as idProduk', 'products.nama', 'products.detail', 'products.foto', 'kategoris.kategori', 'kategoris.id')
         ->get();
         $data   = [
             'products' => $produk,
@@ -34,7 +34,7 @@ class ProdukController extends Controller
         $id = $request->id;
         $produk = DB::table('products')
         ->join('kategoris', 'products.kategori_id', '=', 'kategoris.id')
-        ->select('products.id', 'products.nama', 'products.detail', 'products.foto', 'kategoris.kategori', 'kategoris.id')
+        ->select('products.id as idProduk', 'products.nama', 'products.detail', 'products.foto', 'kategoris.kategori', 'kategoris.id')
         ->where('products.id', '=', $id)
         ->first();
         $data   = [
@@ -49,7 +49,7 @@ class ProdukController extends Controller
         
         $produk = DB::table('products')
         ->join('kategoris', 'products.kategori_id', '=', 'kategoris.id')
-        ->select('products.id', 'products.nama', 'products.detail', 'products.foto', 'kategoris.kategori', 'kategoris.id');
+        ->select('products.id as idProduk', 'products.nama', 'products.detail', 'products.foto', 'kategoris.kategori', 'kategoris.id');
         if($id != 'null'){
             $produk = $produk->where('products.kategori_id', '=', $id)->get();
         }

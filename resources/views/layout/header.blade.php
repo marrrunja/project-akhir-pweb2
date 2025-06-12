@@ -70,11 +70,13 @@
                         <button class="header-action-btn" data-bs-toggle="dropdown">
                             <i class="bi bi-cart3"></i>
                             <span class="action-text d-none d-md-inline-block">Cart</span>
-                            <!-- <span class="badge">3</span> -->
+                            @if(Session::has('user_id'))
+                                <span class="badge" id="jumlahCart"> {{ \App\Models\Cart::getCountCartsByUserId(Session::get('user_id')) }}</span>
+                            @endif
                         </button>
                         <div class="dropdown-menu cart-dropdown-menu">
                             <div class="dropdown-header">
-                                <!-- <h6>Shopping Cart (3)</h6> -->
+                                <h6>Shopping Cart @if(Session::has('user_id')) {{ (\App\Models\Cart::getCountCartsByUserId(Session::get('user_id')))}} @endif</h6>
                             </div>
                             <div class="dropdown-body">
                                 <div class="cart-items">

@@ -8,14 +8,14 @@
               <img src="{{ asset('storage/images/'.$product->foto) }}" alt="Product Hover" class="img-fluid">
           </div>
           <div class="product-info">
-              <h5 class="product-title"><a href="{{ route('produk.variant', $product->id) }}">{{ $product->nama }}</a>
+              <h5 class="product-title"><a href="{{ route('produk.variant', $product->idProduk) }}">{{ $product->nama }}</a>
               </h5>
               <div class="product-price">
                   <span class="">{{ Str::limit($product->detail, 10) }}</span>
               </div>
               <div class="product-price">
-                  <a href="/produk/detail/{{ $product->id }}" class="current-price btn-modal"
-                      data-id="{{ $product->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Detail produk
+                  <a href="/produk/detail/{{ $product->idProduk }}" class="current-price btn-modal"
+                      data-id="{{ $product->idProduk }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Detail produk
                       &raquo;</a>
               </div>
           </div>
