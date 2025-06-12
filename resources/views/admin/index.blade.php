@@ -14,7 +14,7 @@
         </div>
 
         {{-- Konten utama di samping navbar --}}
-        <div class="container-fluid">
+        <div class="container">
             <!-- Page Wrapper -->
             <div id="wrapper">
                 <!-- Content Wrapper -->
@@ -184,4 +184,5 @@
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
                 <script src="../../../../templatesbadmin2/js/sb-admin-2.min.js"></script>
+             
             @endpush

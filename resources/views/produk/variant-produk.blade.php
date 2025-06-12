@@ -87,50 +87,6 @@
         </div>
     </div>
 </section>
-<main class="main">
-    <!-- Product List Section -->
-    <section id="product-list" class="product-list section">
-        <div class="container isotope-layout" data-aos="fade-up" data-aos-delay="100" data-default-filter="*"
-            data-layout="masonry" data-sort="original-order">
-            <div class="row product-container isotope-container" data-aos="fade-up" data-aos-delay="200">
-                <!-- Product Item 1 -->
-                @foreach($variants as $product)
-                <div class="col-md-6 col-lg-3 product-item isotope-item filter-clothing">
-                    <div class="product-card">
-                        <div class="product-image">
-                            <span class="badge">Sale</span>
-                            <img src="{{ asset('storage/image-variant/'.$product->foto) }}" alt="Product"
-                                class="img-fluid main-img">
-                            <img src="{{ asset('storage/image-variant/'.$product->foto) }}" alt="Product Hover"
-                                class="img-fluid">
-                        </div>
-                        <div class="product-info">
-                            <h5 class="product-title">{{ $product->variant }}</h5>
-                            <div class="product-price">
-                                <span class="current-price">{{ Str::limit($product->detail, 10) }}</span>
-                            </div>
-                            <div class="product-price">
-                                <a href="{{ route('produk.variant', $product->id) }}" class="current-price">Lihat
-                                    variant &raquo;</a>
-                                <button class="quantity-btn decrease" data-id="" data-stock="">
-                                    <i class="bi bi-dash"></i>
-                                </button>
-                                <input disabled type="number" class="quantity-input" value="" min="1" max="">
-                                <button class="quantity-btn increase" data-id="" data-stock="">
-                                    <i class="bi bi-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- End Product Item -->
-                @endforeach
-            </div>
-
-        </div>
-
-    </section><!-- /Product List Section -->
-
-</main>
 @endsection
 
 

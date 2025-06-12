@@ -69,8 +69,8 @@
             </div>
             @endif
             <div class="row d-flex justify-content-center mb-2">
-                <div class="col text-center">
-                    Total {{ count($orders) }} pesanan
+                <div class="col text-center" >
+                    Total <span id="totalPesanan">{{ count($orders) }}</span> pesanan
                 </div>
             </div>
             <table class="table table-stripped">
@@ -100,14 +100,20 @@
                                         Lihat detail
                                     </a>
                                 </li>
-                                <li>
+                                @if($order->is_dibayar == 0)
+                                 <li>
                                     <a class="dropdown-item hover" href="{{ $order->link_bayar }}">
                                         Link pembayaran
                                     </a>
                                 </li>
                                 <li>
-                                    <span class="text-danger dropdown-item hapus" data-id="{{ $order->id }}">Hapus orderan</span>
+                                    <span class="text-danger dropdown-item hapus" data-id="{{ $order->id }}" data-order="{{ $order->order_id }}">Batalkan orderan</span>
                                 </li>
+                                @else
+                                <li>
+                                    <span class="text-danger dropdown-item hapus" data-id="{{ $order->id }}">Hapus riwayat</span>
+                                </li>
+                                @endif
                             </ul>
 
                         </td>

@@ -78,6 +78,7 @@
                             </div>
                             <div class="dropdown-body">
                                 <div class="cart-items">
+                                    @if(Session::has('user_id'))
                                     @foreach (\App\Models\Cart::getAllCartWithUserId(Session::get('user_id')) as $item)
                                     <div class="cart-item">
                                         <div class="cart-item-image">
@@ -106,6 +107,7 @@
                                         </button>
                                     </div>
                                     @endforeach
+                                    @endif
 
                                 </div>
                             </div>

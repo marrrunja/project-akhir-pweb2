@@ -25,7 +25,7 @@ class Cart extends Model
 
     public static function getAllCartWithUserId($id)
     {
-        $carts = Cart::with(['variant.produk'])
+        $carts = Cart::with(['variant'])
             ->where('pembeli_id', $id)
             ->get();
         return $carts;

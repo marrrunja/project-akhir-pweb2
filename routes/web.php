@@ -90,7 +90,6 @@ Route::get('api/produk/variants/edit',[ProdukVariantApiController::class, 'editP
 Route::controller(OrderController::class)->prefix('/order')->group(function(){
     Route::get('/index', 'index');
     Route::get('/detail/{id}', 'detailOrder');
-    Route::post('/hapus', 'deleteOrder');
 });
 
 Route::get('/tanggal',function(){
@@ -107,21 +106,3 @@ Route::post('/check', function(Request $request){
 Route::get('/gaada', function(){
     return view('index');
 });
-// Route::get('/detail', function () {
-//     return view('detail');
-// });
-
-
-// Route::get('/coba/race', function(){
-//     $currentStok = DB::table('stoks')
-//         ->join('produk_variants', 'stoks.variant_id', '=', 'produk_variants.id')
-//         ->join('order_items', 'produk_variants.id', '=', 'order_items.variant_id')
-//         ->join('table_orders', 'order_items.order_id', '=', 'table_orders.id')
-//         ->select('stoks.jumlah')
-//         ->where('table_orders.order_id', '=', 'INV-2025-06-05-62')
-//         ->lockForUpdate()
-//         ->get();
-//     dd($currentStok);
-
-// });
-

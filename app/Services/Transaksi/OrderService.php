@@ -45,10 +45,10 @@ class OrderService
 		$pembeli = Pembeli::where('username', '=',$username)->first();
 		$items = [];
 		if(count($data) == 1){
-			foreach($data as $value){
+			foreach($data as $row){
 				$items[] = [
-					'price' => $value['hargaSatuan'],
-					'quantity' => $value['jumlah'],
+					'price' => $row['hargaSatuan'],
+					'quantity' => $row['jumlah'],
 					'name' => $orderId
 				];
 			}
@@ -74,7 +74,7 @@ class OrderService
             ],
             'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart'],
             'callbacks' => [
-		        'finish' => url('/transaksi/finish'),// Ganti sesuai dengan URL kamu
+		        'finish' => url('/transaksi/finish'),
 			],
         ];
         $url = 'https://app.sandbox.midtrans.com/snap/v1/transactions';
