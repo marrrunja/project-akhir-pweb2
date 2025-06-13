@@ -106,3 +106,8 @@ Route::post('/check', function(Request $request){
 Route::get('/gaada', function(){
     return view('index');
 });
+
+
+Route::get('/order/berhasil', function(){
+    return view('transaksi.order-susccess');
+});

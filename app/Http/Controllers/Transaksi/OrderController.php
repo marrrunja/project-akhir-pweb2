@@ -40,9 +40,10 @@ class OrderController extends Controller
     {
         $id = $request->id;
         $orderId = $request->orderId;
-
+        
         $url = "https://api.sandbox.midtrans.com/v2/{$orderId}/cancel";
-
+        
+     
         $response = Http::withBasicAuth(env('MIDTRANS_SERVER_KEY'), '')
             ->post($url);
 
@@ -54,8 +55,9 @@ class OrderController extends Controller
             ]);
         }else{
             return response()->json([
-                'message' => $response->status() . '' . $response 
-            ], $response->status());
+                    'message' => $response->status() . '' . $response 
+                ], $response->status()
+            );
         }
     }
 

@@ -145,4 +145,3 @@ function addProdukVariant(e) {
 
 rowKonten.addEventListener("click", showDetailVariant);
 btnTambahProdukVariant.addEventListener("click", addProdukVariant);
-console.log(btnTambahProdukVariant);

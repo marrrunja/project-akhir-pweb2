@@ -1,5 +1,6 @@
 let urutkan = document.getElementById("urutkan");
 const appurl = document.querySelector("meta[name=_appurl]").content;
+const token = document.querySelector("meta[name=_token]").content;
 let konten = document.getElementById("konten");
 let APIURL = appurl + "/api/orderListByTanggal";
 
@@ -95,6 +96,7 @@ async function deleteDataOrder(url, id, orderId) {
         });
         
         const response = await data.json();
+        console.log(response);
         
 
         if (!data.ok) {
@@ -139,11 +141,8 @@ async function showConfirmAlert(e) {
                     const parent = e.target.parentElement.parentElement.parentElement.parentElement
                     parent.remove();
                     let total = parseInt(totalPesanan.innerText);
-                    console.log(total)
-                    console.log(typeof total);
                     totalPesanan.textContent = total - 1;
                 }
-                    
             }
         });
     }
