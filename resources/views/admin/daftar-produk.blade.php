@@ -3,7 +3,8 @@
 
 @push('styles')
 
-<link href="{{ custom_asset('templatesbadmin2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ custom_asset('templatesbadmin2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet"
+    type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700,900" rel="stylesheet">
 <link href="{{ custom_asset('templatesbadmin2/css/sb-admin-2.min.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
@@ -141,8 +142,7 @@
                                         <td class="py-4"><img src="{{ asset('storage/images/' . $product->foto) }}"
                                                 width="100">
                                         </td>
-                                        <td
-                                            class="py-4">
+                                        <td class="py-4">
                                             <a href="{{ route('admin.detailProduk', $product->id) }}"
                                                 class="btn btn-primary ">Lihat variant produk</a>
                                             <a href="{{ route('produk.edit', $product->id) }}"
@@ -198,11 +198,10 @@
 <script src="js/demo/chart-pie-demo.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ env('TYPE_URL') == 'http' ? asset('resources/js/api.js') : secure_asset('resources/js/api.js') }}">></script>
+<script src="{{ env('TYPE_URL') == 'http' ? asset('resources/js/api.js') : secure_asset('resources/js/api.js') }}">
+    >
+
+</script>
 <script src="{{ custom_asset('templatesbadmin2/js/sb-admin-2.min.js') }}"></script>
 
 @endpush
-
-
-
-

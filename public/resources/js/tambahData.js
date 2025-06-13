@@ -17,7 +17,30 @@ function scrollByLines(lines = 1) {
         behavior: 'smooth'
     });
 }
-
+function createInputVariant(i){
+    let inputVariant = `
+                <fieldset class="shadow p-3 rounded">
+                    <legend>Varian ${i}</legend>
+                    <div class="mb-3">
+                        <label for="variant${i}" class="form-label">Nama varian</label>
+                        <input type="text" id="variant${i}" name="variant[]" class="form-control"placeholder="Contoh, original" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="harga${i}" class="form-label">Harga</label>
+                        <input type="number" name="harga[]" class="form-control" id="harga${i}" placeholder="Contoh, 5000" required>
+                    </div>
+                    <div class="mb-3">
+                            <label for="stok${i}" class="form-label">Stok</label>
+                        <input type="number" id="stok${i}" name="stok[]" class="form-control" id="stok" placeholder="Contoh, 10" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="gambar${i}" class="form-label">Foto produk</label>
+                        <input type="file" name="gambar[]" id="gambar${i}" class="form-control" multiple>
+                    </div>
+                </fieldset>
+                   `;
+    return inputVariant;
+}
 function tambahInputVariant()
 {
 	if(i > 5){
@@ -27,27 +50,8 @@ function tambahInputVariant()
 	}
 	i++;
 	jumlahVariant.value = i;
-	let inputVariant = `
-                        <fieldset class="shadow p-3 rounded">
-                            <legend>Varian ${i}</legend>
-							<div class="mb-3">
-                                <label for="variant${i}" class="form-label">Nama varian</label>
-                                <input type="text" id="variant${i}" name="variant[]" class="form-control"placeholder="Contoh, original" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="harga${i}" class="form-label">Harga</label>
-                                <input type="number" name="harga[]" class="form-control" id="harga${i}" placeholder="Contoh, 5000" required>
-                            </div>
-                            <div class="mb-3">
-                                 <label for="stok${i}" class="form-label">Stok</label>
-                                <input type="number" id="stok${i}" name="stok[]" class="form-control" id="stok" placeholder="Contoh, 10" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="gambar${i}" class="form-label">Foto produk</label>
-                                <input type="file" name="gambar[]" id="gambar${i}" class="form-control" multiple>
-                            </div>
-                        </fieldset>
-                   `;
+    let inputVariant = createInputVariant(i);
+	
     let div = document.createElement("div");
     div.classList.add("mb-3");
     div.innerHTML = inputVariant;
