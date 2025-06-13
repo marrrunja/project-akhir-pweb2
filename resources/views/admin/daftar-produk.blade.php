@@ -37,19 +37,7 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    {{--
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    --}}
+                    <h3 class="pt-2">Halaman Admin</h3>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -105,22 +93,21 @@
                     <!-- Cards -->
                     <div class="card text w-100">
                         <!-- Cards Header -->
-                        <div class="card-header text-primary" style="font-weight:bold;">
-                            Ilustrasions
-                            <img src="img/icon.png" alt="icon" width="30px">
+                        <div class="card-header text-primary text-center" style="font-weight:bold;">
+                            Berikut Merupakan Produk Yang Anda Jual
                         </div>
                         <!-- Cards Body -->
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 col-md-10 col-xl-5">
-                                    <input type="search" name="keyword" id="inputCari"
-                                        class="form-control mb-3 border-primary border-2 py-4 ps-4"
-                                        placeholder="Cari nama produk atau kategori...."
-                                        aria-label="Cari nama produk atau kategori...." aria-describedby="button-addon2">
-                                    <!-- <button class="btn btn-primary border-primary border-2" type="button" id="btnCari"><i
-                                                                                                            class="bi bi-search"></i></button> -->
 
-                                </div>
+                            <div class="col-12 col-md-10 col-xl-5">
+                                <input type="search" name="keyword" id="inputCari"
+                                    class="form-control mb-3 border-primary border-2 py-4 ps-4"
+                                    placeholder="Cari nama produk atau kategori...."
+                                    aria-label="Cari nama produk atau kategori...." aria-describedby="button-addon2">
+                                <!-- <button class="btn btn-primary border-primary border-2" type="button" id="btnCari"><i
+                                                                                                                                                            class="bi bi-search"></i></button> -->
+
+
                             </div>
                             <div class="table-responsive" id="content-produk">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -137,7 +124,7 @@
                                     <tbody>
                                         @foreach($products as $product)
                                             <tr>
-                                                <th class="text-center align-middle px-5">{{ $loop->iteration }}</th>
+                                                <th class="text-center align-middle">{{ $loop->iteration }}</th>
                                                 <td class="text-center align-middle px-5">{{ $product->nama }}</td>
                                                 <td class="text-center align-middle px-5">{{ $product->detail }}</td>
                                                 <td class="text-center align-middle px-5">{{ $product->kategori }}</td>
@@ -207,7 +194,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ env('TYPE_URL') == 'http' ? asset('resources/js/api.js') : secure_asset('resources/js/api.js') }}">
-                                                                        >
+                                                                                                                                >
 
     </script>
     <script src="{{ custom_asset('templatesbadmin2/js/sb-admin-2.min.js') }}"></script>

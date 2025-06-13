@@ -17,11 +17,14 @@ function scrollByLines(lines = 1) {
         behavior: 'smooth'
     });
 }
+
 function createInputVariant(i){
-    let inputVariant = `
-                <fieldset class="shadow p-3 rounded">
-                    <legend>Varian ${i}</legend>
-                    <div class="mb-3">
+    let inputVariant=`
+        <div class="card px-4 py-4">
+            <div class="body">
+            <h3 class="card-title text-center">Variant ${i}</h3>
+            <h5 class="card-subtitle text-center mb-4">Silahkan Masukkan Varian Produk Anda</h5>
+                <div class="mb-3">
                         <label for="variant${i}" class="form-label">Nama varian</label>
                         <input type="text" id="variant${i}" name="variant[]" class="form-control"placeholder="Contoh, original" required>
                     </div>
@@ -33,12 +36,13 @@ function createInputVariant(i){
                             <label for="stok${i}" class="form-label">Stok</label>
                         <input type="number" id="stok${i}" name="stok[]" class="form-control" id="stok" placeholder="Contoh, 10" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="">
                         <label for="gambar${i}" class="form-label">Foto produk</label>
                         <input type="file" name="gambar[]" id="gambar${i}" class="form-control" multiple>
                     </div>
-                </fieldset>
-                   `;
+            </div>
+        </div>
+    `;
     return inputVariant;
 }
 function tambahInputVariant()
@@ -53,10 +57,12 @@ function tambahInputVariant()
     let inputVariant = createInputVariant(i);
 	
     let div = document.createElement("div");
-    div.classList.add("mb-3");
+    div.classList.add("col-12");
+    div.classList.add("col-xl-6");
+    div.classList.add("col-md-8");
+    div.classList.add("mb-4");
     div.innerHTML = inputVariant;
 	container.append(div);
-	scrollByLines(1000);
 }
 
 function kurangiVariant()
