@@ -71,7 +71,7 @@
                                 <div class="col-lg-6 col-12 mt-3 mt-lg-0 mb-lg-0 mb-3">
                                     <div class="product-info d-flex align-items-center">
                                         <div class="product-image">
-                                            <img src="assets/img/product/product-1.webp" alt="Product" class="img-fluid"
+                                            <img src="{{ asset('storage/image-variant/'.$item->variant->foto) }}" alt="Product" class="img-fluid"
                                                 loading="lazy">
                                         </div>
                                         <div class="product-details">
@@ -174,7 +174,7 @@
                         </div>
 
                         <div class="checkout-button">
-                            <a href="/" class="btn btn-accent w-100" id="btnCheckout"
+                            <a href="" class="btn btn-accent w-100" id="btnCheckout"
                                 data-id="{{ Session::get('user_id') }}">
                                 Proceed to Checkout <i class="bi bi-arrow-right"></i>
                             </a>

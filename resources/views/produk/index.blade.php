@@ -79,7 +79,7 @@
             </div> -->
             <div class="row mb-4">
                 <div class="col-12">
-                    <h1 class="fw-bold" id="judul-kategori">Daftar produk yang tersedia</h1>
+                    <h1 class="fw-bold">Daftar <span id="judul-kategori">produk</span> yang tersedia</h1>
                 </div>
                 @if(Session::has('status'))
                 <div class="col-12 col-md-10 col-xl-6">
@@ -104,13 +104,13 @@
                         </div>
                         <div class="product-info">
                             <h5 class="product-title"><a
-                                    href="{{ route('produk.variant', $product->id) }}">{{ $product->nama }}</a></h5>
+                                    href="/variant/{{ $product->idProduk }}">{{ $product->nama }}</a></h5>
                             <div class="product-price">
                                 <span class="">{{ Str::limit($product->detail, 25) }}</span>
                             </div>
                             <div class="product-price">
-                                <a href="/produk/detail/{{ $product->id }}" class="current-price btn-modal"
-                                    data-id="{{ $product->id }}" data-bs-toggle="modal"
+                                <a href="/produk/detail/{{ $product->idProduk }}" class="current-price btn-modal"
+                                    data-id="{{ $product->idProduk }}" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">Detail produk
                                     &raquo;</a>
                             </div>

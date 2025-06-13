@@ -10,7 +10,7 @@
                     <h1 class="sitename">Adila<span>Snack</span></h1>
                 </a>
                 <!-- Search -->
-                <form class="search-form desktop-search-form" method="post"
+                <form class="search-form desktop-search-form" method="get"
                     action="{{ env('BASE_URL') }}/variant/search">
                     @csrf
                     <div class="input-group">
@@ -70,14 +70,17 @@
                         <button class="header-action-btn" data-bs-toggle="dropdown">
                             <i class="bi bi-cart3"></i>
                             <span class="action-text d-none d-md-inline-block">Cart</span>
-                            <!-- <span class="badge">3</span> -->
+                            @if(Session::has('user_id'))
+                                <span class="badge" id="jumlahCart"> {{ \App\Models\Cart::getCountCartsByUserId(Session::get('user_id')) }}</span>
+                            @endif
                         </button>
                         <div class="dropdown-menu cart-dropdown-menu">
                             <div class="dropdown-header">
-                                <!-- <h6>Shopping Cart (3)</h6> -->
+                                <h6>Shopping Cart @if(Session::has('user_id')) {{ (\App\Models\Cart::getCountCartsByUserId(Session::get('user_id')))}} @endif</h6>
                             </div>
                             <div class="dropdown-body">
                                 <div class="cart-items">
+                                    @if(Session::has('user_id'))
                                     @foreach (\App\Models\Cart::getAllCartWithUserId(Session::get('user_id')) as $item)
                                     <div class="cart-item">
                                         <div class="cart-item-image">
@@ -106,6 +109,7 @@
                                         </button>
                                     </div>
                                     @endforeach
+                                    @endif
 
                                 </div>
                             </div>
@@ -169,7 +173,7 @@
     <!-- Mobile Search Form -->
     <div class="collapse" id="mobileSearch">
         <div class="container">
-            <form class="search-form" method="post" action="{{ env('BASE_URL') }}/variant/search">
+            <form class="search-form" method="get" action="{{ env('BASE_URL') }}/variant/search">
                 @csrf
                 <div class="input-group">
                     <input type="text" name="keyword" class="form-control" placeholder="Search for products...">

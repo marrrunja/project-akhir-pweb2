@@ -48,3 +48,5 @@ async function sendData()
 }
 
 btnBayar.addEventListener("click", sendData);
+
+console.log("ok")

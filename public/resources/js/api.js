@@ -76,13 +76,14 @@ async function getProdukByKategoriId(kategoriId){
         await showAlertDanger("Gagal fetch data " +error);
     }
 }
-async function deleteDataOrder(url, id) {
+async function deleteDataOrder(url, id, orderId) {
 
     const token = document.querySelector("meta[name=_token]").content;
 
     try {
         const dataToSend = {
-            id: id
+            id: id,
+            orderId :orderId
         };
         const data = await fetch(url, {
             method: "POST",
@@ -94,6 +95,7 @@ async function deleteDataOrder(url, id) {
         });
         
         const response = await data.json();
+        
 
         if (!data.ok) {
             await showAlertDanger("HTTP ERROR " + data.status);
@@ -101,10 +103,12 @@ async function deleteDataOrder(url, id) {
         }
         if (data.status == 200) {
             await showAlertSuccess(response.message);
+            return true;
         }
 
     } catch (error) {
         await showAlertDanger("Gagal fetch data dari api " + error);
+        return false;
     }
 }
 async function showAlertSuccess(pesan) {
@@ -127,11 +131,19 @@ async function showConfirmAlert(e) {
     if (e.target.classList.contains("hapus")) {
         await showQuestionAlert().then((result) => {
             if (result.isConfirmed) {
-                const url = appurl + "/order/hapus";
+                const url = appurl + "/api/order/hapus";
+                let totalPesanan = document.getElementById("totalPesanan");
                 let id = e.target.dataset.id;
-                deleteDataOrder(url, id);
-                const parent = e.target.parentElement.parentElement.parentElement.parentElement
-                parent.remove();
+                let orderId = e.target.dataset.order;
+                if(deleteDataOrder(url, id, orderId) == true){
+                    const parent = e.target.parentElement.parentElement.parentElement.parentElement
+                    parent.remove();
+                    let total = parseInt(totalPesanan.innerText);
+                    console.log(total)
+                    console.log(typeof total);
+                    totalPesanan.textContent = total - 1;
+                }
+                    
             }
         });
     }
@@ -165,29 +177,31 @@ if(listProduk != null)
 
 let data = null;
 if(kategori != null){
+    let judulKategori = document.getElementById("judul-kategori");
     for(let i = 0; i < kategori.length; i++){
         kategori[i].addEventListener("click",async function(){
             switch(kategori[i].innerText){
                 case "Makanan":
                     data = await getProdukByKategoriId(1);
                     listProduk.innerHTML = data;
+                    judulKategori.innerText = "Makanan";
                     break;
                 case "Minuman":
                     data = await getProdukByKategoriId(2);
                     listProduk.innerHTML = data;
+                    judulKategori.innerText = "Minuman";
                     break;
                 case "Souvenir":
                     data = await getProdukByKategoriId(3);
+                    judulKategori.innerText = "Souvenir";
                     listProduk.innerHTML = data;
                     break;
                 default:
                     data = await getProdukByKategoriId(null);
                     listProduk.innerHTML= data;
+                    judulKategori.innerText = "Produk";
                     break;
             }
         });
     }
 }
-
-
-console.log("hello world");

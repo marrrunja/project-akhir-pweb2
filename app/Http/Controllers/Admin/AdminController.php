@@ -14,9 +14,23 @@ class AdminController extends Controller
 {
     public function index():Response
     {
-        $categories = Kategori::all();
+        // pendapatan
+        $pendapatan = DB::table('table_orders')
+                        ->select(DB::raw('SUM(total_harga) as total'))
+                        ->where('is_dibayar', '=', 1)
+                        ->first();
+        $rerata = DB::table('table_orders')
+                    ->select(DB::raw('AVG(total_harga) as rerata'))
+                    ->where('is_dibayar', '=', 1)
+                    ->first();
+        $pending = DB::table('table_orders')
+                        ->select(DB::raw('count(*) as jumlah'))
+                        ->where('is_dibayar', '=', 0)
+                        ->first();
         $data = [
-            'categories' => $categories,
+            'pendapatan' => $pendapatan->total,
+            'rerata' => $rerata->rerata,
+            'pending' => $pending->jumlah
         ];
         return response()->view('admin.index', $data);
     }

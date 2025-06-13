@@ -37,7 +37,7 @@ function createInputEditElement(variant, jumlah, harga, foto, token, id) {
     tdVariant.innerHTML += inputIdHidden;
     tdHarga.innerHTML = inputHarga;
     tdJumlah.innerHTML = inputJumlah;
-    tdFile.innerHTML = labelFile;
+    tdFile.innerHTML = labelFile + inputFoto;
 
     tr.append(tdKosong);
     tr.append(tdVariant);
@@ -135,11 +135,14 @@ function makeInputAddVariantElement() {
 }
 
 function addProdukVariant(e) {
-    if (contentAddVariant == true) return;
+    console.log("Ok")
+    if (contentAddVariant === true) return;
     let apiData = appurl + "/variant/tambah/" + this.dataset.id;
+    console.log(apiData);
     makeInputAddVariantElement();
     formTambahProdukVariant.setAttribute("action", apiData);
 }
 
 rowKonten.addEventListener("click", showDetailVariant);
 btnTambahProdukVariant.addEventListener("click", addProdukVariant);
+console.log(btnTambahProdukVariant);

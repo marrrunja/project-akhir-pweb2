@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Models\Transaksi\OrderItem;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
 {
@@ -34,19 +35,28 @@ class OrderController extends Controller
         return response()->view('transaksi.order-items', $data);
     }
 
-    public function deleteOrder():JsonResponse
-    {
-        $id = request('id');
 
-        $order = Order::where('id', $id)->firstOrFail();
-        $order->delete();
-        return response()->json(['message' => "Berhasil hapus data"]);
-    }
-    public function cancel($orderId)
+    public function deleteOrder(Request $request): JsonResponse
     {
-        \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
-        \Midtrans\Config::$isProduction = false;
+        $id = $request->id;
+        $orderId = $request->orderId;
 
-        return \Midtrans\Transaction::cancel($orderId);
+        $url = "https://api.sandbox.midtrans.com/v2/{$orderId}/cancel";
+
+        $response = Http::withBasicAuth(env('MIDTRANS_SERVER_KEY'), '')
+            ->post($url);
+
+        if ($response->successful()) {
+            $order = Order::where('id', $id)->firstOrFail();
+            $order->delete();
+            return response()->json([
+                'message' => "Transaksi {$orderId} berhasil dibatalkan"
+            ]);
+        }else{
+            return response()->json([
+                'message' => $response->status() . '' . $response 
+            ], $response->status());
+        }
     }
+
 }
