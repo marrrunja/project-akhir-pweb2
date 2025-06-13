@@ -172,7 +172,7 @@ class TransaksiController extends Controller
     }
 
     public function success(Request $request){
-        return "Order sukses";
+        return view('transaksi.order-success');
     }
 
     public function orderSuccess():RedirectResponse

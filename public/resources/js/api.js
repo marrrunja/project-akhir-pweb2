@@ -129,6 +129,7 @@ async function showAlertDanger(pesan) {
         text: pesan
     });
 }
+
 async function showConfirmAlert(e) {
     if (e.target.classList.contains("hapus")) {
         await showQuestionAlert().then((result) => {

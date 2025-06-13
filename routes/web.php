@@ -109,5 +109,5 @@ Route::get('/gaada', function(){
 
 
 Route::get('/order/berhasil', function(){
-    return view('transaksi.order-susccess');
+    return view('transaksi.order-success');
 });

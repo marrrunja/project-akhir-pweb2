@@ -155,7 +155,7 @@ class OrderService
 	}
 
 
-	public function addOrders(array $data, ?string &$error = null):bool
+	public function addOrders(array $data, ?string &$error = null, ?string &$link = null):bool
 	{
 		if(count($data) === 0) {
 			$error = "Data tidak boleh kosong!!";
@@ -197,6 +197,8 @@ class OrderService
 			    return false;
 			}
             $linkBayar = $response['redirect_url'];
+
+            $link = $linkBayar;
             DB::table('table_orders')->where('id', '=', $orderInsertId)->update([
             	'order_id' => $orderId,
             	'link_bayar' => $response['redirect_url'] ?? null

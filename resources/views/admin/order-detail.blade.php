@@ -15,6 +15,7 @@
             
             @foreach($orderItems as $orderItem)
             <div class="col-12 col-md-8 col-xl-5">
+                <img src="{{ asset('storage/image-variant/'.$orderItem->foto) }}">
                 <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">Tanggal Transaksi: {{ $orderItem->tanggal_transaksi }}</h5>

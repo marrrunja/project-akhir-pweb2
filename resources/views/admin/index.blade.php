@@ -178,30 +178,33 @@
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-comments fa-2x text-gray-300"></i>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card text w-100">
-                    <!-- Cards Header -->
-                    <div class="card-header text-primary" style="font-weight:bold;">
-                        Ilustrasions
-                        <img src="img/icon.png" alt="icon" width="30px">
-                    </div>
-                    <!-- Cards Body -->
-                    <div class="card-body">
-                        <p><?php echo "Hello World!"; ?></p>
-                        <p><?php echo "Muammar Irfan"; ?></p>
-                        <p><?php echo "F1E123040"; ?></p>
-                        <p><?php echo "Sistem Informasi"; ?></p>
-                    </div>
-                    <!-- Cards Footer -->
-                    <div class="card-footer text-muted">
-                        <button class="btn btn-primary">Done</button>
-                        <button class="btn btn-danger">Cancel</button>
+                <div class="row">
+                    <div class="col-12 col-xl-8">
+                        <div class="card text">
+                            <!-- Cards Header -->
+                            <div class="card-header text-primary" style="font-weight:bold;">
+                                Ilustrasions
+                                <img src="img/icon.png" alt="icon" width="30px">
+                            </div>
+                            <!-- Cards Body -->
+                            <div class="card-body">
+                                <p><?php echo "Hello World!"; ?></p>
+                                <p><?php echo "Muammar Irfan"; ?></p>
+                                <p><?php echo "F1E123040"; ?></p>
+                                <p><?php echo "Sistem Informasi"; ?></p>
+                            </div>
+                            <!-- Cards Footer -->
+                            <div class="card-footer text-muted">
+                                <button class="btn btn-primary">Done</button>
+                                <button class="btn btn-danger">Cancel</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- End of cards -->

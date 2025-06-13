@@ -53,7 +53,7 @@
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-            <h2>Daftar Pesanan anda</h2>
+            <h2>Pesanan berhasil <i class="bi bi-emoji-grin"></i> , sebaiknya dibayar sebelum 24 jam</h2>
             <p>Klik lihat detail untuk melihat detail setiap pesanan</p>
         </div><!-- End Section Title -->
 

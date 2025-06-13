@@ -58,18 +58,15 @@
             <h2>Daftar Pesanan anda</h2>
             <p>Klik lihat detail untuk melihat detail setiap pesanan</p>
         </div><!-- End Section Title -->
-
         <div class="container" data-aos="fade-up" id="content">
             <!-- Header untuk perangkat menengah ke atas -->
-            <div
-                class="row mb-2 px-3 py-2 bg-ungu text-white rounded shadow-sm fw-semibold text-center d-none d-md-flex">
+            <div class="row mb-2 px-3 py-2 bg-ungu text-white rounded shadow-sm fw-semibold text-center d-none d-md-flex">
                 <div class="col-md-3">Foto</div>
                 <div class="col-md-2">Nama Produk</div>
                 <div class="col-md-2">Jumlah</div>
                 <div class="col-md-2">Harga Satuan</div>
                 <div class="col-md-2">Total Harga</div>
             </div>
-
             @foreach($items as $item)
             <!-- Card responsive untuk tiap item -->
             <div id="row-{{ $item->id }}" class="row justify-content-center px-3 py-3 mb-3 bg-white border rounded shadow-sm align-items-center">

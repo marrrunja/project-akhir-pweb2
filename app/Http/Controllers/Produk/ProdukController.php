@@ -7,6 +7,7 @@ use App\Models\Produk\Stok;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Intervention\Image\Facades\Image;
 use App\Models\Produk\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -111,14 +112,17 @@ class ProdukController extends Controller
 
         try {
             $namaFoto = $request->foto->store('images', 'public');
+            $fotoToInsert = basename($namaFoto);
             DB::table('products')->insert([
                 'nama'        => $namaProduk,
                 'kategori_id' => $kategori,
                 'detail' => $deskripsi,
-                'foto' => basename($namaFoto),
+                'foto' => $fotoToInsert,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
+            $image = Image::make(public_path("storage/images/{$fotoToInsert}"))->fit(1200,1200);
+            $image->save();
 
             $lastInsertIdProduk = DB::getPdo()->lastInsertId();
 
@@ -136,6 +140,8 @@ class ProdukController extends Controller
                 if ($insertProdukVariant > 0) {
                     $gambar[$i]->storeAs('image-variant', $originalName, 'public');
                 }
+                $imageToInsert = Image::make(public_path("storage/image-variant/{$originalName}"))->fit(1200,1200);
+                $imageToInsert->save();
                 $lastInsertProdukVariantId = DB::getPdo()->lastInsertId();
                 DB::table('stoks')->insert([
                     'jumlah' => $request->stok[$i],
@@ -183,6 +189,8 @@ class ProdukController extends Controller
             }
             $originalName = Str::replace(' ', '', Str::uuid() . '-' . $kategori . '-' . $newImage->getClientOriginalName());
             $newImage->storeAs('images', $originalName, 'public');
+            $image = Image::make(public_path("storage/images/{$originalName}"))->fit(1200,1200);
+            $image->save();
         }
         // update data
         $produk = DB::table('products')->where('id', '=', $id);

@@ -89,7 +89,7 @@ class AdminController extends Controller
                 ->join('order_items', 'table_orders.id', '=', 'order_items.order_id')
                 ->join('produk_variants', 'order_items.variant_id', '=', 'produk_variants.id')
                 ->join('products', 'produk_variants.produk_id', '=', 'products.id')
-                ->select('table_orders.tanggal_transaksi', 'order_items.jumlah', 'order_items.total_harga', 'produk_variants.variant','products.nama','produk_variants.harga')
+                ->select('table_orders.tanggal_transaksi', 'order_items.jumlah', 'order_items.total_harga', 'produk_variants.variant','products.nama','produk_variants.harga', 'produk_variants.foto')
                 ->where('order_items.order_id', '=', $id)
                 ->get();
         return response()->view('admin.order-detail', compact('orderItems'));

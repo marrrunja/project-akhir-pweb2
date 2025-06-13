@@ -16,6 +16,18 @@ async function showConfirmDeleteItem()
         confirmButtonText: 'Ya, hapus aja!'
     });
 }
+async function showConfirmDeleteCart(){
+    return await  Swal.fire({
+        title: 'Hapus semua?',
+        text: 'Seluruh isi keranjang akan terhapus. Yakin?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Hapus semua!'
+    });
+}
+
 
 async function removeItemCart(e) {
     if (e.target.classList.contains("remove-item")) {
@@ -164,18 +176,7 @@ function updateCartSummary() {
     });
 }
 
-async function showConfirmDeleteCart(){
-    return await  Swal.fire({
-        title: 'Hapus semua?',
-        text: 'Seluruh isi keranjang akan terhapus. Yakin?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#6c757d',
-        confirmButtonText: 'Hapus semua!'
-    });
-}
-
+// males rapihin, rapihin dewek
 document.getElementById('clear-cart-btn').addEventListener('click',async function () {
     const userId = this.dataset.user;
    await showConfirmDeleteCart().then(async (result) => {

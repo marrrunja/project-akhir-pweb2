@@ -13,8 +13,8 @@
     @yield('body')
     @include('layout.footer')
     @stack('scripts')
-    <script>
-        
+    <script src="">
+
     </script>
 </body>
 
