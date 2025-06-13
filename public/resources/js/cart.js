@@ -1,7 +1,7 @@
 const cartItem = document.getElementById("cart");
 const appurl = document.querySelector("meta[name=_appurl]").content;
-const urlHapusCart = appurl+"/cart/delete";
-const urlUpdateCart = appurl+"/cart/update/{id}";
+const urlHapusCart = appurl + "/cart/delete";
+const urlUpdateCart = appurl + "/cart/update/{id}";
 let token = document.querySelector("meta[name=_token]").content;
 async function removeItemCart(e) {
     if (e.target.classList.contains("remove-item")) {
@@ -40,6 +40,7 @@ async function removeItemCart(e) {
                         const json = await response.json();
                         console.log(json);
                         parent.remove();
+                        updateCartSummary();
 
                         Swal.fire(
                             'Berhasil!',
@@ -75,10 +76,6 @@ document.addEventListener("click", removeItemCart);
 document.addEventListener('DOMContentLoaded', async () => {
     await initCartHandler();
     updateCartSummary();
-
-    const clearCartBtn = document.getElementById('clear-cart-btn');
-    clearCartBtn.addEventListener('click', clearCartHandler);
-
 });
 
 async function initCartHandler() {
@@ -92,17 +89,20 @@ async function initCartHandler() {
                     "Content-Type": "application/json",
                     'X-CSRF-TOKEN': token
                 },
-                body: JSON.stringify({ qty: newQty, id: cartId})
+                body: JSON.stringify({ qty: newQty, id: cartId })
             });
             const data = await res.json();
             console.log(data);
             if (data.success) {
+
                 const input = button.parentElement.querySelector('.quantity-input');
+
                 input.value = data.qty;
 
-                const hargaText = button.closest('.cart-item').querySelector('.current-price').textContent.replace(/[^\d]/g, '');
+                const hargaText = button.closest('.cart-ireng').querySelector('.current-price').textContent.replace(/[^\d]/g, '');
                 const harga = parseInt(hargaText);
 
+                console.log(data);
                 updateItemTotal(button, harga);
                 updateCartSummary();
             }
@@ -137,14 +137,15 @@ async function initCartHandler() {
 }
 
 function updateItemTotal(button, harga) {
-    const qty = parseInt(button.parentElement.querySelector('.quantity-input').value);
-    const totalEl = button.closest('.cart-item').querySelector('.item-total span');
+    const input = button.parentElement.querySelector('.quantity-input');
+    const qty = parseInt(input.value);
+    const totalEl = button.closest('.cart-ireng').querySelector('.item-total span');
     totalEl.textContent = "Rp" + new Intl.NumberFormat('id-ID').format(harga * qty);
 }
 
 function updateCartSummary() {
     let total = 0;
-    document.querySelectorAll('.cart-item').forEach(item => {
+    document.querySelectorAll('.cart-ireng').forEach(item => {
         const qty = parseInt(item.querySelector('.quantity-input').value);
         const priceText = item.querySelector('.current-price').textContent.replace(/[^\d]/g, '');
         const harga = parseInt(priceText);
@@ -182,10 +183,10 @@ document.getElementById('clear-cart-btn').addEventListener('click', function () 
 
                 const data = await response.json();
                 if (data.success) {
-                    document.querySelectorAll('.cart-item').forEach(item => item.remove());
+                    document.querySelectorAll('.cart-ireng').forEach(item => item.remove());
 
                     document.querySelectorAll('.summary-value').forEach(el => {
-                    el.textContent = 'Rp0';
+                        el.textContent = 'Rp0';
                     });
                     Swal.fire('Berhasil!', 'Semua item telah dihapus dari cart.', 'success');
                 } else {
