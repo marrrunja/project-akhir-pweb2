@@ -11,8 +11,8 @@
 @endpush
 
 @section('meta')
-    <meta name="_appurl" content="{{ env('BASE_URL') }}">
-    <meta name="_token" content="{{ csrf_token() }}">
+<meta name="_appurl" content="{{ env('BASE_URL') }}">
+<meta name="_token" content="{{ csrf_token() }}">
 @endsection
 
 @section('body')
@@ -115,7 +115,7 @@
                             <h1>Daftar Order User</h1>
                             <div class="row mb-3 mt-3">
                                 <div class="col-12 col-xl-3" id="kontent">
-                                    <select class="form-select" id="urutkan">
+                                    <select class="form-control" id="urutkan">
                                         <option value="2">Urutkan</option>
                                         <option value="0">Terbaru</option>
                                         <option value="1">Terlama</option>

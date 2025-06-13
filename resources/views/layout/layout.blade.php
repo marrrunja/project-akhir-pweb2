@@ -13,7 +13,9 @@
     @yield('body')
     @include('layout.footer')
     @stack('scripts')
-    <!-- SweetAlert2 CDN -->
+    <script>
+        
+    </script>
 </body>
 
 </html>

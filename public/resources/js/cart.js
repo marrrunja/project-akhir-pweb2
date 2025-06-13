@@ -3,6 +3,20 @@ const appurl = document.querySelector("meta[name=_appurl]").content;
 const urlHapusCart = appurl + "/cart/delete";
 const urlUpdateCart = appurl + "/cart/update/{id}";
 let token = document.querySelector("meta[name=_token]").content;
+
+async function showConfirmDeleteItem()
+{
+    return await Swal.fire({
+        title: 'Kamu yakin?',
+        text: "Item ini akan dihapus dari keranjang.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, hapus aja!'
+    });
+}
+
 async function removeItemCart(e) {
     if (e.target.classList.contains("remove-item")) {
         const parent = e.target.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -15,15 +29,7 @@ async function removeItemCart(e) {
         };
 
         // Konfirmasi dulu sebelum hapus
-        Swal.fire({
-            title: 'Kamu yakin?',
-            text: "Item ini akan dihapus dari keranjang.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, hapus aja!'
-        }).then(async (result) => {
+        await showConfirmDeleteItem().then(async (result) => {
             if (result.isConfirmed) {
                 try {
                     const response = await fetch(urlHapusCart, {
@@ -158,10 +164,8 @@ function updateCartSummary() {
     });
 }
 
-document.getElementById('clear-cart-btn').addEventListener('click', function () {
-    const userId = this.dataset.user;
-
-    Swal.fire({
+async function showConfirmDeleteCart(){
+    return await  Swal.fire({
         title: 'Hapus semua?',
         text: 'Seluruh isi keranjang akan terhapus. Yakin?',
         icon: 'warning',
@@ -169,7 +173,12 @@ document.getElementById('clear-cart-btn').addEventListener('click', function () 
         confirmButtonColor: '#d33',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'Hapus semua!'
-    }).then(async (result) => {
+    });
+}
+
+document.getElementById('clear-cart-btn').addEventListener('click',async function () {
+    const userId = this.dataset.user;
+   await showConfirmDeleteCart().then(async (result) => {
         if (result.isConfirmed) {
             try {
                 const response = await fetch('/cart/clear', {

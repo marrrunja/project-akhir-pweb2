@@ -9,6 +9,7 @@
     <link href="../../../../templatesbadmin2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700,900" rel="stylesheet">
     <link href="../../../../templatesbadmin2/css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <style>
         @media (max-width: 768px) {
             .responsive-heading {
@@ -113,7 +114,7 @@
                             <div class="container">
                                 <div>
                                     <button class="btn btn-primary mb-3 mt-2" data-id="{{ $id }}"
-                                        id="btnTambahProdukVariant">[+]
+                                        id="btnTambahProdukVariant"><i class="bi bi-plus-circle fw-bold me-1"></i>
                                         Tambah Variant</button>
                                 </div>
                                 <div class="row">
