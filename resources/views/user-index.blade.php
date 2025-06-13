@@ -647,7 +647,7 @@
             </div>
 
             <div class="text-center mt-5" data-aos="fade-up">
-                <a href="category.html" class="view-all-btn">View All Products <i class="bi bi-arrow-right"></i></a>
+                <a href="/produk/index" class="view-all-btn">View All Products <i class="bi bi-arrow-right"></i></a>
             </div>
 
         </div>
