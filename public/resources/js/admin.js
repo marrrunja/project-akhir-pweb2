@@ -29,7 +29,7 @@ function createInputEditElement(variant, jumlah, harga, foto, token, id) {
     let tdHarga = document.createElement('td');
     let tdJumlah = document.createElement('td');
     let tdFile = document.createElement("td");
-    let labelFile = `<label for="gambar" class="form-label btn btn-primary">Edit Jika Perlu</label>` ;
+    let labelFile = `<label for="gambar" class="form-label btn btn-primary">Edit Jika Perlu</label>`;
 
     tdKosong.setAttribute("colspan", "2");
 
@@ -116,8 +116,8 @@ function makeInputAddVariantElement() {
     let inputGambar = `<input type="file" name="gambar" class="form-control" required>`;
 
 
-    let btnSubmit = `<button type="submit" class="btn btn-success mb-3 mt-2 me-2">Tambah</button>`;
-    let btnBatal = `<button type="button" class="btn btn-danger btn-batal mb-3 mt-2">Batal</button>`;
+    let btnSubmit = `<button type="submit" class="btn btn-success mb-3 mt-3 me-2">Tambah</button>`;
+    let btnBatal = `<button type="button" class="btn btn-danger btn-batal mb-3 mt-3">Batal</button>`;
 
     containerAddProdukVariant.innerHTML = inputToken + inputVarian + inputHarga + inputStok + inputGambar;
     containerBtn.innerHTML = btnSubmit + btnBatal;
