@@ -7,14 +7,15 @@ use App\Models\Produk\Stok;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Intervention\Image\Facades\Image;
 use App\Models\Produk\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Produk\ProdukVariant;
+use Intervention\Image\ImageManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class ProdukController extends Controller
 {
@@ -121,7 +122,8 @@ class ProdukController extends Controller
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
-            $image = Image::make(public_path("storage/images/{$fotoToInsert}"))->fit(1200,1200);
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read(public_path("storage/images/{$fotoToInsert}"))->cover(1200,1200);
             $image->save();
 
             $lastInsertIdProduk = DB::getPdo()->lastInsertId();
@@ -140,7 +142,7 @@ class ProdukController extends Controller
                 if ($insertProdukVariant > 0) {
                     $gambar[$i]->storeAs('image-variant', $originalName, 'public');
                 }
-                $imageToInsert = Image::make(public_path("storage/image-variant/{$originalName}"))->fit(1200,1200);
+                $imageToInsert = $manager->read(public_path("storage/image-variant/{$originalName}"))->cover(1200);
                 $imageToInsert->save();
                 $lastInsertProdukVariantId = DB::getPdo()->lastInsertId();
                 DB::table('stoks')->insert([
@@ -189,7 +191,8 @@ class ProdukController extends Controller
             }
             $originalName = Str::replace(' ', '', Str::uuid() . '-' . $kategori . '-' . $newImage->getClientOriginalName());
             $newImage->storeAs('images', $originalName, 'public');
-            $image = Image::make(public_path("storage/images/{$originalName}"))->fit(1200,1200);
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read(public_path("storage/images/{$originalName}"))->cover(1200,1200);
             $image->save();
         }
         // update data

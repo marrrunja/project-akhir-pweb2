@@ -51,8 +51,6 @@
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <!-- Topbar Search -->
-                    <h3 class="pt-2">Halaman Admin</h3>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -105,12 +103,11 @@
                     <!-- Cards -->
                     <div class="card text w-100">
                         <!-- Cards Header -->
-                        <div class="card-header text-primary text-center" style="font-weight:bold;">
-                            Berikut Merupakan Produk Yang Anda Jual
+                        <div class="card-header text-primary" style="font-weight:bold;">
+                            Ilustrasions
+                            <img src="img/icon.png" alt="icon" width="30px">
                         </div>
                         <!-- Cards Body -->
-
-
                         <div class="card-body">
                             <div class="container">
                                 <div>
@@ -148,7 +145,7 @@
                                                 <tbody>
                                                     @foreach($variants as $index => $variant)
                                                         <tr>
-                                                            <td class="text-center align-middle">
+                                                            <td class="text-center align-middle px-5">
                                                                 {{ $variants->firstItem() + $index }}
                                                             </td>
                                                             <td class="text-center align-middle px-5">{{ $variant->nama }}</td>
@@ -181,46 +178,52 @@
                             </div>
 
                         </div>
-
-                    </div>
-                </div>
-                <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website
-                                2021</span>
+                        <!-- Cards Footer -->
+                        <div class="card-footer text-muted">
+                            <button class="btn btn-primary">Done</button>
+                            <button class="btn btn-danger">Cancel</button>
                         </div>
                     </div>
-                </footer>
-
+                    <!-- End of cards -->
+                </div>
             </div>
-            <!-- /.container-fluid -->
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website
+                            2021</span>
+                    </div>
+                </div>
+            </footer>
+
         </div>
+        <!-- /.container-fluid -->
+    </div>
 @endsection
 
-    @push('scripts')
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+@push('scripts')
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
 
-        <!-- Page level plugins -->
-        <script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script src="{{ custom_asset('resources/js/admin.js') }}"></script>
-        <script src="{{ env('TYPE_URL') == 'http' ? asset('resources/js/api.js') : secure_asset('resources/js/api.js') }}">
-        </script>
+    <!-- Page level custom scripts -->
+    <script src="{{ custom_asset('resources/js/admin.js') }}"></script>
+    <script src="{{ env('TYPE_URL') == 'http' ? asset('resources/js/api.js') : secure_asset('resources/js/api.js') }}">
+    </script>
 
-        <script src="js/demo/chart-area-demo.js"></script>
-        <script src="js/demo/chart-pie-demo.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="{{ custom_asset('templatesbadmin2/js/sb-admin-2.min.js') }}"></script>
-    @endpush
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ custom_asset('templatesbadmin2/js/sb-admin-2.min.js') }}"></script>
+@endpush

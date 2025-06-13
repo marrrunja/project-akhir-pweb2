@@ -8,8 +8,10 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Produk\ProdukVariant;
+use Intervention\Image\ImageManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
 use App\Services\Produk\ProdukVariantService;
 
 class ProdukVariantController extends Controller
@@ -64,7 +66,10 @@ class ProdukVariantController extends Controller
         try {
             $insertProdukVariant = DB::table('produk_variants')->insert($data);
             if ($insertProdukVariant > 0) {
+                $manager = new ImageManager(new Driver());
                 $gambar->storeAs('image-variant', $originalName, 'public');
+                $image = $manager->read(public_path("storage/image-variant/{$originalName}"))->cover(1200,1200);
+                $image->save();
             }
             $lastInsertProdukVariantId = DB::getPdo()->lastInsertId();
             $data2 = [
@@ -115,6 +120,9 @@ class ProdukVariantController extends Controller
             }
             $originalName = Str::replace(' ', '', Str::uuid() . '-' . $id . '-' . $fotoBaru->getClientOriginalName());
             $fotoBaru->storeAs('image-variant', $originalName, 'public');
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read(public_path("storage/image-variant/{$originalName}"))->cover(1200,1200);
+            $image->save();
         }
 
         $variant = DB::table('produk_variants')->where('id', $id);
