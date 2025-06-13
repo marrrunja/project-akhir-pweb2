@@ -88,15 +88,15 @@ class ProdukController extends Controller
             'namaProduk' => ['required'],
             'kategori'   => ['required'],
             'deskripsi'  => ['required'],
-            'foto'       => ['required', 'mimes:jpeg,jpg,png', 'max:2048'],
-            'gambar.*'   => 'file|mimes:jpg,jpeg,png|max:2048',
+            'foto'       => ['required', 'mimes:jpeg,jpg,png,webp', 'max:2048'],
+            'gambar.*'   => 'file|mimes:jpg,jpeg,png,webp|max:2048',
         ];
         $pesanValidasi = [
             'namaProduk.required' => 'Nama produk tidak boleh kosong!',
             'kategori.required'   => 'Pilih kategori terlebih dahulu!',
             'stok.min'            => 'Stok minimal 1 buah!',
             'deskripsi.required'  => 'Silahkan masukkan deskripsi!',
-            'foto.mimes'          => 'File harus foto jpg, jpeg, atau png!',
+            'foto.mimes'          => 'File harus foto jpg, jpeg, atau png dan webp!',
             'foto.max'            => '2000',
             'foto.required'       => 'Masukkan foto produk!',
         ];
@@ -142,7 +142,7 @@ class ProdukController extends Controller
                 if ($insertProdukVariant > 0) {
                     $gambar[$i]->storeAs('image-variant', $originalName, 'public');
                 }
-                $imageToInsert = $manager->read(public_path("storage/image-variant/{$originalName}"))->cover(1200);
+                $imageToInsert = $manager->read(public_path("storage/image-variant/{$originalName}"))->cover(1200,1200);
                 $imageToInsert->save();
                 $lastInsertProdukVariantId = DB::getPdo()->lastInsertId();
                 DB::table('stoks')->insert([

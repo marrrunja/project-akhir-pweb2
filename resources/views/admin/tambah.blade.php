@@ -1,5 +1,6 @@
 @extends('layout.layout-admin')
-@section('title', 'Tambah Data')@push('styles')
+@section('title', 'Tambah Data')
+@push('styles')
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
@@ -170,29 +171,20 @@
                                                         <h3 class="card-title text-center">Variant 1</h3>
                                                         <h5 class="card-subtitle text-center mb-4">Silahkan Masukkan Varian
                                                             Produk Anda</h5>
-                                                        @error('variant') <div class="text-danger fw-semibold">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
+                                                    
                                                         <div class="mb-3">
                                                             <label for="variant" class="form-label">Nama varian</label>
                                                             <input type="text" id="variant" name="variant[]"
                                                                 class="form-control" placeholder="Contoh, original">
                                                         </div>
                                                         <div class="mb-3">
-                                                            @error('harga') <div class="text-danger fw-semibold">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
+                                                          
                                                             <label for="harga" class="form-label">Harga</label>
                                                             <input type="number" name="harga[]" class="form-control"
                                                                 id="harga" placeholder="Contoh, 5000">
                                                         </div>
                                                         <div class="mb-3">
-                                                            @error('stok') <div class="text-danger fw-semibold">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
+                                                         
                                                             <label for="stok" class="form-label">Stok</label>
                                                             <input type="number" name="stok[]" class="form-control"
                                                                 id="stok" placeholder="Contoh, 10">

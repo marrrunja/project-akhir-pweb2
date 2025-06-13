@@ -13033,9 +13033,21 @@ section,
   gap: 1rem;
 
 }
-.card-img-top{
-  width:100% !important;min-height:300px !important;max-height: 300px !important; object-fit:cover !important;
+.btn-primary{
+  background-color: #8c0d4f !important;
+  border-color: #8c0d4f !important;
 }
+.btn-outline-primary{
+  border-color: #8c0d4f !important;
+  color:#8c0d4f !important;
+}
+.btn-outline-primary:hover{
+  background-color: #8c0d4f !important;
+  color:white !important;
+}
+/* .card-img-top{
+  width:100% !important;min-height:300px !important;max-height: 300px !important; object-fit:cover !important;
+} */
 
  /* position: absolute;
   top: -5px;

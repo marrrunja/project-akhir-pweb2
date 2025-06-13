@@ -74,13 +74,13 @@
                 </div>
             </div>
             @endif
-            <div class="row gy-3 gy-md-0">
+            <div class="row gy-3 gy-md-0 justify-content-center">
                 @foreach($variants as $variant)
-                <div class="col-12 col-md-6 col-xl-3">
+                <div class="col-10 col-md-6 col-xl-3">
                     <form method="post" action="{{ route('transaksi.order', $variant->id) }}">
                         @csrf
                         @method('POST')
-                        <div class="card">
+                        <div class="card border-0 shadow">
                             <img src="{{ asset('storage/image-variant/'.$variant->foto) }}" class="card-img-top">
                             <div class="card-body">
                                 @error('jumlah') <div class="fw-semibold text-danger">{{ $message }}</div> @enderror
@@ -91,19 +91,18 @@
                                 <div class="card-subtitle text-secondary">Sisa: {{ $variant->stok->jumlah }}</div>
                                 <div class="mt-3 mb-3">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-success btnTambah">+</button>
+                                        <button type="button" class="btn btn-primary btnTambah">+</button>
                                         <input type="hidden" name="jumlah" id="jumlah"
                                             data-max="{{ $variant->stok->jumlah }}" value="0">
-                                            <button type="button" disabled class="btn btn-outline-success btnHasil">0</button>
-                                            <button type="button" class="btn btn-success btnKurang">-</button>
-                                        
+                                            <button type="button" disabled class="btn btn-outline-primary btnHasil">0</button>
+                                            <button type="button" class="btn btn-primary btnKurang">-</button>
                                     </div>
                                     <div class="text-secondary text-danger mt-2 pesan d-none fw-semibold"></div>
                                 </div>
                                 <div class="d-flex gap-2">
-                                    <button type="submit" class="btn btn-outline-success">Rp.
+                                    <button type="submit" class="btn btn-outline-primary">Rp.
                                         {{ number_format($variant->harga, 0, ",", ".") }}</button>
-                                    <button type="button" data-id="{{ $variant->id }}" class="btn btn-outline-success btnCart">
+                                    <button type="button" data-id="{{ $variant->id }}" class="btn btn-outline-primary btnCart">
                                         <i class="bi bi-cart-fill me-1"></i>
                                     </button>
                                 </div>
