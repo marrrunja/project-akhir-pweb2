@@ -63,7 +63,7 @@ Route::post('/variant/doEdit', [ProdukVariantController::class, 'doEdit']);
 
 // transaksi
 Route::controller(TransaksiController::class)->prefix('/transaksi')->group(function(){
-    Route::post('/index/{id}', 'index')->name('transaksi.order');
+    Route::post('/index/{id}', 'index')->name('transaksi.order')->middleware(SessionHasNotMiddleware::class);
     Route::post('/checkout', 'makeOrder')->middleware(SessionHasNotMiddleware::class);
     Route::get('/checkout/success', 'orderSuccess')->middleware(SessionHasNotMiddleware::class);
     Route::get('/checkout/fail', 'orderFail')->middleware(SessionHasNotMiddleware::class);
@@ -108,6 +108,6 @@ Route::get('/gaada', function(){
 });
 
 
-Route::get('/order/berhasil', function(){
-    return view('transaksi.order-success');
-});
+// Route::get('/order/berhasil', function(){
+//     return view('transaksi.order-success');
+// });

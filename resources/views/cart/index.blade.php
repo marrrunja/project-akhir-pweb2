@@ -29,6 +29,7 @@
 
 <!-- Main CSS File -->
 <link href="{{ custom_asset('assets/css/main.css') }}" rel="stylesheet">
+<script type="module" src="{{ custom_asset('resources/js/utility/alert.js') }}"></script>
 @endpush
 
 @section('body')
@@ -140,27 +141,18 @@
                 <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
                     <div class="cart-summary">
                         <h4 class="summary-title">Order Summary</h4>
-
                         <div class="summary-item">
                             <span class="summary-label">Subtotal</span>
                             <span
                                 class="summary-value">Rp{{ number_format($carts->sum(fn($item) => ($item->variant->harga ?? 0) * $item->qty)) }}
                             </span>
                         </div>
-
                         <div class="summary-item shipping-item">
                             <span class="summary-label">Shipping</span>
                             <div class="shipping-options">
                                 <div class="form-check text-end">
-                                    <input class="form-check-input" type="radio" name="shipping" id="express">
                                     <label class="form-check-label" for="express">
                                         Express Delivery - Free
-                                    </label>
-                                </div>
-                                <div class="form-check text-end">
-                                    <input class="form-check-input" type="radio" name="shipping" id="free">
-                                    <label class="form-check-label" for="free">
-                                        Free Shipping (Orders over $300)
                                     </label>
                                 </div>
                             </div>
@@ -174,12 +166,11 @@
                         </div>
 
                         <div class="checkout-button">
-                            <a href="/" class="btn btn-accent w-100" id="btnCheckout"
+                            <button class="btn btn-accent w-100" id="btnCheckout"
                                 data-id="{{ Session::get('user_id') }}">
-                                Proceed to Checkout <i class="bi bi-arrow-right"></i>
-                            </a>
+                                Pesan sekarang <i class="bi bi-arrow-right"></i>
+                            </button>
                         </div>
-
                         <div class="continue-shopping">
                             <a href="/produk/index" class="btn btn-link w-100">
                                 <i class="bi bi-arrow-left"></i> Continue Shopping
@@ -223,6 +214,6 @@
 <script src="{{ custom_asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
 
 <!-- Main JS File -->
-<script src="{{ custom_asset('resources/js/cart.js') }}"></script>
+<script type="module" src="{{ custom_asset('resources/js/cart.js') }}"></script>
 <script src="{{ custom_asset('assets/js/main.js') }}"></script>
 @endpush

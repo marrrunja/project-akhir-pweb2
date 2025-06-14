@@ -25,7 +25,7 @@ class OrderService
         $orderInsertId = DB::getPdo()->lastInsertId();
         $orderId = 'INV-'.now()->format('Y-m-d') . '-' . $orderInsertId;
 	}
-
+	
 	private function insertIntoOrderItems(Collection $carts, $orderInsertId):void
 	{
 		foreach($carts as $cart){
@@ -74,7 +74,7 @@ class OrderService
             ],
             'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart'],
             'callbacks' => [
-		        'finish' => url('/transaksi/finish'),
+		        'finish' => url(env('BASE_URL').'/transaksi/finish'),
 			],
         ];
         $url = 'https://app.sandbox.midtrans.com/snap/v1/transactions';

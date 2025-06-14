@@ -1,23 +1,23 @@
+import { showAlertSuccess } from "./utility/alert.js";
+import { showAlertDanger } from "./utility/alert.js";
+import { showConfirm } from "./utility/alert.js";
+
 const cartItem = document.getElementById("cart");
 const appurl = document.querySelector("meta[name=_appurl]").content;
 const urlHapusCart = appurl + "/cart/delete";
 const urlUpdateCart = appurl + "/cart/update/{id}";
 let token = document.querySelector("meta[name=_token]").content;
+let btnCheckout = document.getElementById("btnCheckout");
+let btnTotal = document.getElementById("summary-value");
+btnTotal = parseInt(Array.from(btnTotal.innerText)
+                .filter((item) => item != '.' && item != "R" && item != "p" && item != ",")
+                .reduce((str, item) => str += item));
 
-async function showConfirmDeleteItem()
-{
-    return await Swal.fire({
-        title: 'Kamu yakin?',
-        text: "Item ini akan dihapus dari keranjang.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya, hapus aja!'
-    });
-}
+
+console.log(appurl);
+
 async function showConfirmDeleteCart(){
-    return await  Swal.fire({
+    return await Swal.fire({
         title: 'Hapus semua?',
         text: 'Seluruh isi keranjang akan terhapus. Yakin?',
         icon: 'warning',
@@ -41,7 +41,7 @@ async function removeItemCart(e) {
         };
 
         // Konfirmasi dulu sebelum hapus
-        await showConfirmDeleteItem().then(async (result) => {
+        await showConfirm("Item ini akan dihapus dari cart", "warning", "Ya hapus aja").then(async (result) => {
             if (result.isConfirmed) {
                 try {
                     const response = await fetch(urlHapusCart, {
@@ -211,4 +211,53 @@ document.getElementById('clear-cart-btn').addEventListener('click',async functio
 });
 
 
+async function initOrders()
+{
+    let data = {
+        userId:btnCheckout.dataset.id,
+        totalHarga : btnTotal
+    }
+    try {
+        let response = await fetch(appurl + "/transaksi/checkout/cart", {
+            method:"POST",
+            headers:{
+                "content-type":"application/json",
+                "X-CSRF-TOKEN":token
+            },
+            body:JSON.stringify(data)
+        });
+        let responseServer = await response.json();
+        if(!response.ok){
+            await showAlertDanger("HTTP ERROR" + response.status);
+            throw new Error("HTTP ERROR" + response.status);
+        }
+        if(response.status === 200){
+            await showAlertSuccess(responseServer.message);
+            setTimeout(function(){
+                document.location.href = responseServer.redirect_url;
+            },3000);
+        }
+    } catch (error) {
+        await showAlertDanger(error + " " +responseServer.message);
+    }
+    
+}
+
+
+async function wantMakeOrders(e)
+{
+    e.preventDefault();
+    if(btnTotal <= 0){
+        await showAlertDanger("Keranjang masih kosong!!");
+        return;
+    }
+    await showConfirm("Anda yakin ingin order sekarang", "question", "Iya").then(async (result) => {
+        if(result.isConfirmed){
+            initOrders();
+        }
+    });
+
+}
+
+btnCheckout.addEventListener("click", wantMakeOrders);
 

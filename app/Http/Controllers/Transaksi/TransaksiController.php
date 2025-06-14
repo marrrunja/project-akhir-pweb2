@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Transaksi;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -95,8 +96,7 @@ class TransaksiController extends Controller
             'pesan' => 'Internal server error'
         ], 500);
     }
-
-    public function makeOrders(Request $request)
+    public function makeOrders(Request $request):JsonResponse
     {
         $userId = $request->userId;
         $totalHarga = $request->totalHarga;
@@ -107,11 +107,12 @@ class TransaksiController extends Controller
             'username' => $username
         ];
         $error = null;
-       if($this->orderService->addOrders($data, $error)){
+        $link = null;
+       if($this->orderService->addOrders($data, $error, $link)){
         Log::info("User dengan user id $userId berhasil order pesanan dari cart");
-        return redirect('/cart')->with('status', 'order berhasil');
+        return response()->json(['message' => 'Berhasil order', 'redirect_url' => $link]);
        }else{
-        return redirect('/cart')->with('status', $error);
+        return response()->json(['message' => 'Gagal order' . $error],422);
        }
     }
 
@@ -123,7 +124,6 @@ class TransaksiController extends Controller
             'Content-Type' => 'application/json',
             'Authorization' => "Basic $auth"
             ])->get("https://api.sandbox.midtrans.com/v2/$orderId/status");
-            
         $response = json_decode($midtransResponse->body());
         return $response;
     }
@@ -174,7 +174,6 @@ class TransaksiController extends Controller
     public function success(Request $request){
         return view('transaksi.order-success');
     }
-
     public function orderSuccess():RedirectResponse
     {
         return redirect('/produk/index')->with('status', 'Berhasil order!!');

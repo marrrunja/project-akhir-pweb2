@@ -19,7 +19,6 @@ async function sendData()
         id:btnBayar.dataset.id,
         harga:hargaSatuan
     }
-    console.log(data);
     try{
         const response = await fetch(URLENDPOINT, {
             method:'POST',
