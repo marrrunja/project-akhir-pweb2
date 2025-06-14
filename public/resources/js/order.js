@@ -33,7 +33,7 @@ for (let i = 0; i < btnTambah.length; i++) {
     btnTambah[i].addEventListener("click", function () {
         let angka = parseInt(btnHasil[i].innerText);
         angka++;
-        if (angka > parseInt(btnTambah[i].nextElementSibling.dataset.max)) {
+        if (angka > parseInt(btnTambah[i].previousElementSibling.dataset.max)) {
             showTextError(i, "Stok tersisa tidak cukup");
             return;
         }

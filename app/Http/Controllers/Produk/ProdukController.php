@@ -31,6 +31,19 @@ class ProdukController extends Controller
         ];
         return response()->view('produk.index', $data);
     }
+    public function dashboard(): Response
+    {
+        //DB::raw('SUM(price) as total_sales')
+        $produk = DB::table('products')
+        ->join('kategoris', 'products.kategori_id', '=', 'kategoris.id')
+        ->select('products.id as idProduk', 'products.nama', 'products.detail', 'products.foto', 'kategoris.kategori', 'kategoris.id')
+        ->limit(5)
+        ->get();
+        $data   = [
+            'products' => $produk,
+        ];
+        return response()->view('user-index', $data);
+    }
     public function detailProdukModal(Request $request)
     {
         $id = $request->id;

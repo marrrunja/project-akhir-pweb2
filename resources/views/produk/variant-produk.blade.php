@@ -60,8 +60,7 @@
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-            <h2>Daftar Produk variant</h2>
-            <p>Klik lihat detail untuk melihat detail setiap pesanan</p>
+            <h2>Daftar Produk Variant</h2>
         </div><!-- End Section Title -->
 
         <div class="container" data-aos="fade-up">
@@ -86,6 +85,27 @@
                                 @error('jumlah') <div class="fw-semibold text-danger">{{ $message }}</div> @enderror
                                 @error('harga') <div class="fw-semibold text-danger">{{ $message }}</div> @enderror
                                 <h5 class="card-title">{{ $variant->variant }}</h5>
+
+                                <div class="card-subtitle text-secondary">Sisa: {{ $variant->stok->jumlah }}</div>
+                                <div class="card-subtitle text-secondary">Harga: Rp. {{ number_format($variant->harga, 0, ",", ".") }}</div>
+                                <div class="text-secondary text-danger mt-2 pesan d-none fw-semibold"></div>
+                                <div class="d-flex justify-content-center mt-3 mb-3">
+                                    
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary btnKurang">-</button>
+                                        <input type="hidden" name="jumlah" id="jumlah" data-max="{{ $variant->stok->jumlah }}" value="0">
+                                        <button type="button" disabled class="btn btn-outline-primary btnHasil">0</button>
+                                        <button type="button" class="btn btn-primary btnTambah">+</button>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <button type="button" data-id="{{ $variant->id }}" class="btn btn-outline-primary btnCart">
+                                        <i class="bi bi-cart-fill me-1"></i>Keranjang
+                                    </button>
+                                    <button type="submit" class="btn btn-outline-primary">Pesan Sekarang</button>
+                                </div>
+                                {{-- backup kalo amar tidak suka--}}
+                                {{-- <h5 class="card-title">{{ $variant->variant }}</h5>
                                 <h6 class="card-subtitle mb-2 text-body-secondary">{{ $variant->produk->nama }}</h6>
 
                                 <div class="card-subtitle text-secondary">Sisa: {{ $variant->stok->jumlah }}</div>
@@ -105,7 +125,7 @@
                                     <button type="button" data-id="{{ $variant->id }}" class="btn btn-outline-primary btnCart">
                                         <i class="bi bi-cart-fill me-1"></i>
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </form>

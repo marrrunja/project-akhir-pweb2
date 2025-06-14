@@ -173,7 +173,7 @@
                         </div>
                         <div class="continue-shopping">
                             <a href="/produk/index" class="btn btn-link w-100">
-                                <i class="bi bi-arrow-left"></i> Continue Shopping
+                                <i class="bi bi-arrow-left"></i> Lanjut Belanja
                             </a>
                         </div>
 
@@ -214,6 +214,5 @@
 <script src="{{ custom_asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
 
 <!-- Main JS File -->
-<script type="module" src="{{ custom_asset('resources/js/cart.js') }}"></script>
 <script src="{{ custom_asset('assets/js/main.js') }}"></script>
 @endpush

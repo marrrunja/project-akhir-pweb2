@@ -99,7 +99,7 @@
                                                     {{ $item->qty }}
                                                 </span> ×
                                                 <span class="item-total">
-                                                    Rp{{ number_format(($item->variant->harga ?? 0) * $item->qty) }}
+                                                    Rp{{ number_format($item->variant->harga ?? 0,) }}
                                                 </span>
                                             </div>
                                         </div>
@@ -116,7 +116,9 @@
                             <div class="dropdown-footer">
                                 <div class="cart-total">
                                     <span>Total:</span>
-                                    <span class="cart-total-price">Rp.0</span>
+                                    <span class="summary-value"
+                                        id="summary-value">Rp{{ number_format($carts->sum(fn($item) => ($item->variant->harga ?? 0) * $item->qty)) }}
+                                    </span>
                                 </div>
                                 <div class="cart-actions">
                                     <a href="{{ url('/cart') }}" class="btn btn-outline-primary">Lihat Keranjang</a>

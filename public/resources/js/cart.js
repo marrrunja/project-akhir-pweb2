@@ -1,3 +1,4 @@
+console.log("test")
 import { showAlertSuccess } from "./utility/alert.js";
 import { showAlertDanger } from "./utility/alert.js";
 import { showConfirm } from "./utility/alert.js";
@@ -8,10 +9,18 @@ const urlHapusCart = appurl + "/cart/delete";
 const urlUpdateCart = appurl + "/cart/update/{id}";
 let token = document.querySelector("meta[name=_token]").content;
 let btnCheckout = document.getElementById("btnCheckout");
-let btnTotal = document.getElementById("summary-value");
-btnTotal = parseInt(Array.from(btnTotal.innerText)
-                .filter((item) => item != '.' && item != "R" && item != "p" && item != ",")
-                .reduce((str, item) => str += item));
+
+function getCartTotalHarga() {
+    let total = 0;
+    document.querySelectorAll('.cart-ireng').forEach(item => {
+        const qty = parseInt(item.querySelector('.quantity-input').value);
+        const priceText = item.querySelector('.current-price').textContent.replace(/[^\d]/g, '');
+        const harga = parseInt(priceText);
+        total += harga * qty;
+    });
+    return total;
+}
+
 
 
 console.log(appurl);
@@ -31,7 +40,7 @@ async function showConfirmDeleteCart(){
 
 async function removeItemCart(e) {
     if (e.target.classList.contains("remove-item")) {
-        const parent = e.target.parentElement.parentElement.parentElement.parentElement.parentElement;
+        const itemElement = e.target.closest('.cart-item'); 
         const cartId = e.target.dataset.id;
         const userId = e.target.dataset.user;
 
@@ -57,7 +66,8 @@ async function removeItemCart(e) {
                     if (response.ok) {
                         const json = await response.json();
                         console.log(json);
-                        parent.remove();
+                        if (!itemElement) return;
+                        itemElement.remove();
                         updateCartSummary();
 
                         Swal.fire(
@@ -214,9 +224,9 @@ document.getElementById('clear-cart-btn').addEventListener('click',async functio
 async function initOrders()
 {
     let data = {
-        userId:btnCheckout.dataset.id,
-        totalHarga : btnTotal
-    }
+        userId: btnCheckout.dataset.id,
+        totalHarga: getCartTotalHarga()
+    };
     try {
         let response = await fetch(appurl + "/transaksi/checkout/cart", {
             method:"POST",
@@ -247,10 +257,11 @@ async function initOrders()
 async function wantMakeOrders(e)
 {
     e.preventDefault();
-    if(btnTotal <= 0){
+        if (getCartTotalHarga() <= 0) {
         await showAlertDanger("Keranjang masih kosong!!");
         return;
     }
+
     await showConfirm("Anda yakin ingin order sekarang", "question", "Iya").then(async (result) => {
         if(result.isConfirmed){
             initOrders();

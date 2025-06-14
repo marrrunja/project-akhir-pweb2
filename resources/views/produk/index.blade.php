@@ -79,7 +79,7 @@
             </div> -->
             <div class="row mb-4">
                 <div class="col-12">
-                    <h1 class="fw-bold">Daftar <span id="judul-kategori">produk</span> yang tersedia</h1>
+                    <h1 class="fw-bold">Daftar <span id="judul-kategori">Produk</span> Yang Tersedia</h1>
                 </div>
                 @if(Session::has('status'))
                 <div class="col-12 col-md-10 col-xl-6">
@@ -93,30 +93,31 @@
                 data-aos-delay="200">
                 <!-- Product Item 1 -->
                 @foreach($products as $product)
-                <div class="col-md-6 col-lg-3 product-item isotope-item filter-clothing">
-                    <div class="product-card">
-                        <div class="product-image">
-                            <span class="badge">{{ $product->kategori }}</span>
-                            <img src="{{ asset('storage/images/'.$product->foto) }}" alt="Product"
-                                class="img-fluid main-img">
-                            <img src="{{ asset('storage/images/'.$product->foto) }}" alt="Product Hover"
-                                class="img-fluid">
-                        </div>
-                        <div class="product-info">
-                            <h5 class="product-title"><a
-                                    href="/variant/{{ $product->idProduk }}">{{ $product->nama }}</a></h5>
-                            <div class="product-price">
-                                <span class="">{{ Str::limit($product->detail, 25) }}</span>
+                    <div class="col-md-6 col-lg-3 product-item isotope-item filter-clothing">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <span class="badge">{{ $product->kategori }}</span>
+                                <a href="/variant/{{ $product->idProduk }}">
+                                <img src="{{ asset('storage/images/'.$product->foto) }}" alt="Product"
+                                    class="img-fluid main-img">
+                                <img src="{{ asset('storage/images/'.$product->foto) }}" alt="Product Hover"
+                                    class="img-fluid"></a>
                             </div>
-                            <div class="product-price">
-                                <a href="/produk/detail/{{ $product->idProduk }}" class="current-price btn-modal"
-                                    data-id="{{ $product->idProduk }}" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">Detail produk
-                                    &raquo;</a>
+                            <div class="product-info">
+                                <h5 class="product-title">
+                                        {{ $product->nama }}</></h5>
+                                <div class="product-price">
+                                    <span class="">Deskripsi Singkat: <br>{{ Str::limit($product->detail, 25) }}</span>
+                                </div>
+                                <div class="product-price">
+                                    <a href="/produk/detail/{{ $product->idProduk }}" class="current-price btn-modal"
+                                        data-id="{{ $product->idProduk }}" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">Detail produk 
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div><!-- End Product Item -->
+                    </div><!-- End Product Item -->
                 @endforeach
 
             </div>

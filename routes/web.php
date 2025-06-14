@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\ProdukVariantApiController;
 use App\Http\Controllers\Produk\ProdukVariantController;
 
 Route::get('/', [UserController::class, 'index']);
+Route::get('/', [ProdukController::class, 'dashboard']);
 Route::get('/profil', [UserController::class, 'profil'])->middleware(SessionHasNotMiddleware::class);
 
 Route::controller(LoginController::class)->prefix('/login')->group(function(){
