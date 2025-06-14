@@ -47,10 +47,14 @@
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
+
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
+
+                    <!-- Topbar Search -->
+                    <h3 class="pt-2">Halaman Admin</h3>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -103,9 +107,8 @@
                     <!-- Cards -->
                     <div class="card text w-100">
                         <!-- Cards Header -->
-                        <div class="card-header text-primary" style="font-weight:bold;">
-                            Ilustrasions
-                            <img src="img/icon.png" alt="icon" width="30px">
+                        <div class="card-header text-primary text-center" style="font-weight:bold;">
+                            Berikut Merupakan Varian Dari Produk {{ $nama }}
                         </div>
                         <!-- Cards Body -->
                         <div class="card-body">
@@ -178,11 +181,7 @@
                             </div>
 
                         </div>
-                        <!-- Cards Footer -->
-                        <div class="card-footer text-muted">
-                            <button class="btn btn-primary">Done</button>
-                            <button class="btn btn-danger">Cancel</button>
-                        </div>
+
                     </div>
                     <!-- End of cards -->
                 </div>

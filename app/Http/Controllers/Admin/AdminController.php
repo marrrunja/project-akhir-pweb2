@@ -75,6 +75,7 @@ class AdminController extends Controller
             'variants' => $variants,
             'id' => $id,
             'nama' => $produk->nama
+
         ];
         return response()->view('admin.variants-produk', $data);
     }
@@ -100,6 +101,5 @@ class AdminController extends Controller
             ->get();
         return response()->view('admin.order-detail', compact('orderItems'));
     }
-
 
 }
