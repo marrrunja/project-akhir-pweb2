@@ -188,6 +188,12 @@ class ProdukController extends Controller
     }
     public function doEdit(Request $request)
     {
+        $validate = $request->validate([
+            'nama' => 'required',
+            'detail' => 'required',
+            'kategori' => 'required',
+        ]);
+        
         $id           = $request->id;
         $nama         = $request->nama;
         $detail       = $request->detail;
