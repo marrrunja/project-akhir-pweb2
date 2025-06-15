@@ -81,7 +81,7 @@
                             <div class="dropdown-body">
                                 <div class="cart-items">
                                     @if(Session::has('user_id'))
-                                    @foreach (\App\Models\Cart::getAllCartWithUserId(Session::get('user_id')) as $item)
+                                    @foreach ($carts as $item)
                                     <div class="cart-item">
                                         <div class="cart-item-image">
                                             <img class="card-img-top"
@@ -122,7 +122,7 @@
                                 </div>
                                 <div class="cart-actions">
                                     <a href="{{ url('/cart') }}" class="btn btn-outline-primary">Lihat Keranjang</a>
-                                    <button id="btnCheckout" class="btn btn-primary" data-id="{{ Session::get('user_id') }}">Checkout</button>
+                                    <button id="btnCheckoutHeader" class="btn btn-primary" data-id="{{ Session::get('user_id') }}">Checkout</button>
                                 </div>
                             </div>
                         </div>

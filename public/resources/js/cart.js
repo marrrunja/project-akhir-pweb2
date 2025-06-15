@@ -1,4 +1,3 @@
-console.log("test")
 import { showAlertSuccess } from "./utility/alert.js";
 import { showAlertDanger } from "./utility/alert.js";
 import { showConfirm } from "./utility/alert.js";
@@ -9,6 +8,11 @@ const urlHapusCart = appurl + "/cart/delete";
 const urlUpdateCart = appurl + "/cart/update/{id}";
 let token = document.querySelector("meta[name=_token]").content;
 let btnCheckout = document.getElementById("btnCheckout");
+let btnCheckoutHeader = document.getElementById("btnCheckoutHeader");
+let summaryValue = document.getElementById("summary-value");
+let totalHarga = parseInt(Array.from(summaryValue.innerText)
+                      .filter((item) => item != "R" && item != "p" && item != ",")
+                      .reduce((str, item) => str += item));
 
 function getCartTotalHarga() {
     let total = 0;
@@ -18,7 +22,7 @@ function getCartTotalHarga() {
         const harga = parseInt(priceText);
         total += harga * qty;
     });
-    return total;
+    return totalHarga;
 }
 
 
@@ -223,10 +227,10 @@ if(clearCart != null){
 // males rapihin, rapihin dewek
 
 
-async function initOrders()
+async function initOrders(id)
 {
     let data = {
-        userId: btnCheckout.dataset.id,
+        userId: id,
         totalHarga: getCartTotalHarga()
     };
     try {
@@ -268,13 +272,29 @@ async function wantMakeOrders(e)
 
     await showConfirm("Anda yakin ingin order sekarang", "question", "Iya").then(async (result) => {
         if(result.isConfirmed){
-            initOrders();
+            initOrders(btnCheckout.dataset.id);
         }
     });
+}
+async function makeOrderCartHeader(e)
+{
+    e.preventDefault();
+        if (getCartTotalHarga() <= 0) {
+        await showAlertDanger("Keranjang masih kosong!!");
+        return;
+    }
 
+    await showConfirm("Anda yakin ingin order sekarang", "question", "Iya").then(async (result) => {
+        if(result.isConfirmed){
+            initOrders(btnCheckoutHeader.dataset.id);
+        }
+    });
 }
 
 if(btnCheckout != null){
     btnCheckout.addEventListener("click", wantMakeOrders);
+}
+if(btnCheckoutHeader != null){
+    btnCheckoutHeader.addEventListener("click", makeOrderCartHeader);
 }
 
