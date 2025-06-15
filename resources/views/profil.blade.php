@@ -1,34 +1,35 @@
 @extends('layout.layout')
 @section('title', 'Halaman Index User')
 
-@section('')
-@if(Session::has('status'))
-{{ Session::get('status') }}
-@endif
+
 @section('title', 'Home')
 @push('styles')
- <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<!-- Favicons -->
+<link href="assets/img/favicon.png" rel="icon">
+<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Quicksand:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Quicksand:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
 
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/drift-zoom/drift-basic.css" rel="stylesheet">
+<!-- Vendor CSS Files -->
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<link href="assets/vendor/aos/aos.css" rel="stylesheet">
+<link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="assets/vendor/drift-zoom/drift-basic.css" rel="stylesheet">
 
-    <!-- Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet">
+<!-- Main CSS File -->
+<link href="assets/css/main.css" rel="stylesheet">
 @endpush
+@section('meta')
+<meta name="_appurl" content="{{ env('BASE_URL') }}">
+<meta name="_token" content="{{ csrf_token() }}">
+@endsection
 
 @section('body')
 <main class="main">
@@ -68,7 +69,7 @@
                             <span>S</span>
                         </div>
                         <div class="profile-info">
-                            <h4>{{session::get('username')}}</h4>
+                            <h4>{{Session::get('username')}}</h4>
                             <div class="profile-bonus">
                                 <!-- <i class="bi bi-gift"></i>
                                 <span>100 bonuses available</span> -->
@@ -130,7 +131,8 @@
                             <li class="nav-item">
                                 <form method="post" action="/login/logout">
                                     @csrf
-                                    <button type="submit" class="nav-link logout"> <i class="bi bi-box-arrow-right"></i>Logout</button> 
+                                    <button type="submit" class="nav-link logout"> <i
+                                            class="bi bi-box-arrow-right"></i>Logout</button>
                                 </form>
                             </li>
                         </ul>
@@ -209,7 +211,7 @@
                                 </div>
 
                                 <div class="order-items">
-                              
+
                                     <!-- Order Item 6 -->
                                     <div class="order-item">
                                         <div class="row align-items-center">
@@ -346,57 +348,85 @@
                                 <h2>Personal Information</h2>
                             </div>
                             <div class="personal-info-form" data-aos="fade-up" data-aos-delay="100">
-                                <form class="php-email-form" method="post" action="">
+                                <form method="post" action="/profil/update/{{ Session::get('user_id') }}">
+                                    @csrf
                                     <div class="row">
+                                        <div class="col-12">
+                                            @error('email')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        @if(Session::has('status') && Session::has('pesan'))
+                                        <script>
+                                            Swal.fire({
+                                            title: "Update data",
+                                            text: "{{ Session::get('pesan') }}",
+                                            icon: "{{ Session::get('status') }}"
+                                            });
+                                        </script>
+                                        @endif
                                         <div class="col-md-6 mb-3">
-                                            <label for="firstName" class="form-label">First Name</label>
-                                            <input type="text" class="form-control" id="firstName" name="firstName"
-                                                value="Lorem" required="">
+                                            <label for="firstName" class="form-label">Username</label>
+                                            <input type="text" disabled class="form-control" id="firstName"
+                                                name="username" value="{{ old('username') ?? $pembeli->username }}"
+                                                required="">
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="lastName" class="form-label">Last Name</label>
-                                            <input type="text" class="form-control" id="lastName" name="lastName"
-                                                value="Ipsum" required="">
+                                            <label for="lastName" class="form-label">Email</label>
+                                            <input type="text" class="form-control" id="lastName" name="email"
+                                                value="{{ old('email') ?? $pembeli->email }}" required="">
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6 mb-3">
-                                            <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                value="lorem@example.com" required="">
+                                        <div class="col-12">
+                                            @error('kecamatan')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                              @error('desa')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="phone" class="form-label">Phone</label>
-                                            <input type="tel" class="form-control" id="phone" name="phone"
-                                                value="+1 (555) 123-4567">
+                                       
+                                            <label for="email" class="form-label">Kecamatan</label>
+                                            <select name="kecamatan" id="kecamatan" class="form-control">
+                                                <option value="">Pilih Kecamatan</option>
+                                                @foreach($kecamatans as $kecamatan)
+                                                <option value="{{ $kecamatan->kode_kecamatan }}"
+                                                    {{ $pembeli->kode_kecamatan == $kecamatan->kode_kecamatan ? 'selected':'' }}>
+                                                    {{ $kecamatan->nama_kecamatan }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                            
+                                            <label class="form-label">Desa</label>
+                                            <select name="desa" id="desa" class="form-control">
+                                                <option value="">Pilih Desa</option>
+                                                @foreach($desas as $desa)
+                                                <option value="{{ $desa->kode_desa }}"
+                                                    {{ $pembeli->kode_desa == $desa->kode_desa ? 'selected':'' }}>
+                                                    {{ $desa->nama_desa }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="birthdate" class="form-label">Date of Birth</label>
-                                        <input type="date" class="form-control" id="birthdate" name="birthdate"
-                                            value="1990-01-01">
+                                        @error('alamat')
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                        <label for="birthdate" class="form-label">Alamat Spesifik</label>
+                                        <input type="text" class="form-control" id="birthdate" name="alamat"
+                                            value="{{ $pembeli->jalan }}">
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label d-block">Gender</label>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="gender" id="genderMale"
-                                                value="male" checked="">
-                                            <label class="form-check-label" for="genderMale">Male</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="gender" id="genderFemale"
-                                                value="female">
-                                            <label class="form-check-label" for="genderFemale">Female</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="gender" id="genderOther"
-                                                value="other">
-                                            <label class="form-check-label" for="genderOther">Other</label>
-                                        </div>
-                                    </div>
-                                    <div class="loading">Loading</div>
-                                    <div class="error-message"></div>
-                                    <div class="sent-message">Your information has been updated. Thank you!</div>
                                     <div class="text-end">
                                         <button type="submit" class="btn btn-save">Save Changes</button>
                                     </div>
@@ -579,28 +609,25 @@
 @endsection
 
 @push('scripts')
-  <!-- Scroll Top -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+<!-- Scroll Top -->
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Preloader -->
-    <div id="preloader"></div>
+<!-- Preloader -->
+<div id="preloader"></div>
 
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/drift-zoom/Drift.min.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<!-- Vendor JS Files -->
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/drift-zoom/Drift.min.js"></script>
+<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
 
-    <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
+<!-- Main JS File -->
+<script src="assets/js/main.js"></script>
+<script src="{{ custom_asset('resources/js/profil.js') }}"></script>
 @endpush
-
-
-
-

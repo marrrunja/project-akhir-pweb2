@@ -384,7 +384,7 @@
     <!-- Main JS File -->
     <script src="/assets/js/main.js"></script>
 
-    <script
+    <script type="modul"
         src="{{ env('TYPE_URL') == 'http' ? asset('resources/js/alamat.js') : secure_asset('resources/js/alamat.js') }}"></script>
 
 @endpush
