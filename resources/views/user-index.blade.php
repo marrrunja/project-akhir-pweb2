@@ -32,6 +32,11 @@
 
 @endpush
 
+@section('meta')
+<meta name="_token" content="{{ csrf_token() }}">
+<meta name="_appurl" content="{{ env('BASE_URL') }}">
+@endsection
+
 @section('body')
 <main class="main">
 
@@ -145,7 +150,7 @@
                                 class="img-fluid hover-img">
                             <div class="product-overlay">
                                 <a href="/variant/{{ $product->idProduk }}" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
-                                <a href="/produk/detail/{{ $product->idProduk }}" class="btn-cart"
+                                <a href="/produk/detail/{{ $product->idProduk }}" class="btn-cart btn-modal"
                                     data-id="{{ $product->idProduk }}" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">Detail produk 
                                 </a>
@@ -173,6 +178,27 @@
                     </div>
                 </div>
                 @endforeach
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Detail Produk</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row" id="modal-body">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end modal -->
                 <!-- End Product Item -->
 
                 <!-- End Product Item -->

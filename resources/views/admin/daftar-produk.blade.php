@@ -91,7 +91,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Cards -->
-                    <div class="card text w-100">
+                    <div class="card text w-100 mb-5">
                         <!-- Cards Header -->
                         <div class="card-header text-primary text-center" style="font-weight:bold;">
                             Berikut Merupakan Produk Yang Anda Jual
@@ -107,18 +107,17 @@
                                 <!-- <button class="btn btn-primary border-primary border-2" type="button" id="btnCari"><i
                                                                                                                                                             class="bi bi-search"></i></button> -->
 
-
                             </div>
                             <div class="table-responsive" id="content-produk">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
-                                        <tr></tr>
-                                        <th class="text-center">No</th>
-                                        <th class="text-center">Nama</th>
-                                        <th class="text-center">Detail</th>
-                                        <th class="text-center">Kategori</th>
-                                        <th class="text-center">Foto</th>
-                                        <th class="text-center">Aksi</th>
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th class="text-center">Nama</th>
+                                            <th class="text-center">Detail</th>
+                                            <th class="text-center">Kategori</th>
+                                            <th class="text-center">Foto</th>
+                                            <th class="text-center">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -156,23 +155,33 @@
 
                     </div>
                     <!-- End of cards -->
+                    
+                    <!-- Spacer untuk gap antara card dan footer -->
+                    <div class="pb-4"></div>
+                    
                 </div>
+                <!-- /.container-fluid -->
+
             </div>
+            <!-- End of Main Content -->
+
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website
-                            2021</span>
+                        <span>Copyright &copy; Your Website 2021</span>
                     </div>
                 </div>
             </footer>
+            <!-- End of Footer -->
 
         </div>
-        <!-- /.container-fluid -->
+        <!-- End of Content Wrapper -->
 
     </div>
+    <!-- End of Page Wrapper -->
 @endsection
+
 
 @push('scripts')
     <!-- Bootstrap core JavaScript-->
