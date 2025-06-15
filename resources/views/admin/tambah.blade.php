@@ -88,11 +88,11 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid ">
+                <div class="container-fluid">
                     <div class="row">
 
-                        <div class="col-12 ">
-                            <div class="card px-4 py-4">
+                        <div class="col-12">
+                            <div class="card px-4 py-4 mb-5">
                                 <div class="container">
                                     <form action="{{ route('produk.tambah') }}" method="post" enctype="multipart/form-data"
                                         class="">
@@ -163,7 +163,6 @@
                                             </div>
                                         </div>
 
-
                                         <div class="row justify-content-center" id="gaada">
                                             <div class="col-12 col-md col-xl-6 mb-4">
                                                 <div class="card px-4 py-4">
@@ -178,13 +177,11 @@
                                                                 class="form-control" placeholder="Contoh, original">
                                                         </div>
                                                         <div class="mb-3">
-                                                          
                                                             <label for="harga" class="form-label">Harga</label>
                                                             <input type="number" name="harga[]" class="form-control"
                                                                 id="harga" placeholder="Contoh, 5000">
                                                         </div>
                                                         <div class="mb-3">
-                                                         
                                                             <label for="stok" class="form-label">Stok</label>
                                                             <input type="number" name="stok[]" class="form-control"
                                                                 id="stok" placeholder="Contoh, 10">
@@ -215,23 +212,32 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Spacer untuk gap antara card dan footer -->
+                    <div class="pb-1"></div>
+                    
                 </div>
+                <!-- /.container-fluid -->
+
             </div>
+            <!-- End of Main Content -->
+
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website
-                            2021</span>
+                        <span>Copyright &copy; Your Website 2021</span>
                     </div>
                 </div>
             </footer>
+            <!-- End of Footer -->
+
         </div>
-        <!-- /.container-fluid -->
+        <!-- End of Content Wrapper -->
 
     </div>
+    <!-- End of Page Wrapper -->
 @endsection
-
 @push('scripts')
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
