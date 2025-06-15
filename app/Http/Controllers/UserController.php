@@ -33,6 +33,11 @@ class UserController extends Controller
         return view('profil',$data);
     }
 
+    public function about()
+    {
+        return view('about');
+    }
+
     public function updateProfil(Request $request)
     {
         $data = $request->validate([

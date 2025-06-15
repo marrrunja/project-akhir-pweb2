@@ -11,3 +11,4 @@ use App\Http\Controllers\Transaksi\TransaksiController;
 
 Route::post('/webhook/midtrans', [TransaksiController::class, 'webhook']);
 Route::post('/order/hapus', [OrderController::class,'deleteOrder']);
+Route::post('/riwayat/delete',[OrderController::class, 'deleteHistory']);

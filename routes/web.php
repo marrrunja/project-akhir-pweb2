@@ -21,18 +21,19 @@ use App\Http\Controllers\Produk\ProdukVariantController;
 Route::get('/', [UserController::class, 'index']);
 Route::get('/', [ProdukController::class, 'dashboard']);
 Route::get('/profil', [UserController::class, 'profil'])->middleware(SessionHasNotMiddleware::class);
-Route::post('/profil/update/{id}',[UserController::class, 'updateProfil']);
+Route::post('/profil/update/{id}',[UserController::class, 'updateProfil'])->middleware(SessionHasNotMiddleware::class);
+Route::get('/about',[UserController::class,'about']);
 
 Route::controller(LoginController::class)->prefix('/login')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasMiddleware::class);
-    Route::post('/index/post', 'doLogin');
-    Route::post('/logout', 'logout');
+    Route::post('/index/post', 'doLogin')->middleware(SessionHasMiddleware::class);
+    Route::post('/logout', 'logout')->middleware(SessionHasNotMiddleware::class);
 });
 
 
 Route::controller(RegisterController::class)->prefix('/register')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasMiddleware::class);
-    Route::post('/index', 'doRegister');
+    Route::post('/index', 'doRegister')->middleware(SessionHasMiddleware::class);
 });
 
 // cart

@@ -61,4 +61,15 @@ class OrderController extends Controller
         }
     }
 
+    public function deleteHistory(Request $request):JsonResponse
+    {
+        $id = $request->id;
+        $order = Order::where('id', $id)->first();
+        if($order){
+            Order::where('id', $id)->delete();
+            return response()->json(['message' => "Berhasil hapus data dengan order id {$order->order_id}"]);    
+        }else{
+            return response()->json(['message' => 'Data tidak ditemukan'],404);
+        }
+    }
 }

@@ -1,6 +1,6 @@
 @extends('layout.layout')
 
-@section('title', 'History pembelian')
+@section('title', 'About us')
 
 @push('styles')
 <!-- Favicons -->
@@ -42,7 +42,7 @@
             <nav class="breadcrumbs">
                 <ol>
                     <li><a href="/">Home</a></li>
-                    <li class="current">History Pembelian</li>
+                    <li class="current">About</li>
                 </ol>
             </nav>
         </div>
@@ -54,73 +54,12 @@
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-            <h2>Daftar Pesanan anda</h2>
-            <p>Klik lihat detail untuk melihat detail setiap pesanan</p>
+            <h2>About us</h2>
+            <p>Follow Ig Kami</p>
         </div><!-- End Section Title -->
 
         <div class="container" data-aos="fade-up">
-            @if(Session::has('status'))
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-6 col-xl-6">
-                    <div class="alert alert-primary">
-                        {{ Session::get('status') }}
-                    </div>
-                </div>
-            </div>
-            @endif
-            <div class="row d-flex justify-content-center mb-2">
-                <div class="col text-center" >
-                    Total <span id="totalPesanan">{{ count($orders) }}</span> pesanan
-                </div>
-            </div>
-            <table class="table table-stripped">
-                <thead>
-                    <tr>
-                        <th class="text-center py-4">Order Id</th>
-                        <th class="text-center py-4">Tanggal Transaksi</th>
-                        <th class="text-center py-4">Total Harga</th>
-                        <th class="text-center py-4">Status</th>
-                        <th class="text-center py-4">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="body-table">
-                    @foreach($orders as $order)
-                    <tr>
-                        <td class="py-4 text-center">{{ $order->order_id }}</td>
-                        <td class="py-4 text-center">{{ $order->tanggal_transaksi }}</td>
-                        <td class="py-4 text-center">Rp {{ $order->total_harga }}</td>
-                        <td class="py-4 text-center">{{ $order->is_dibayar == 1 ? "Sudah dibayar" : "Belum dibayar" }}
-                        </td>
-                        <td class="py-4 text-center" class="dropdown">
-                            <i class="bi bi-three-dots-vertical text-ungu-utama fw-bold" data-bs-toggle="dropdown"
-                                style="cursor:pointer;"></i>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item hover" href="/order/detail/{{ $order->id }}">
-                                        Lihat detail
-                                    </a>
-                                </li>
-                                @if($order->is_dibayar == 0)
-                                 <li>
-                                    <a class="dropdown-item hover" href="{{ $order->link_bayar }}">
-                                        Link pembayaran
-                                    </a>
-                                </li>
-                                <li>
-                                    <span class="text-danger dropdown-item hapus" data-id="{{ $order->id }}" data-order="{{ $order->order_id }}">Batalkan orderan</span>
-                                </li>
-                                @else
-                                <li>
-                                    <span class="text-danger dropdown-item hapusRiwayat" data-id="{{ $order->id }}">Hapus riwayat</span>
-                                </li>
-                                @endif
-                            </ul>
-
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            
         </div>
     </section>
     <!-- /Starter Section Section -->
