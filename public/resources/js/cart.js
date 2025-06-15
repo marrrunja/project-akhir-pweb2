@@ -9,25 +9,30 @@ const urlUpdateCart = appurl + "/cart/update/{id}";
 let token = document.querySelector("meta[name=_token]").content;
 let btnCheckout = document.getElementById("btnCheckout");
 let btnCheckoutHeader = document.getElementById("btnCheckoutHeader");
+let btnLogout = document.getElementById("btnLogout");
+let formLogout = document.getElementById("form-logout");
+
+
 let summaryValue = document.getElementById("summary-value");
 let totalHarga = parseInt(Array.from(summaryValue.innerText)
                       .filter((item) => item != "R" && item != "p" && item != ",")
                       .reduce((str, item) => str += item));
 
+                    
+
 function getCartTotalHarga() {
     let total = 0;
-    document.querySelectorAll('.cart-ireng').forEach(item => {
-        const qty = parseInt(item.querySelector('.quantity-input').value);
-        const priceText = item.querySelector('.current-price').textContent.replace(/[^\d]/g, '');
-        const harga = parseInt(priceText);
-        total += harga * qty;
-    });
+    // document.querySelectorAll('.cart-ireng').forEach(item => {
+    //     const qty = parseInt(item.querySelector('.quantity-input').value);
+    //     const priceText = item.querySelector('.current-price').textContent.replace(/[^\d]/g, '');
+    //     const harga = parseInt(priceText);
+    //     total += harga * qty;
+    // });
     return totalHarga;
 }
 
 
 
-console.log(appurl);
 
 async function showConfirmDeleteCart(){
     return await Swal.fire({
@@ -291,10 +296,22 @@ async function makeOrderCartHeader(e)
     });
 }
 
+async function handleSubmit(event)
+{
+event.preventDefault();
+   await showConfirm("Anda yakin ingin logout?", "question", "Iya").then(async (result) => {
+        if(result.isConfirmed){
+            formLogout.submit();
+        }
+    });
+}
+
 if(btnCheckout != null){
     btnCheckout.addEventListener("click", wantMakeOrders);
 }
 if(btnCheckoutHeader != null){
     btnCheckoutHeader.addEventListener("click", makeOrderCartHeader);
 }
+
+btnLogout.addEventListener("click", handleSubmit);
 

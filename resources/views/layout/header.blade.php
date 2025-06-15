@@ -55,9 +55,9 @@
                                 <a href="/login/index" class="btn btn-primary w-100 mb-2">Sign In</a>
                                 <a href="/register/index" class="btn btn-outline-primary w-100">Register</a>
                                 @else
-                                <form method="post" action="/login/logout">
+                                <form method="post" id="form-logout" action="/login/logout">
                                     @csrf
-                                    <button type="submit" class="btn btn-primary w-100">Logout</button>
+                                    <button type="submit" class="btn btn-primary w-100"  id="btnLogout">Logout</button>
                                 </form>
                                 @endif
                             </div>
