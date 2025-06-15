@@ -298,7 +298,7 @@ async function makeOrderCartHeader(e)
 
 async function handleSubmit(event)
 {
-event.preventDefault();
+   event.preventDefault();
    await showConfirm("Anda yakin ingin logout?", "question", "Iya").then(async (result) => {
         if(result.isConfirmed){
             formLogout.submit();
