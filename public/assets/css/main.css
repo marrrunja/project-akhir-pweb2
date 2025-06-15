@@ -13072,6 +13072,21 @@ section,
   align-items: center;
   color:black;
   padding:10px 12px;
-  background-color: #8c0d4f;
+  background-color: rgb(140, 13, 79);
   color: white;
+}
+
+.img-about{
+  width: 100%;
+}
+.frame-img{
+  width: 300px;
+  height: 400px;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(140,13,79,.7);
+  border-radius: 8px;
+}
+.frame-img .img-card{
+  width: 100px;
+  height: 100px;
 }

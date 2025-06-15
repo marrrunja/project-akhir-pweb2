@@ -26,7 +26,78 @@
 <link href="{{ custom_asset('assets/vendor/drift-zoom/drift-basic.css') }}" rel="stylesheet">
 <!-- Main CSS File -->
 <link href="{{ custom_asset('assets/css/main.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="{{ custom_asset('resources/css/user.css') }}">
+
+<style>
+    h2 {
+        text-align: center;
+        margin-bottom: 3rem;
+        font-size: 2rem;
+        color: #1a1a1a;
+    }
+
+    .cards {
+        font-family: 'Segoe UI', 'sans-serif';
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+
+    .card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin: 0 0 0.5rem 0;
+        color: #8c0d4f;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #555;
+    }
+
+    .social-icons {
+        margin-top: 1rem;
+    }
+
+    .social-icons a {
+        margin-right: 0.5rem;
+        text-decoration: none;
+        font-size: 1.2rem;
+        color: #8c0d4f;
+        transition: color 0.2s ease;
+    }
+
+    .social-icons a:hover {
+        color: #8c0d4f;
+    }
+
+</style>
+
 @endpush
 
 @section('meta')
@@ -59,7 +130,105 @@
         </div><!-- End Section Title -->
 
         <div class="container" data-aos="fade-up">
-            
+            <div class="row justify-content-center mb-3 gap-4">
+                <div class="col-8 col-md-5 col-xl-3">
+                    <div class="card">
+                        <img src="{{ asset('storage/about/arfun.jpg') }}" alt="Foto Rizky">
+                        <div class="card-body">
+                            <h3 class="card-title">Arfun Ali</h3>
+                            <p class="card-text">Front-End Developer yang ahli dalam membuat UI modern dan responsif
+                                dengan React & Tailwind CSS.</p>
+                            <div class="social-icons">
+                                <a href="https://github.com/username" title="GitHub">
+                                    <i class="fab fa-github fa-lg me-1 text-dark"></i>
+                                </a>
+                                <a href="https://instagram.com/username" target="_blank" title="Instagram"
+                                    style="color: #e4405f;">
+                                    <i class="fab fa-instagram fa-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-xl-3">
+                    <div class="card">
+                        <img src="{{ asset('storage/about/arfun.jpg') }}" alt="Foto Rizky">
+                        <div class="card-body">
+                            <h3 class="card-title">Arfun Ali</h3>
+                            <p class="card-text">Front-End Developer yang ahli dalam membuat UI modern dan responsif
+                                dengan React & Tailwind CSS.</p>
+                            <div class="social-icons">
+                                <a href="https://github.com/username" title="GitHub">
+                                    <i class="fab fa-github fa-lg me-1 text-dark"></i>
+                                </a>
+                                <a href="https://instagram.com/username" target="_blank" title="Instagram"
+                                    style="color: #e4405f;">
+                                    <i class="fab fa-instagram fa-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-xl-3">
+                    <div class="card">
+                        <img src="{{ asset('storage/about/eka.jpg') }}" alt="Foto Rizky">
+                        <div class="card-body">
+                            <h3 class="card-title">Arfun Ali</h3>
+                            <p class="card-text">Front-End Developer yang ahli dalam membuat UI modern dan responsif
+                                dengan React & Tailwind CSS.</p>
+                            <div class="social-icons">
+                                <a href="https://github.com/username" title="GitHub">
+                                    <i class="fab fa-github fa-lg me-1 text-dark"></i>
+                                </a>
+                                <a href="https://instagram.com/username" target="_blank" title="Instagram"
+                                    style="color: #e4405f;">
+                                    <i class="fab fa-instagram fa-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center gap-4">
+                <div class="col-8 col-xl-3">
+                    <div class="card">
+                        <img src="{{ asset('storage/about/irfan2.jpg') }}" alt="Foto Rizky">
+                        <div class="card-body">
+                            <h3 class="card-title">Arfun Ali</h3>
+                            <p class="card-text">Front-End Developer yang ahli dalam membuat UI modern dan responsif
+                                dengan React & Tailwind CSS.</p>
+                            <div class="social-icons">
+                                <a href="https://github.com/username" title="GitHub">
+                                    <i class="fab fa-github fa-lg me-1 text-dark"></i>
+                                </a>
+                                <a href="https://instagram.com/username" target="_blank" title="Instagram"
+                                    style="color: #e4405f;">
+                                    <i class="fab fa-instagram fa-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-xl-3">
+                    <div class="card">
+                        <img src="{{ asset('storage/about/griyo.jpg') }}" alt="Foto Rizky">
+                        <div class="card-body">
+                            <h3 class="card-title">Arfun Ali</h3>
+                            <p class="card-text">Front-End Developer yang ahli dalam membuat UI modern dan responsif
+                                dengan React & Tailwind CSS.</p>
+                            <div class="social-icons">
+                                <a href="https://github.com/username" title="GitHub">
+                                    <i class="fab fa-github fa-lg me-1 text-dark"></i>
+                                </a>
+                                <a href="https://instagram.com/username" target="_blank" title="Instagram"
+                                    style="color: #e4405f;">
+                                    <i class="fab fa-instagram fa-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <!-- /Starter Section Section -->

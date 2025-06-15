@@ -133,6 +133,8 @@
                                     <p>Daftar untuk belanja dan nikmati penawarannya</p>
                                 </div>
 
+                                
+
                                 <form action="/register/index" method="POST">
                                     @csrf
                                     @foreach (['username', 'desa', 'jalan'] as $field)
