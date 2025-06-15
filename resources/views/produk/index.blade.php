@@ -119,9 +119,11 @@
                         </div>
                     </div><!-- End Product Item -->
                 @endforeach
-
             </div>
         </div>
+         <div class="d-flex justify-content-center mt-4">
+                    {{ $products->links() }}
+                </div>
     </section><!-- /Product List Section -->
 </main>
 <!-- <section class="pb-5">

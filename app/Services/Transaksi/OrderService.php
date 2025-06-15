@@ -44,7 +44,7 @@ class OrderService
 	{
 		$pembeli = Pembeli::where('username', '=',$username)->first();
 		$items = [];
-		if(count($data) == 1){
+		if(count($data) == 1 && (!$data instanceof Collection)){
 			foreach($data as $row){
 				$items[] = [
 					'price' => $row['hargaSatuan'],

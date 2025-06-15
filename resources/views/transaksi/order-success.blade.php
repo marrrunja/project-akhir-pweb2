@@ -50,11 +50,9 @@
 
     <!-- Starter Section Section -->
     <section id="starter-section" class="starter-section section">
-
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-            <h2>Pesanan berhasil <i class="bi bi-emoji-grin"></i> , sebaiknya dibayar sebelum 24 jam</h2>
-            <p>Klik lihat detail untuk melihat detail setiap pesanan</p>
+            <h2>Pembelian berhasil <i class="bi bi-emoji-grin"></i></h2>
         </div><!-- End Section Title -->
 
         <div class="container" data-aos="fade-up">

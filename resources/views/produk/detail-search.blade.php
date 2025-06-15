@@ -52,52 +52,77 @@
             </div>
         </div>
         @endif
-        <div class="row gy-3 gy-md-0">
+        <div class="row gy-3 justify-content-center">
             @foreach($products as $variant)
-            <div class="col-12 col-md-6 col-xl-3">
+            <div class="col-10 col-md-6 col-xl-3">
                 <form method="post" action="{{ route('transaksi.order', $variant->id) }}">
                     @csrf
                     @method('POST')
-                    <div class="card">
+                    <div class="card border-0 shadow">
                         <img src="{{ asset('storage/image-variant/'.$variant->foto) }}" class="card-img-top">
                         <div class="card-body">
                             @error('jumlah') <div class="fw-semibold text-danger">{{ $message }}</div> @enderror
                             @error('harga') <div class="fw-semibold text-danger">{{ $message }}</div> @enderror
-                            <h5 class="card-title">{{ $variant->variant }}</h5>
-                            <h6 class="card-subtitle mb-2 text-body-secondary">{{ $variant->nama }}</h6>
+                            <h5 class="card-title mb-0">{{ $variant->nama }}</h5>
+                            <small>{{ $variant->variant }}</small>
+                            <div class="card-subtitle text-secondary mt-2">Sisa: {{ $variant->jumlah }}</div>
+                            <div class="card-subtitle text-secondary">Harga: Rp.
+                                {{ number_format($variant->harga, 0, ",", ".") }}</div>
+                            <div class="text-secondary text-danger mt-2 pesan d-none fw-semibold"></div>
+                            <div class="d-flex justify-content-center mt-3 mb-3">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary btnKurang">-</button>
+                                    <input type="hidden" name="jumlah" id="jumlah"
+                                        data-max="{{ $variant->jumlah }}" value="0">
+                                    <button type="button" disabled class="btn btn-outline-primary btnHasil">0</button>
+                                    <button type="button" class="btn btn-primary btnTambah">+</button>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center gap-2">
+                                <button type="button" data-id="{{ $variant->id }}"
+                                    class="btn btn-outline-primary btnCart">
+                                    <i class="bi bi-cart-fill me-1"></i>Cart
+                                </button>
+                                <button type="submit" class="btn btn-outline-primary">Order Now</button>
+                            </div>
+                            {{-- backup kalo amar tidak suka--}}
+                            {{-- <h5 class="card-title">{{ $variant->variant }}</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{ $variant->produk->nama }}</h6>
 
-                            <div class="card-subtitle text-secondary">Sisa: {{ $variant->jumlah }}</div>
+                            <div class="card-subtitle text-secondary">Sisa: {{ $variant->stok->jumlah }}</div>
                             <div class="mt-3 mb-3">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-success btnTambah">+</button>
-                                    <input type="hidden" name="jumlah" id="jumlah" data-max="{{ $variant->jumlah }}"
-                                        value="0">
-                                    <button type="button" disabled class="btn btn-outline-success btnHasil">0</button>
-                                    <button type="button" class="btn btn-success btnKurang">-</button>
-
+                                    <button type="button" class="btn btn-primary btnTambah">+</button>
+                                    <input type="hidden" name="jumlah" id="jumlah"
+                                        data-max="{{ $variant->stok->jumlah }}" value="0">
+                                    <button type="button" disabled class="btn btn-outline-primary btnHasil">0</button>
+                                    <button type="button" class="btn btn-primary btnKurang">-</button>
                                 </div>
                                 <div class="text-secondary text-danger mt-2 pesan d-none fw-semibold"></div>
                             </div>
                             <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-outline-success">Rp.
+                                <button type="submit" class="btn btn-outline-primary">Rp.
                                     {{ number_format($variant->harga, 0, ",", ".") }}</button>
                                 <button type="button" data-id="{{ $variant->id }}"
-                                    class="btn btn-outline-success btnCart">
+                                    class="btn btn-outline-primary btnCart">
                                     <i class="bi bi-cart-fill me-1"></i>
                                 </button>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </form>
             </div>
             @endforeach
+            <div class="d-flex justify-content-center mt-5">
+                {{ $products->links() }}
+            </div>
         </div>
     </div>
 </section>
 @else
 <section class="pt-5 pb-5">
     <div class="container">
-        <h3>Ups...  produk yang kamu cari tidak ditemukan <i class="bi bi-emoji-frown"></i></h3>
+        <h3>Ups... produk yang kamu cari tidak ditemukan <i class="bi bi-emoji-frown"></i></h3>
     </div>
 </section>
 @endif

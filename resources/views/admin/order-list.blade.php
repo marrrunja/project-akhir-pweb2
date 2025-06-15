@@ -110,7 +110,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="table-responsive" id="kontent">
+                            <div class="table-responsive" id="konten">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <th>#</th>

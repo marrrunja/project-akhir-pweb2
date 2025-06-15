@@ -153,16 +153,19 @@ class ProdukVariantController extends Controller
         }
     }
 
-    public function search(Request $request): Response
+    public function search(Request $request): Response|RedirectResponse
     {
         $keyword  = $request->keyword;
+        if($keyword === ''){
+            return redirect()->back();
+        }
         $products = DB::table('produk_variants')
             ->join('products', 'produk_variants.produk_id', '=', 'products.id')
             ->join('stoks', 'produk_variants.id', '=', 'stoks.variant_id')
             ->select('produk_variants.*', 'products.nama', 'products.detail', 'stoks.jumlah')
             ->where('produk_variants.variant', 'LIKE', '%' . $keyword . '%')
             ->orWhere('products.nama', 'LIKE', '%' . $keyword . '%')
-            ->get();
+            ->paginate(8);
         return response()->view('produk.detail-search', ['products' => $products]);
     }
 }

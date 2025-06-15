@@ -185,40 +185,42 @@ function updateCartSummary() {
         el.textContent = formatted;
     });
 }
-
-// males rapihin, rapihin dewek
-document.getElementById('clear-cart-btn').addEventListener('click',async function () {
-    const userId = this.dataset.user;
-   await showConfirmDeleteCart().then(async (result) => {
-        if (result.isConfirmed) {
-            try {
-                const response = await fetch('/cart/clear', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': token
-                    },
-                    body: JSON.stringify({ userId: userId })
-                });
-
-                const data = await response.json();
-                if (data.success) {
-                    document.querySelectorAll('.cart-ireng').forEach(item => item.remove());
-
-                    document.querySelectorAll('.summary-value').forEach(el => {
-                        el.textContent = 'Rp0';
+const clearCart = document.getElementById("clear-cart-btn");
+if(clearCart != null){
+    clearCart.addEventListener('click',async function () {
+        const userId = this.dataset.user;
+       await showConfirmDeleteCart().then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const response = await fetch('/cart/clear', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token
+                        },
+                        body: JSON.stringify({ userId: userId })
                     });
-                    Swal.fire('Berhasil!', 'Semua item telah dihapus dari cart.', 'success');
-                } else {
-                    Swal.fire('Oops!', 'Gagal menghapus isi cart.', 'error');
+    
+                    const data = await response.json();
+                    if (data.success) {
+                        document.querySelectorAll('.cart-ireng').forEach(item => item.remove());
+    
+                        document.querySelectorAll('.summary-value').forEach(el => {
+                            el.textContent = 'Rp0';
+                        });
+                        Swal.fire('Berhasil!', 'Semua item telah dihapus dari cart.', 'success');
+                    } else {
+                        Swal.fire('Oops!', 'Gagal menghapus isi cart.', 'error');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    Swal.fire('Error!', 'Gagal menghubungi server.', 'error');
                 }
-            } catch (error) {
-                console.error(error);
-                Swal.fire('Error!', 'Gagal menghubungi server.', 'error');
             }
-        }
+        });
     });
-});
+}
+// males rapihin, rapihin dewek
 
 
 async function initOrders()
@@ -248,7 +250,7 @@ async function initOrders()
             },3000);
         }
     } catch (error) {
-        await showAlertDanger(error + " " +responseServer.message);
+        await showAlertDanger(error);
     }
     
 }
@@ -270,5 +272,7 @@ async function wantMakeOrders(e)
 
 }
 
-btnCheckout.addEventListener("click", wantMakeOrders);
+if(btnCheckout != null){
+    btnCheckout.addEventListener("click", wantMakeOrders);
+}
 

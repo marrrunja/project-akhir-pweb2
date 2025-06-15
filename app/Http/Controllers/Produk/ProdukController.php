@@ -25,7 +25,7 @@ class ProdukController extends Controller
         $produk = DB::table('products')
         ->join('kategoris', 'products.kategori_id', '=', 'kategoris.id')
         ->select('products.id as idProduk', 'products.nama', 'products.detail', 'products.foto', 'kategoris.kategori', 'kategoris.id')
-        ->get();
+        ->paginate(8);
         $data   = [
             'products' => $produk,
         ];
@@ -241,7 +241,6 @@ class ProdukController extends Controller
             ->where('products.nama', 'LIKE', '%' . $keyword . '%')
             ->orWhere('kategoris.kategori', 'LIKE', '%' . $keyword . '%')
             ->get();
-
         $data = [
             'products' => $products,
         ];

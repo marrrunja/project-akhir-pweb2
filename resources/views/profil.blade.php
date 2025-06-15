@@ -88,13 +88,6 @@
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="payment-tab" data-bs-toggle="tab" data-bs-target="#payment"
-                                    type="button" role="tab" aria-controls="payment" aria-selected="false">
-                                    <i class="bi bi-credit-card"></i>
-                                    <span>Payment methods</span>
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="personal-tab" data-bs-toggle="tab"
                                     data-bs-target="#personal" type="button" role="tab" aria-controls="personal"
                                     aria-selected="false">
@@ -347,68 +340,13 @@
                         </div>
 
 
-                        <!-- Payment Methods Tab -->
-                        <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
-                            <div class="tab-header">
-                                <h2>Payment Methods</h2>
-                                <button class="btn btn-add-payment" type="button">
-                                    <i class="bi bi-plus-lg"></i> Add payment method
-                                </button>
-                            </div>
-                            <div class="payment-methods">
-                                <!-- Payment Method 1 -->
-                                <div class="payment-method-item" data-aos="fade-up" data-aos-delay="100">
-                                    <div class="payment-card">
-                                        <div class="card-type">
-                                            <i class="bi bi-credit-card"></i>
-                                        </div>
-                                        <div class="card-info">
-                                            <div class="card-number">**** **** **** 4589</div>
-                                            <div class="card-expiry">Expires 09/2026</div>
-                                        </div>
-                                        <div class="card-actions">
-                                            <button class="btn-edit-card" type="button">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                            <button class="btn-delete-card" type="button">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="default-badge">Default</div>
-                                </div><!-- End Payment Method -->
-
-                                <!-- Payment Method 2 -->
-                                <div class="payment-method-item" data-aos="fade-up" data-aos-delay="200">
-                                    <div class="payment-card">
-                                        <div class="card-type">
-                                            <i class="bi bi-credit-card"></i>
-                                        </div>
-                                        <div class="card-info">
-                                            <div class="card-number">**** **** **** 7821</div>
-                                            <div class="card-expiry">Expires 05/2025</div>
-                                        </div>
-                                        <div class="card-actions">
-                                            <button class="btn-edit-card" type="button">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                            <button class="btn-delete-card" type="button">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-sm btn-make-default" type="button">Make default</button>
-                                </div><!-- End Payment Method -->
-                            </div>
-                        </div>
-
                         <!-- Personal Info Tab -->
                         <div class="tab-pane fade" id="personal" role="tabpanel" aria-labelledby="personal-tab">
                             <div class="tab-header">
                                 <h2>Personal Information</h2>
                             </div>
                             <div class="personal-info-form" data-aos="fade-up" data-aos-delay="100">
-                                <form class="php-email-form">
+                                <form class="php-email-form" method="post" action="">
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="firstName" class="form-label">First Name</label>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Transaksi;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\Transaksi\Order;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -127,7 +128,6 @@ class TransaksiController extends Controller
         $response = json_decode($midtransResponse->body());
         return $response;
     }
-        
     public function webhook(Request $request):JsonResponse
     {
         Log::info("Webhook dari midtrans");
@@ -172,6 +172,43 @@ class TransaksiController extends Controller
     }
 
     public function success(Request $request){
+        $orderId = $request->order_id;
+        $order = Order::where('order_id', $orderId)->first();
+
+        if($order){
+            if($order->is_dibayar != 1){
+                try{
+                    // update is dibayar menjadi satu ketika pembayaran sudah lunas
+                    DB::statement("UPDATE table_orders SET is_dibayar = ? WHERE order_id = ?", [1, $orderId]);
+                    $variantIds = DB::table('order_items')
+                        ->join('table_orders', 'order_items.order_id', '=', 'table_orders.id')
+                        ->where('table_orders.order_id','=',$orderId)
+                        ->pluck('order_items.variant_id');
+
+                    // lock update nya untuk mencegah race condition
+                    DB::table('stoks')
+                        ->whereIn('variant_id', $variantIds)
+                        ->lockForUpdate()
+                        ->get();
+    
+                    $query = "UPDATE stoks
+                            JOIN order_items ON stoks.variant_id = order_items.variant_id
+                            JOIN table_orders ON order_items.order_id = table_orders.id
+                            SET stoks.jumlah = stoks.jumlah - order_items.jumlah
+                            WHERE table_orders.order_id = ? AND stoks.jumlah >= order_items.jumlah
+                            ";
+                    $update = DB::update($query, [$orderId]);
+                    if($update <= 0) {
+                        DB::rollback();
+                        Log::info("Order id $orderId, gagal melakukan pembelian karna order id tidak valid atau stok tidak mencukupi");
+                    }
+                    DB::commit();
+                    Log::info("Berhasil update produk dengan order id $orderId");
+                }catch(\Exception $e){
+                    DB::rollback();
+                }
+            }
+        }
         return view('transaksi.order-success');
     }
     public function orderSuccess():RedirectResponse

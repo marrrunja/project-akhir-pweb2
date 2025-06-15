@@ -85,12 +85,10 @@
                                 @error('jumlah') <div class="fw-semibold text-danger">{{ $message }}</div> @enderror
                                 @error('harga') <div class="fw-semibold text-danger">{{ $message }}</div> @enderror
                                 <h5 class="card-title">{{ $variant->variant }}</h5>
-
                                 <div class="card-subtitle text-secondary">Sisa: {{ $variant->stok->jumlah }}</div>
                                 <div class="card-subtitle text-secondary">Harga: Rp. {{ number_format($variant->harga, 0, ",", ".") }}</div>
                                 <div class="text-secondary text-danger mt-2 pesan d-none fw-semibold"></div>
                                 <div class="d-flex justify-content-center mt-3 mb-3">
-                                    
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-primary btnKurang">-</button>
                                         <input type="hidden" name="jumlah" id="jumlah" data-max="{{ $variant->stok->jumlah }}" value="0">
@@ -100,9 +98,9 @@
                                 </div>
                                 <div class="d-flex justify-content-center gap-2">
                                     <button type="button" data-id="{{ $variant->id }}" class="btn btn-outline-primary btnCart">
-                                        <i class="bi bi-cart-fill me-1"></i>Keranjang
+                                        <i class="bi bi-cart-fill me-1"></i>Cart
                                     </button>
-                                    <button type="submit" class="btn btn-outline-primary">Pesan Sekarang</button>
+                                    <button type="submit" class="btn btn-outline-primary">Order Now</button>
                                 </div>
                                 {{-- backup kalo amar tidak suka--}}
                                 {{-- <h5 class="card-title">{{ $variant->variant }}</h5>

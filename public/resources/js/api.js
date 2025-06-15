@@ -13,7 +13,6 @@ const listProduk = document.getElementById("list-produk");
 const modalBody = document.getElementById("modal-body");
 let kategori = document.getElementsByClassName("kategori");
 
-
 async function orderByTanggal() {
     try {
         let response = await fetch(APIURL + "?order=" + urutkan.value);

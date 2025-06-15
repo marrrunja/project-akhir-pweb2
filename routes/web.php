@@ -21,6 +21,7 @@ use App\Http\Controllers\Produk\ProdukVariantController;
 Route::get('/', [UserController::class, 'index']);
 Route::get('/', [ProdukController::class, 'dashboard']);
 Route::get('/profil', [UserController::class, 'profil'])->middleware(SessionHasNotMiddleware::class);
+Route::post('/profil/update/{id}',[UserController::class, 'updateProfil']);
 
 Route::controller(LoginController::class)->prefix('/login')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasMiddleware::class);
