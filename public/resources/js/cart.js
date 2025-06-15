@@ -239,9 +239,10 @@ async function initOrders()
             body:JSON.stringify(data)
         });
         let responseServer = await response.json();
+        console.log(data)
         if(!response.ok){
-            await showAlertDanger("HTTP ERROR" + response.status);
-            throw new Error("HTTP ERROR" + response.status);
+            // await showAlertDanger("HTTP ERROR " + response.status);
+            throw new Error("HTTP ERROR " + response.status);
         }
         if(response.status === 200){
             await showAlertSuccess(responseServer.message);
@@ -251,6 +252,7 @@ async function initOrders()
         }
     } catch (error) {
         await showAlertDanger(error);
+        console.log(error);
     }
     
 }

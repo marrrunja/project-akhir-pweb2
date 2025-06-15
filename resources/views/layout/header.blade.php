@@ -122,7 +122,7 @@
                                 </div>
                                 <div class="cart-actions">
                                     <a href="{{ url('/cart') }}" class="btn btn-outline-primary">Lihat Keranjang</a>
-                                    <a href="checkout.html" class="btn btn-primary">Checkout</a>
+                                    <button id="btnCheckout" class="btn btn-primary" data-id="{{ Session::get('user_id') }}">Checkout</button>
                                 </div>
                             </div>
                         </div>
