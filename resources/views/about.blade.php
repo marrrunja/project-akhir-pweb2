@@ -76,7 +76,7 @@
 
     .card-text {
         font-size: 1rem;
-        line-height: 1.5;
+        line-height: 2;
         color: #555;
     }
 
@@ -130,14 +130,14 @@
         </div><!-- End Section Title -->
 
         <div class="container" data-aos="fade-up">
-            <div class="row justify-content-center mb-3 gap-4">
+            <div class="row justify-content-center mb-5 gap-4">
                 <div class="col-8 col-md-5 col-xl-3">
                     <div class="card">
                         <img src="{{ asset('storage/about/arfun.jpg') }}" alt="Foto Rizky">
                         <div class="card-body">
-                            <h3 class="card-title">Arfun Ali</h3>
-                            <p class="card-text">Front-End Developer yang ahli dalam membuat UI modern dan responsif
-                                dengan React & Tailwind CSS.</p>
+                            <h3 class="card-title">Arfun Ali Yafie</h3>
+                            <p class="card-text"><strong>Front-End Developer</strong> yang ahli dalam membuat UI modern dan responsif
+                                dengan JavaScript & Bootstrap.</p>
                             <div class="social-icons">
                                 <a href="https://github.com/username" title="GitHub">
                                     <i class="fab fa-github fa-lg me-1 text-dark"></i>
@@ -154,8 +154,8 @@
                     <div class="card">
                         <img src="{{ asset('storage/about/arfun.jpg') }}" alt="Foto Rizky">
                         <div class="card-body">
-                            <h3 class="card-title">Arfun Ali</h3>
-                            <p class="card-text">Front-End Developer yang ahli dalam membuat UI modern dan responsif
+                            <h3 class="card-title">Bintang Aliqa</h3>
+                            <p class="card-text"><strong>Front-End Developer</strong> yang ahli dalam membuat UI modern dan responsif
                                 dengan React & Tailwind CSS.</p>
                             <div class="social-icons">
                                 <a href="https://github.com/username" title="GitHub">
@@ -173,8 +173,8 @@
                     <div class="card">
                         <img src="{{ asset('storage/about/eka.jpg') }}" alt="Foto Rizky">
                         <div class="card-body">
-                            <h3 class="card-title">Arfun Ali</h3>
-                            <p class="card-text">Front-End Developer yang ahli dalam membuat UI modern dan responsif
+                            <h3 class="card-title">Eka Putra</h3>
+                            <p class="card-text"><strong>Front-End Developer</strong> yang ahli dalam membuat UI modern dan responsif
                                 dengan React & Tailwind CSS.</p>
                             <div class="social-icons">
                                 <a href="https://github.com/username" title="GitHub">
@@ -194,14 +194,13 @@
                     <div class="card">
                         <img src="{{ asset('storage/about/irfan2.jpg') }}" alt="Foto Rizky">
                         <div class="card-body">
-                            <h3 class="card-title">Arfun Ali</h3>
-                            <p class="card-text">Front-End Developer yang ahli dalam membuat UI modern dan responsif
-                                dengan React & Tailwind CSS.</p>
+                            <h3 class="card-title">Muammar Irfan</h3>
+                            <p class="card-text"><strong>Back-End Developer</strong> yang bertanggung jawab membangun logika aplikasi, manajemen database, dan integrasi API.</p>
                             <div class="social-icons">
-                                <a href="https://github.com/username" title="GitHub">
+                                <a href="https://github.com/marrrunja" title="GitHub">
                                     <i class="fab fa-github fa-lg me-1 text-dark"></i>
                                 </a>
-                                <a href="https://instagram.com/username" target="_blank" title="Instagram"
+                                <a href="https://instagram.com/marrmr04" target="_blank" title="Instagram"
                                     style="color: #e4405f;">
                                     <i class="fab fa-instagram fa-lg"></i>
                                 </a>
@@ -213,14 +212,13 @@
                     <div class="card">
                         <img src="{{ asset('storage/about/griyo.jpg') }}" alt="Foto Rizky">
                         <div class="card-body">
-                            <h3 class="card-title">Arfun Ali</h3>
-                            <p class="card-text">Front-End Developer yang ahli dalam membuat UI modern dan responsif
-                                dengan React & Tailwind CSS.</p>
+                            <h3 class="card-title">Griyo Sihnugroho</h3>
+                            <p class="card-text"><strong>Front-End Developer</strong> yang bikin sistem yang bisa kerja keras biar user tinggal pencet tombol doang. Membuat sistem Database</p>
                             <div class="social-icons">
-                                <a href="https://github.com/username" title="GitHub">
+                                <a href="https://github.com/griyo1009" title="GitHub">
                                     <i class="fab fa-github fa-lg me-1 text-dark"></i>
                                 </a>
-                                <a href="https://instagram.com/username" target="_blank" title="Instagram"
+                                <a href="https://instagram.com/griyo_1009" target="_blank" title="Instagram"
                                     style="color: #e4405f;">
                                     <i class="fab fa-instagram fa-lg"></i>
                                 </a>
