@@ -102,4 +102,15 @@ class AdminController extends Controller
         return response()->view('admin.order-detail', compact('orderItems'));
     }
 
+    public function login()
+    {
+        return view('admin.login');
+    }
+    public function doLogin(Request $request){
+
+    }
+    public function doLogout(Request $request){
+        return "Hello";
+    }
+
 }

@@ -82,6 +82,9 @@ Route::controller(AdminController::class)->prefix('/admin')->group(function(){
     Route::get('produk/variant/{id}', 'variantProduk')->name('admin.detailProduk');
     Route::get('/order/list', 'orderList')->name('admin.order');
     Route::get('/order/detail/{id}', 'orderDetail')->name('admin.detailOrder');
+    Route::get('/login', 'login');
+    Route::get('/login', 'doLogin');
+    Route::get('/logout', 'doLogout');
 });
 
 // route untuk api
