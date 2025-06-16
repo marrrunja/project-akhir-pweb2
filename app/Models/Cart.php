@@ -36,5 +36,25 @@ class Cart extends Model
     {
         $carts = DB::table('carts')->where('pembeli_id', '=', $id)->get();
         return count($carts);
+    } 
+      
+    public static function getTotalCartByUserId($id=null)
+    {
+        $id = $id ?? auth()->id();
+        if (!$id) {
+        return 0; 
     }
+       $carts = Cart::with(['variant'])
+            ->where('pembeli_id', $id)
+            ->get();
+
+            
+        $total = 0;
+        foreach ($carts as $cart) {
+            $total = $carts->sum(fn($cart) => ($cart->variant->harga ?? 0)* $cart->qty);
+        }
+        // dd($total);
+        return $total;
+    }
+
 }

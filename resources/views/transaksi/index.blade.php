@@ -88,6 +88,7 @@
                     <tr>
                         <td class="py-4 text-center">{{ $order->order_id }}</td>
                         <td class="py-4 text-center">{{ $order->tanggal_transaksi }}</td>
+                        <td class="py-4 text-center">Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
                         <td class="py-4 text-center">Rp {{ number_format($order->total_harga,0,',','.') }}</td>
                         <td class="py-4 text-center">{{ $order->is_dibayar == 1 ? "Sudah dibayar" : "Belum dibayar" }}
                         </td>

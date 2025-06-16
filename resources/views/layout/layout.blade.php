@@ -11,6 +11,8 @@
 <body>
     @php
         $carts = \App\Models\Cart::getAllCartWithUserId(Session::get('user_id'));
+        $total = \App\Models\Cart::getTotalCartByUserId(Session::get('user_id'));
+        
     @endphp
     @include('layout.header')
     @yield('body')
