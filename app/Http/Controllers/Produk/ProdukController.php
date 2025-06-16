@@ -192,8 +192,9 @@ class ProdukController extends Controller
             'nama' => 'required',
             'detail' => 'required',
             'kategori' => 'required',
+            'gambar' => 'mimes:jpg,jpeg,png,webp|max:3000'
         ]);
-        
+
         $id           = $request->id;
         $nama         = $request->nama;
         $detail       = $request->detail;

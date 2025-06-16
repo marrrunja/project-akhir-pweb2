@@ -107,7 +107,7 @@
                                 <h5 class="product-title">
                                         {{ $product->nama }}</></h5>
                                 <div class="product-price">
-                                    <span class="">Deskripsi Singkat: <br>{{ Str::limit($product->detail, 25) }}</span>
+                                    <span class="">{{ Str::limit($product->detail, 25) }}</span>
                                 </div>
                                 <div class="product-price">
                                     <a href="/produk/detail/{{ $product->idProduk }}" class="current-price btn-modal"
