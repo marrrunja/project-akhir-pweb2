@@ -20,6 +20,8 @@
     <script type="module" src="{{ custom_asset('resources/js/cart.js') }}"></script>
     @stack('scripts')
 
+
+
 </body>
 
 </html>

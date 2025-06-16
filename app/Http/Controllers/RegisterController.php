@@ -20,8 +20,9 @@ class RegisterController extends Controller
 
     public function doRegister(Request $request):Response{
         $validatedData = $request->validate([
-            'username'  => ['required', 'max:20'],
-            'password'  => ['required'],
+            'username'  => ['required', 'max:20','min:10'],
+            'email' => ['required', 'email:rfc,dns'],
+            'password'  => ['required', 'min:5'],
             'kecamatan' => ['required'],
             'desa'      => ['required'],
             'alamat'    => ['required', 'max:255'],

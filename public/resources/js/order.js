@@ -27,8 +27,6 @@ function showTextSuccess(i, message){
     }, 2000);
 }
 
-
-
 for (let i = 0; i < btnTambah.length; i++) {
     btnTambah[i].addEventListener("click", function () {
         let angka = parseInt(btnHasil[i].innerText);

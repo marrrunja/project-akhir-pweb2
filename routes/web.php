@@ -11,9 +11,11 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Produk\ProdukController;
+use App\Http\Middleware\Auth\OnlyAdminMiddleware;
 use App\Http\Middleware\Auth\SessionHasMiddleware;
 use App\Http\Controllers\Transaksi\OrderController;
 use App\Http\Middleware\Auth\SessionHasNotMiddleware;
+use App\Http\Middleware\Auth\OnlyGuestAdminMiddleware;
 use App\Http\Controllers\Transaksi\TransaksiController;
 use App\Http\Controllers\Api\ProdukVariantApiController;
 use App\Http\Controllers\Produk\ProdukVariantController;
@@ -76,12 +78,15 @@ Route::controller(TransaksiController::class)->prefix('/transaksi')->group(funct
 
 // controller admin
 Route::controller(AdminController::class)->prefix('/admin')->group(function(){
-    Route::get('/tambah', 'tambah')->name('admin.tambah');
-    Route::get('/index', 'index');
-    Route::get('/produk', 'lihatProduk')->name('admin.manage');
-    Route::get('produk/variant/{id}', 'variantProduk')->name('admin.detailProduk');
-    Route::get('/order/list', 'orderList')->name('admin.order');
-    Route::get('/order/detail/{id}', 'orderDetail')->name('admin.detailOrder');
+    Route::get('/tambah', 'tambah')->name('admin.tambah')->middleware(OnlyAdminMiddleware::class);
+    Route::get('/index', 'index')->middleware(OnlyAdminMiddleware::class);
+    Route::get('/produk', 'lihatProduk')->name('admin.manage')->middleware(OnlyAdminMiddleware::class);
+    Route::get('produk/variant/{id}', 'variantProduk')->name('admin.detailProduk')->middleware(OnlyAdminMiddleware::class);
+    Route::get('/order/list', 'orderList')->name('admin.order')->middleware(OnlyAdminMiddleware::class);
+    Route::get('/order/detail/{id}', 'orderDetail')->name('admin.detailOrder')->middleware(OnlyAdminMiddleware::class);
+    Route::get('/login', 'login')->middleware(OnlyGuestAdminMiddleware::class);
+    Route::post('/login', 'doLogin')->middleware(OnlyGuestAdminMiddleware::class);
+    Route::post('/logout', 'doLogout')->middleware(OnlyAdminMiddleware::class);
 });
 
 // route untuk api

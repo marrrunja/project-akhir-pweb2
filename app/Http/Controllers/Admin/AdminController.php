@@ -6,12 +6,15 @@ use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Produk\Product;
+use App\Services\AdminService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
+    public function __construct(private AdminService $adminService){}
     public function index(): Response
     {
         // pendapatan
@@ -102,4 +105,32 @@ class AdminController extends Controller
         return response()->view('admin.order-detail', compact('orderItems'));
     }
 
+    public function login()
+    {
+        return view('admin.login');
+    }
+    public function doLogin(Request $request){
+        $validate = $request->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        $name = $request->username;
+        $password  = $request->password;
+        $username = null;
+        $error = null;
+        $data =  [
+            'username' => $name,
+            'password' => $password
+        ];
+        if($this->adminService->login($data, $error, $username)){
+            $request->session()->put('admin', $username);
+            return redirect('/admin/index');
+        }else
+            return redirect()->back()->with('status', $error);
+    }
+    public function doLogout(Request $request):JsonResponse{
+        $request->session()->forget('admin');
+        return response()->json(['redirect_url' => '/admin/login'],200);
+    }
 }

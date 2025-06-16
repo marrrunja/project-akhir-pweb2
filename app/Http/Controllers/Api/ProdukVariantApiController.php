@@ -16,7 +16,7 @@ class ProdukVariantApiController extends Controller
         ->join('stoks', 'produk_variants.id', '=', 'stoks.variant_id')
         ->select('produk_variants.harga', 'stoks.jumlah','produk_variants.foto', 'produk_variants.variant','produk_variants.id')
         ->where('produk_variants.id', '=', $id)->get();
-      
+        
         $data = [
             'variant' => $variant
         ];

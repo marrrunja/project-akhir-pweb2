@@ -143,11 +143,11 @@ async function deleteDataOrder(url, id, orderId) {
 }
 
 async function deleteOrder(url, id){
-    let isSuccess = false;
     try {
-         const dataToSend = {
+        const dataToSend = {
             id: id,
         };
+        let isSuccess = false;
         const response = await fetch(url, {
             method: "POST",
             headers: {
@@ -175,19 +175,17 @@ async function deleteOrder(url, id){
 
 async function showConfirmAlert(e) {
     if (e.target.classList.contains("hapus")) {
-        await showQuestionAlert("Apa kamu yakin ingin menghapus pesanan?").then((result) => {
+        await showQuestionAlert("Apa kamu yakin ingin membatalkan pesanan?").then((result) => {
             if (result.isConfirmed) {
                 const url = appurl + "/api/order/hapus";
                 let totalPesanan = document.getElementById("totalPesanan");
                 let id = e.target.dataset.id;
                 let orderId = e.target.dataset.order;
-
-                if (deleteDataOrder(url, id, orderId) == true) {
-                    const parent = e.target.parentElement.parentElement.parentElement.parentElement
-                    parent.remove();
-                    let total = parseInt(totalPesanan.innerText);
-                    totalPesanan.textContent = total - 1;
-                }
+                deleteDataOrder(url, id, orderId);
+                const parent = e.target.parentElement.parentElement.parentElement.parentElement
+                parent.remove();
+                let total = parseInt(totalPesanan.innerText);
+                totalPesanan.textContent = total - 1;
             }
         });
     }

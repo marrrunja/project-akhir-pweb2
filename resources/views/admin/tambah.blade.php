@@ -14,6 +14,10 @@
     <link rel="stylesheet" type="text/css" href="{{ custom_asset('resources/css/admin.css') }}">
 
 @endpush
+@section('meta')
+    <meta name="_token" content="{{ csrf_token() }}">
+    <meta name="_appurl" content="{{ env('BASE_URL') }}">
+@endsection
 
 @section('body')
     <div id="wrapper">

@@ -32,8 +32,6 @@ function getCartTotalHarga() {
 }
 
 
-
-
 async function showConfirmDeleteCart(){
     return await Swal.fire({
         title: 'Hapus semua?',

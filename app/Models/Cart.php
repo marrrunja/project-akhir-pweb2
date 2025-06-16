@@ -13,6 +13,7 @@ class Cart extends Model
 
     protected $fillable = ['pembeli_id', 'variant_id', 'qty'];
     protected $with = ['variant', 'pembeli'];
+    
     // update, localhost/user/1{}
     public function variant()
     {
