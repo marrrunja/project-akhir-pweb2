@@ -137,7 +137,7 @@
                         <div class="card-body">
                             <h3 class="card-title">Arfun Ali Yafie</h3>
                             <p class="card-text"><strong>Front-End Developer</strong> yang ahli dalam membuat UI modern dan responsif
-                                dengan JavaScript & Bootstrap.</p>
+                                dengan JavaScript & CSS</p>
                             <div class="social-icons">
                                 <a href="https://github.com/username" title="GitHub">
                                     <i class="fab fa-github fa-lg me-1 text-dark"></i>
@@ -152,16 +152,15 @@
                 </div>
                 <div class="col-8 col-xl-3">
                     <div class="card">
-                        <img src="{{ asset('storage/about/arfun.jpg') }}" alt="Foto Rizky">
+                        <img src="{{ asset('storage/about/aliqa.jpg') }}" alt="Foto Rizky">
                         <div class="card-body">
                             <h3 class="card-title">Bintang Aliqa</h3>
-                            <p class="card-text"><strong>Front-End Developer</strong> yang ahli dalam membuat UI modern dan responsif
-                                dengan React & Tailwind CSS.</p>
+                            <p class="card-text"><strong>Front End Developer</strong> yang ahli dalam membuat UI yang bersih dan user-friendly dengan HTML, CSS, & jQuery</p>
                             <div class="social-icons">
-                                <a href="https://github.com/username" title="GitHub">
+                                <a href="https://github.com/bintangaliqa" title="GitHub">
                                     <i class="fab fa-github fa-lg me-1 text-dark"></i>
                                 </a>
-                                <a href="https://instagram.com/username" target="_blank" title="Instagram"
+                                <a href="https://instagram.com/aliiqaaaa" target="_blank" title="Instagram"
                                     style="color: #e4405f;">
                                     <i class="fab fa-instagram fa-lg"></i>
                                 </a>

@@ -53,6 +53,7 @@
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
             <h2>Pembelian berhasil <i class="bi bi-emoji-grin"></i></h2>
+            <p>Silahkan menunggu pesanan anda di alamat yang sudah di lampirkan</p>
         </div><!-- End Section Title -->
 
         <div class="container" data-aos="fade-up">
