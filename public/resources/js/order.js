@@ -31,10 +31,20 @@ function showTextSuccess(i, message){
 }
 async function getTotalQuantityFromCart(id)
 {
-    const response = await fetch('/cart/get-stok?id='+id);
-    const data = await response.json();
+    try{
+        const response = await fetch('/cart/get-stok?id='+id);
+        const data = await response.json();
+
+        if(!response.ok){
+            throw new Error("HTTP ERROR", response.status);
+        }
+        if(response.status === 200)
+            return [data.stok, data.jumlah];
+
+    }catch(error){
+        await showAlertDanger(error);
+    }
     
-    return [data.stok, data.jumlah];
 }
 
 for (let i = 0; i < btnTambah.length; i++) {
@@ -71,7 +81,7 @@ for (let i = 0; i < btnCart.length; i++) {
         };
         let [qtyCart,stokTersisa ] = await getTotalQuantityFromCart(btnCart[i].dataset.id);
 
-        if(qty + qtyCart > stokTersisa){
+        if(qty + qtyCart > stokTersisa && qtyCart != null){
             await showAlertDanger("Anda sudah mencapai sisa stok untuk produk ini di cart anda!!");
             return;
         }

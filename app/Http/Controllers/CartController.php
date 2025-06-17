@@ -128,13 +128,13 @@ class CartController extends Controller
     {
         $id = $request->id;
         $userId = $request->session()->get('user_id');
+
         $stok = Cart::where('variant_id', $id)->where('pembeli_id', $userId)->first();
         $jumlah = Stok::where('variant_id', $id)->first();
         $data = [
-            'stok' => $stok->qty,
+            'stok' => $stok,
             'jumlah' => $jumlah->jumlah
         ];
         return response()->json($data);
     }
-
 }

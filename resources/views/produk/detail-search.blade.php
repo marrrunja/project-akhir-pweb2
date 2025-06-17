@@ -81,7 +81,7 @@
                             </div>
                             <div class="d-flex justify-content-center gap-2">
                                 <button type="button" data-id="{{ $variant->id }}"
-                                    class="btn btn-outline-primary btnCart" data-user="{{ Session::get('user') }}">
+                                    class="btn btn-outline-primary btnCart" data-user="{{ Session::get('user_id') }}">
                                     <i class="bi bi-cart-fill me-1"></i>Cart
                                 </button>
                                 <button type="submit" class="btn btn-outline-primary">Order Now</button>
