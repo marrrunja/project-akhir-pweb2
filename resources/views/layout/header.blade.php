@@ -116,7 +116,10 @@
                             <div class="dropdown-footer">
                                 <div class="cart-total">
                                     <span>Total:</span>
-                                    <span class="summary-value"
+                                    <span class="summary"
+                                        >Rp{{ number_format(\App\Models\Cart::getTotalCartByUserId(Session::get('user_id')), 0, ',', '.') }}
+                                    </span>
+                                    <span hidden class="summary-value"
                                         >Rp{{ number_format(\App\Models\Cart::getTotalCartByUserId(Session::get('user_id')), 0, ',', '.') }}
                                     </span>
                                 </div>
