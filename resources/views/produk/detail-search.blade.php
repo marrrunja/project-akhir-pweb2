@@ -25,6 +25,7 @@
 
 <!-- Main CSS File -->
 <link href="{{ custom_asset('assets/css/main.css') }}" rel="stylesheet">
+<script type="module" src="{{ custom_asset('resources/js/utility/alert.js') }}"></script>
 
 @endpush
 
@@ -80,7 +81,7 @@
                             </div>
                             <div class="d-flex justify-content-center gap-2">
                                 <button type="button" data-id="{{ $variant->id }}"
-                                    class="btn btn-outline-primary btnCart">
+                                    class="btn btn-outline-primary btnCart" data-user="{{ Session::get('user') }}">
                                     <i class="bi bi-cart-fill me-1"></i>Cart
                                 </button>
                                 <button type="submit" class="btn btn-outline-primary">Order Now</button>
@@ -142,6 +143,6 @@
 <script src="{{ custom_asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
 <!-- Main JS File -->
 <script src="{{ custom_asset('assets/js/main.js') }}"></script>
-<script src="{{ custom_asset('resources/js/order.js') }}"></script>
+<script type="module" src="{{ custom_asset('resources/js/order.js') }}"></script>
 
 @endpush

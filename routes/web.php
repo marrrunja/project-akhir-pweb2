@@ -44,6 +44,7 @@ Route::get('/cart', [CartController::class, 'cart'])->middleware(SessionHasNotMi
 Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/delete', [CartController::class, 'destroy'])->name('cart.delete');
 Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
+Route::get('/cart/get-stok',[CartController::class,'getStok']);
 
 // produk 
 

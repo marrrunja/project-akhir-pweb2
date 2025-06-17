@@ -86,6 +86,7 @@ async function getDetailProdukBasedById(id) {
     const response = await data.text();
     return response;
 }
+
 async function showDetailProduk(e) {
     if (e.target.classList.contains("btn-modal")) {
         const data = await getDetailProdukBasedById(e.target.dataset.id);
@@ -128,7 +129,6 @@ async function deleteDataOrder(url, id, orderId) {
 
 
         if (!data.ok) {
-            await showAlertDanger("HTTP ERROR " + data.status);
             throw new Error('HTTP ERROR', data.status);
         }
         if (data.status == 200) {
@@ -137,7 +137,7 @@ async function deleteDataOrder(url, id, orderId) {
         }
 
     } catch (error) {
-        await showAlertDanger("Gagal fetch data dari api " + error);
+        await showAlertDanger(error);
     }
     return isSuccess;
 }
@@ -158,17 +158,17 @@ async function deleteOrder(url, id){
         });
         const responseServer = await response.json();
         if(!response.ok){
-            await showAlertDanger("HTTP ERROR" + response.status);
             throw new Error("HTTP ERROR ", response.status);
         }
         if(response.status === 200){
             await showAlertSuccess(responseServer.message);
+            console.log(responseServer);
             isSuccess = true;
         }else{
             await showAlertDanger(responseServer.message);
         }
     } catch (error) {
-        await showAlertDanger(error);
+        await showAlertDanger("Gagal fetching data "+error);
     }
     return isSuccess;
 }

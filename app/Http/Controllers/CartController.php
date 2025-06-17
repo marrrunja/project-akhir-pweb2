@@ -2,10 +2,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\Produk\ProdukVariant;
-use App\Services\Cart\CartService;
-use Illuminate\Http\JsonResponse;
+use App\Models\Produk\Stok;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Services\Cart\CartService;
+use App\Models\Produk\ProdukVariant;
 
 class CartController extends Controller
 {
@@ -39,7 +40,7 @@ class CartController extends Controller
 
         $userId = $request->session()->get('user_id');
         if (! $userId) {
-            return redirect()->back()->withErrors('User belum login');
+            return response()->json(['messsage' => 'Belum login']);
         }
         
         $variantId = $request->variant_id;
@@ -121,6 +122,19 @@ class CartController extends Controller
         Cart::where('pembeli_id', $userId)->delete();
 
         return response()->json(['success' => true]);
+    }
+
+    public function getStok(Request $request)
+    {
+        $id = $request->id;
+        $userId = $request->session()->get('user_id');
+        $stok = Cart::where('variant_id', $id)->where('pembeli_id', $userId)->first();
+        $jumlah = Stok::where('variant_id', $id)->first();
+        $data = [
+            'stok' => $stok->qty,
+            'jumlah' => $jumlah->jumlah
+        ];
+        return response()->json($data);
     }
 
 }

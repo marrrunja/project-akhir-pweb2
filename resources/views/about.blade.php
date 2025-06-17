@@ -137,12 +137,12 @@
                         <div class="card-body">
                             <h3 class="card-title">Arfun Ali Yafie</h3>
                             <p class="card-text"><strong>Front-End Developer</strong> yang ahli dalam membuat UI modern dan responsif
-                                dengan JavaScript & CSS</p>
+                                dengan JavaScript & Bootstrap CSS</p>
                             <div class="social-icons">
                                 <a href="https://github.com/username" title="GitHub">
                                     <i class="fab fa-github fa-lg me-1 text-dark"></i>
                                 </a>
-                                <a href="https://instagram.com/username" target="_blank" title="Instagram"
+                                <a href="https://instagram.cm/username" target="_blank" title="Instagram"
                                     style="color: #e4405f;">
                                     <i class="fab fa-instagram fa-lg"></i>
                                 </a>
@@ -174,9 +174,9 @@
                         <div class="card-body">
                             <h3 class="card-title">Eka Putra</h3>
                             <p class="card-text"><strong>Front-End Developer</strong> yang ahli dalam membuat UI modern dan responsif
-                                dengan React & Tailwind CSS.</p>
+                                dengan JavaScript, Ajax & CSS.</p>
                             <div class="social-icons">
-                                <a href="https://github.com/username" title="GitHub">
+                                <a href="https://github.com/people-62" title="GitHub">
                                     <i class="fab fa-github fa-lg me-1 text-dark"></i>
                                 </a>
                                 <a href="https://instagram.com/username" target="_blank" title="Instagram"

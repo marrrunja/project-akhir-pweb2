@@ -12,6 +12,6 @@
 <body id="page-top">
     @yield('body')
     @stack('scripts')
-    <script type="module" src="{{ custom_asset('resources/js/logout.js') }}"></script>
+
 </body>
 </html>

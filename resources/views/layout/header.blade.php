@@ -117,7 +117,7 @@
                                 <div class="cart-total">
                                     <span>Total:</span>
                                     <span class="summary-value"
-                                        >Rp{{ number_format($total ?? 0, 0, ',', '.') }}
+                                        >Rp{{ number_format(\App\Models\Cart::getTotalCartByUserId(Session::get('user_id')), 0, ',', '.') }}
                                     </span>
                                 </div>
                                 <div class="cart-actions">
@@ -141,7 +141,7 @@
                 <ul>
                     <li><a href="/" class="{{ request()->is('/') ? 'active':''}}">Home</a></li>
                     <li><a href="/produk/index" class="{{ request()->is('produk/index') ? 'active':''}}">Produk</a>
-                        <//li> <li><a href="/about">About</a></li>
+                        <//li> <li><a href="/about"  class="{{ request()->is('about') ? 'active':''}}">About</a></li>
                     <li><a href="/order/index" class="{{ request()->is('order/index') ? 'active':''}}">History
                             Pembelian</a></li>
                 </ul>

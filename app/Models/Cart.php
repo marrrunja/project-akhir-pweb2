@@ -53,7 +53,8 @@ class Cart extends Model
         foreach ($carts as $cart) {
             $total = $carts->sum(fn($cart) => ($cart->variant->harga ?? 0)* $cart->qty);
         }
-        // dd($total);
+
+       
         return $total;
     }
 

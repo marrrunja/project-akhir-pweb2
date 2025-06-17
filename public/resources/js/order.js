@@ -1,3 +1,5 @@
+import { showAlertDanger } from "./utility/alert.js";
+
 const token = document.querySelector('meta[name="_token"]').content;
 const appurl = document.querySelector("meta[name=_appurl]").content;
 const btnTambah = document.getElementsByClassName("btnTambah");
@@ -16,6 +18,7 @@ function showTextError(i, message){
         pesan[i].classList.add("d-none");
     }, 2000);
 }
+
 function showTextSuccess(i, message){
     pesan[i].innerText = message;
     pesan[i].classList.remove("d-none");
@@ -26,12 +29,19 @@ function showTextSuccess(i, message){
         pesan[i].classList.remove("text-success");
     }, 2000);
 }
+async function getTotalQuantityFromCart(id)
+{
+    const response = await fetch('/cart/get-stok?id='+id);
+    const data = await response.json();
+    
+    return [data.stok, data.jumlah];
+}
 
 for (let i = 0; i < btnTambah.length; i++) {
     btnTambah[i].addEventListener("click", function () {
         let angka = parseInt(btnHasil[i].innerText);
         angka++;
-        if (angka > parseInt(btnTambah[i].previousElementSibling.dataset.max)) {
+        if (angka > parseInt(btnTambah[i].previousElementSibling.previousElementSibling.dataset.max)) {
             showTextError(i, "Stok tersisa tidak cukup");
             return;
         }
@@ -59,6 +69,12 @@ for (let i = 0; i < btnCart.length; i++) {
             showTextError(i, "Jumlah tidak boleh kurang dari 1");
             return;
         };
+        let [qtyCart,stokTersisa ] = await getTotalQuantityFromCart(btnCart[i].dataset.id);
+
+        if(qty + qtyCart > stokTersisa){
+            await showAlertDanger("Anda sudah mencapai sisa stok untuk produk ini di cart anda!!");
+            return;
+        }
         try {
             let data = {
                 variant_id: btnCart[i].dataset.id,
@@ -73,7 +89,6 @@ for (let i = 0; i < btnCart.length; i++) {
                 body: JSON.stringify(data)
             });
             if (!response.ok) {
-                showTextError(i, "Error " + response.status);
                 throw new Error("HTTP ERROR " + response.status);
             }
             if (response.status == 200) {

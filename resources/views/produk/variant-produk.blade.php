@@ -31,6 +31,7 @@
 <link href="{{ custom_asset('assets/css/main.css') }}" rel="stylesheet">
 
 <link rel="stylesheet" href="{{ custom_asset('resources/css/user.css') }}">
+<script type="module" src="{{ custom_asset('resources/js/utility/alert.js') }}"></script>
 <!-- {{-- <link rel="stylesheet" type="text/css" href="{{ asset('resources/css/style.css') }}"> --}} -->
 @endpush
 
@@ -90,7 +91,6 @@
                                 <div class="card-subtitle text-secondary">Harga: Rp. {{ number_format($variant->harga, 0, ",", ".") }}</div>
                                 <div class="text-secondary text-danger mt-2 pesan d-none fw-semibold"></div>
                                 <div class="d-flex justify-content-center mt-3 mb-3">
-                                    
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-primary btnKurang">-</button>
                                         <input type="hidden" name="jumlah" id="jumlah" data-max="{{ $variant->stok->jumlah }}" value="0">
@@ -112,10 +112,9 @@
                                 <div class="mt-3 mb-3">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-primary btnTambah">+</button>
-                                        <input type="hidden" name="jumlah" id="jumlah"
-                                            data-max="{{ $variant->stok->jumlah }}" value="0">
-                                            <button type="button" disabled class="btn btn-outline-primary btnHasil">0</button>
-                                            <button type="button" class="btn btn-primary btnKurang">-</button>
+                                        <input type="hidden" name="jumlah" id="jumlah" data-max="{{ $variant->stok->jumlah }}" value="0">
+                                        <button type="button" disabled class="btn btn-outline-primary btnHasil">0</button>
+                                        <button type="button" class="btn btn-primary btnKurang">-</button>
                                     </div>
                                     <div class="text-secondary text-danger mt-2 pesan d-none fw-semibold"></div>
                                 </div>
@@ -154,7 +153,7 @@
 <script src="{{ custom_asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
 <!-- Main JS File -->
 <script src="{{ custom_asset('assets/js/main.js') }}"></script>
-<script src="{{ custom_asset('resources/js/order.js') }}"></script>
+<script type="module" src="{{ custom_asset('resources/js/order.js') }}"></script>
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script> -->
 @endpush

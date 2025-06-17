@@ -47,7 +47,12 @@ class OrderController extends Controller
         $response = Http::withBasicAuth(env('MIDTRANS_SERVER_KEY'), '')
             ->post($url);
 
-        if ($response->successful()) {
+
+        $data = [
+            'g' => $response->status()
+        ];
+
+        if ($response->successful() && $response->status() != 500) {
             $order = Order::where('id', $id)->firstOrFail();
             $order->delete();
             return response()->json([

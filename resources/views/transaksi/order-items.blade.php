@@ -52,7 +52,6 @@
 
     <!-- Starter Section Section -->
     <section id="starter-section" class="starter-section section">
-
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
             <h2>Daftar Pesanan anda</h2>

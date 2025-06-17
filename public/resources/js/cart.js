@@ -13,15 +13,13 @@ let btnLogout = document.getElementById("btnLogout");
 let formLogout = document.getElementById("form-logout");
 
 
-let summaryValue = document.getElementById("summary-value");
+let summaryValue = document.getElementsByClassName("summary-value")[0];
 let totalHarga = parseInt(Array.from(summaryValue.innerText)
                       .filter((item) => item != "R" && item != "p" && item != ",")
                       .reduce((str, item) => str += item));
 
                     
-
 function getCartTotalHarga() {
-    let total = 0;
     // document.querySelectorAll('.cart-ireng').forEach(item => {
     //     const qty = parseInt(item.querySelector('.quantity-input').value);
     //     const priceText = item.querySelector('.current-price').textContent.replace(/[^\d]/g, '');
