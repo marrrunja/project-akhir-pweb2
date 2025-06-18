@@ -98,8 +98,8 @@ Route::get('api/produk/variants/edit',[ProdukVariantApiController::class, 'editP
 
 // route untuk menangani tampilan order seperti history dan lain lain
 Route::controller(OrderController::class)->prefix('/order')->group(function(){
-    Route::get('/index', 'index');
-    Route::get('/detail/{id}', 'detailOrder');
+    Route::get('/index', 'index')->middleware(SessionHasNotMiddleware::class);
+    Route::get('/detail/{id}', 'detailOrder')->middleware(SessionHasNotMiddleware::class);
 });
 
 

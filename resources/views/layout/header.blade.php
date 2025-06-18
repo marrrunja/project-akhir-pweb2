@@ -14,7 +14,7 @@
                     action="{{ env('BASE_URL') }}/variant/search">
                     @csrf
                     <div class="input-group">
-                        <input type="text" name="keyword" class="form-control" placeholder="Search for products...">
+                        <input type="text" name="keyword" class="form-control" placeholder="Search for products..."  value="{{ request('keyword') ?? '' }}">
                         <button class="btn search-btn" type="submit">
                             <i class="bi bi-search"></i>
                         </button>
@@ -181,7 +181,7 @@
             <form class="search-form" method="get" action="{{ env('BASE_URL') }}/variant/search">
                 @csrf
                 <div class="input-group">
-                    <input type="text" name="keyword" class="form-control" placeholder="Search for products...">
+                    <input type="text" name="keyword" class="form-control" placeholder="Search for products..." value="{{ request('keyword') ?? '' }}">
                     <button class="btn search-btn" type="submit">
                         <i class="bi bi-search"></i>
                     </button>

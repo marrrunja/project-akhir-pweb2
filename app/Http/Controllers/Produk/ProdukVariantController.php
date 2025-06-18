@@ -114,7 +114,7 @@ class ProdukVariantController extends Controller
             'variant'   => 'required',
             'jumlah'   => 'required|integer|min:1',
             'harga'  => 'required|integer|min:1000',
-            'gambar' => 'required|image|mimes:jpg,jpeg,png,webp',
+            'gambar' => 'image|mimes:jpg,jpeg,png,webp',
         ];
         $pesanValidasi = [
             'variant.required' => 'Variant harus diisi',
@@ -124,7 +124,6 @@ class ProdukVariantController extends Controller
             'harga.required' => 'Harga harus diisi',
             'harga.integer' => 'Harga harus bilangan bulat',
             'harga.min' => 'Harga minimal 1000 rupiah',
-            'gambar.required' => 'Gambar harus diupload',
             'gambar.image' => 'Anda memasukkan file yang bukan gambar',
             'gambar.mimes' => 'Ekstensi gambar harus jpg, png, jpeg, atau webp'
         ];
