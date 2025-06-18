@@ -6,11 +6,9 @@
             border-color: #8c0d4f !important;
             color: white !important;
         }
-
         .pagination .page-item a.page-link {
             color: #8c0d4f;
         }
-
         .pagination .page-item a.page-link:hover {
             background-color: #8c0d4f;
             border-color:#8c0d4f;
