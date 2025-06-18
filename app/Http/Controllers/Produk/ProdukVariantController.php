@@ -157,16 +157,20 @@ class ProdukVariantController extends Controller
 
         $variant = DB::table('produk_variants')->where('id', $id);
         
-        $updateVariant = $variant->update(['variant' => $varian,'harga' => $harga, 'foto' => $originalName, 'updated_at' => Carbon::now()]);
+        $updateVariant = $variant->update(['variant' => $varian,'harga' => $harga, 'foto' => $originalName]);
 
         $updateStok = DB::table('stoks')->where('variant_id', $id)->update([
             'jumlah' => $jumlah,
-            'updated_at' => Carbon::now()
         ]);
      
         $status = null;
         $alert  = null;
         if ($updateVariant > 0 || $updateStok > 0) {
+            DB::table('stoks')->where('variant_id', $id)->update([
+            'updated_at' => Carbon::now()
+            ]);
+            $variant->update(['updated_at' => Carbon::now()]);
+
             $status = "Berhasil update data";
             $alert  = "success";
             $flashMessage = [
