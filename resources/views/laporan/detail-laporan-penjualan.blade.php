@@ -9,35 +9,42 @@
         body {
             font-family: 'helvetica', 'arial', 'sans-serif';
         }
-        h1{
-            margin-bottom:3rem;
-            text-align:center;
+
+        h1 {
+            margin-bottom: 3rem;
+            text-align: center;
         }
-        .container{
+
+        .container {
             width: 100%;
-            float:left;
+            float: left;
         }
-        .card{
-            float:left;
+
+        .card {
+            float: left;
             width: 250px;
-            height:auto;
-            border:1px solid #ddd;
-            overflow:hidden;
-            margin-bottom:1rem;
-            margin-left:4rem;
-            margin-right:1rem;
+            height: auto;
+            border: 1px solid #ddd;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            margin-left: 4.2rem;
+            margin-right: 1rem;
         }
-        .card .img-card-top{
-            width:100%;
-            height:100px;
-            object-fit:cover !important;
+
+        .card .img-card-top {
+            width: 100%;
+            height: 100px;
+            object-fit: cover !important;
         }
-        .card .card-body{
-            padding:1rem;
+
+        .card .card-body {
+            padding: 1rem;
         }
-        .clear{
-            clear:both;
+
+        .clear {
+            clear: both;
         }
+
     </style>
 </head>
 
@@ -46,14 +53,17 @@
     <div class="container">
         @foreach($details as $detail)
         <div class="card">
-            <img src="storage/image-variant/{{ $detail->foto }}" alt="{{ $detail->nama }} {{ $detail->variant }}" class="img-card-top">
-            <div class="card-body">     
+            <img src="storage/image-variant/{{ $detail->foto }}" alt="{{ $detail->nama }} {{ $detail->variant }}"
+                class="img-card-top">
+            <div class="card-body">
                 <table>
                     <tr>
                         <td><strong>{{ $detail->nama }} {{ $detail->variant }}</strong></td>
                         <td></td>
                         <td></td>
                     </tr>
+                </table>
+                <table>
                     <tr>
                         <td>Harga</td>
                         <td>:</td>
