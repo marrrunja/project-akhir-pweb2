@@ -92,6 +92,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            {{ $products->links() }}
                         </div>
                     </div>
                     <!-- Cards Footer -->
@@ -154,5 +155,6 @@
 
 </script>
 <script src="{{ custom_asset('templatesbadmin2/js/sb-admin-2.min.js') }}"></script>
+   <script type="module" src="{{ custom_asset('resources/js/logout.js') }}"></script>
 
 @endpush

@@ -58,7 +58,7 @@ class AdminController extends Controller
                 ,
                 'kategoris.kategori'
             )
-            ->get();
+            ->paginate(5);
         $data = [
             'products' => $products
         ];

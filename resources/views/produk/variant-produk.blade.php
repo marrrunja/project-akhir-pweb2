@@ -74,7 +74,7 @@
                 </div>
             </div>
             @endif
-            <div class="row gy-3 gy-md-0 justify-content-center">
+            <div class="row gy-3 justify-content-center">
                 @foreach($variants as $variant)
                 <div class="col-10 col-md-6 col-xl-3">
                     <form method="post" action="{{ route('transaksi.order', $variant->id) }}">

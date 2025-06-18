@@ -269,5 +269,5 @@
     <script src="{{ custom_asset('templatesbadmin2/js/sb-admin-2.min.js') }}"></script>
     <script
         src="{{ env('TYPE_URL') == 'http' ? asset('resources/js/tambahData.js') : secure_asset('resources/js/tambahData.js') }}"></script>
-
+   <script type="module" src="{{ custom_asset('resources/js/logout.js') }}"></script>
 @endpush

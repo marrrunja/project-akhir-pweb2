@@ -11,6 +11,10 @@ const array = Array.from(totalHarga);
 const total = parseInt(array.filter((item) => item != '.')
                                 .reduce((str, item) => str += item));
 hargaSatuan = parseInt(Array.from(hargaSatuan).filter((item) => item != '.').reduce((str, item) => str += item));
+
+
+
+
 async function sendData()
 {
     const data = {
@@ -48,5 +52,3 @@ async function sendData()
 }
 
 btnBayar.addEventListener("click", sendData);
-
-console.log("ok")

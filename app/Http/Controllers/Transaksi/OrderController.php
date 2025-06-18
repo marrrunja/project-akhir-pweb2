@@ -59,10 +59,11 @@ class OrderController extends Controller
                 'message' => "Transaksi {$orderId} berhasil dibatalkan"
             ]);
         }else{
+            $order = Order::where('id', $id)->firstOrFail();
+            $order->delete();
             return response()->json([
-                    'message' => $response->status() . '' . $response 
-                ], $response->status()
-            );
+                'message' => "Transaksi expired {$orderId} berhasil Dihapus"
+            ]);
         }
     }
 

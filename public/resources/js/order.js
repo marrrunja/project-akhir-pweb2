@@ -81,7 +81,7 @@ for (let i = 0; i < btnCart.length; i++) {
         };
         let [qtyCart,stokTersisa ] = await getTotalQuantityFromCart(btnCart[i].dataset.id);
 
-        if(qty + qtyCart > stokTersisa && qtyCart != null){
+        if(qty + qtyCart > stokTersisa){
             await showAlertDanger("Anda sudah mencapai sisa stok untuk produk ini di cart anda!!");
             return;
         }
@@ -104,6 +104,9 @@ for (let i = 0; i < btnCart.length; i++) {
             if (response.status == 200) {
                 let responseServer = await response.json();
                 showTextSuccess(i, responseServer.message);
+                setTimeout(() => {
+                    document.location.reload(false);
+                }, 1500);
             }
         } catch (error) {
             console.error(error);

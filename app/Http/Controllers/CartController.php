@@ -131,10 +131,19 @@ class CartController extends Controller
 
         $stok = Cart::where('variant_id', $id)->where('pembeli_id', $userId)->first();
         $jumlah = Stok::where('variant_id', $id)->first();
-        $data = [
-            'stok' => $stok,
-            'jumlah' => $jumlah->jumlah
-        ];
-        return response()->json($data);
+
+        if($stok){
+            $data = [
+                'stok' => $stok->qty,
+                'jumlah' => $jumlah->jumlah
+            ];
+            return response()->json($data);
+        }else{
+            $data = [
+                'stok' => 0,
+                'jumlah' => $jumlah->jumlah
+            ];
+            return response()->json($data);
+        }
     }
 }

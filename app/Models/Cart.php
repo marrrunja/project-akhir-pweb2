@@ -27,7 +27,7 @@ class Cart extends Model
 
     public static function getAllCartWithUserId($id)
     {
-        $carts = Cart::with(['variant'])
+        $carts = self::with(['variant'])
             ->where('pembeli_id', $id)
             ->get();
         return $carts;
@@ -44,11 +44,11 @@ class Cart extends Model
         if (!$id) {
         return 0; 
     }
-       $carts = Cart::with(['variant'])
+       $carts = self::with(['variant'])
             ->where('pembeli_id', $id)
             ->get();
 
-            
+        
         $total = 0;
         foreach ($carts as $cart) {
             $total = $carts->sum(fn($cart) => ($cart->variant->harga ?? 0)* $cart->qty);

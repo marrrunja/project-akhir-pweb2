@@ -41,11 +41,23 @@ class ProdukVariantController extends Controller
     {
         $validate = [
             'variant'   => 'required',
-            'stok'   => 'required',
-            'harga'  => 'required',
-            'gambar' => 'required',
+            'stok'   => 'required|integer|min:1',
+            'harga'  => 'required|integer|min:1000',
+            'gambar' => 'required|image|mimes:jpg,jpeg,png,webp',
         ];
-        $request->validate($validate);
+        $pesanValidasi = [
+            'variant.required' => 'Variant harus diisi',
+            'stok.required' => 'Stok Harus diisi',
+            'stok.integer' => 'Stok harus bilangan bulat',
+            'stok.min' => 'Stok minimal 1',
+            'harga.required' => 'Harga harus diisi',
+            'harga.integer' => 'Harga harus bilangan bulat',
+            'harga.min' => 'Harga minimal 1000 rupiah',
+            'gambar.required' => 'Gambar harus diupload',
+            'gambar.image' => 'Anda memasukkan file yang bukan gambar',
+            'gambar.mimes' => 'Ekstensi gambar harus jpg, png, jpeg, atau webp'
+        ];
+        $request->validate($validate, $pesanValidasi);
 
         $produkId = $request->id;
         $variant = $request->variant;
@@ -98,6 +110,25 @@ class ProdukVariantController extends Controller
     }
     public function doEdit(Request $request):RedirectResponse
     {
+        $validate = [
+            'variant'   => 'required',
+            'jumlah'   => 'required|integer|min:1',
+            'harga'  => 'required|integer|min:1000',
+            'gambar' => 'required|image|mimes:jpg,jpeg,png,webp',
+        ];
+        $pesanValidasi = [
+            'variant.required' => 'Variant harus diisi',
+            'jumlah.required' => 'Stok Harus diisi',
+            'jumlah.integer' => 'Stok harus bilangan bulat',
+            'jumlah.min' => 'Stok minimal 1',
+            'harga.required' => 'Harga harus diisi',
+            'harga.integer' => 'Harga harus bilangan bulat',
+            'harga.min' => 'Harga minimal 1000 rupiah',
+            'gambar.required' => 'Gambar harus diupload',
+            'gambar.image' => 'Anda memasukkan file yang bukan gambar',
+            'gambar.mimes' => 'Ekstensi gambar harus jpg, png, jpeg, atau webp'
+        ];
+        $request->validate($validate, $pesanValidasi);
 
         // ambil semua request
         $id = $request->id;

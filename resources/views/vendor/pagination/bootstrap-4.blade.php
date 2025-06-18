@@ -1,4 +1,5 @@
 @if ($paginator->hasPages())
+    @if(!Session::has('admin'))
     <style>
         .pagination .page-item.active .page-link {
             background-color: #8c0d4f !important;
@@ -15,11 +16,11 @@
             border-color:#8c0d4f;
             color: white;
         }
-
         .pagination .page-item.disabled .page-link {
             color: #999;
         }
     </style>
+    @endif
 
     <nav>
         <ul class="pagination">

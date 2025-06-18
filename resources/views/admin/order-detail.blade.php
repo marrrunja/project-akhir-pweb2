@@ -101,5 +101,5 @@
         </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ custom_asset('templatesbadmin2/js/sb-admin-2.min.js') }}"></script>
-
+   <script type="module" src="{{ custom_asset('resources/js/logout.js') }}"></script>
 @endpush

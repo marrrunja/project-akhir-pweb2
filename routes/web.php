@@ -11,8 +11,10 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Produk\ProdukController;
+use App\Http\Controllers\Report\ReportController;
 use App\Http\Middleware\Auth\OnlyAdminMiddleware;
 use App\Http\Middleware\Auth\SessionHasMiddleware;
+use App\Http\Middleware\Auth\UserRejectMiddleware;
 use App\Http\Controllers\Transaksi\OrderController;
 use App\Http\Middleware\Auth\SessionHasNotMiddleware;
 use App\Http\Middleware\Auth\OnlyGuestAdminMiddleware;
@@ -78,7 +80,7 @@ Route::controller(TransaksiController::class)->prefix('/transaksi')->group(funct
 });
 
 // controller admin
-Route::controller(AdminController::class)->prefix('/admin')->group(function(){
+Route::controller(AdminController::class)->middleware(UserRejectMiddleware::class)->prefix('/admin')->group(function(){
     Route::get('/tambah', 'tambah')->name('admin.tambah')->middleware(OnlyAdminMiddleware::class);
     Route::get('/index', 'index')->middleware(OnlyAdminMiddleware::class);
     Route::get('/produk', 'lihatProduk')->name('admin.manage')->middleware(OnlyAdminMiddleware::class);
@@ -89,7 +91,6 @@ Route::controller(AdminController::class)->prefix('/admin')->group(function(){
     Route::post('/login', 'doLogin')->middleware(OnlyGuestAdminMiddleware::class);
     Route::post('/logout', 'doLogout')->middleware(OnlyAdminMiddleware::class);
 });
-
 // route untuk api
 Route::get('/api/orderListByTanggal', [ApiController::class, 'urutkanDataByTanggal']);
 Route::get('api/produk/variants/edit',[ProdukVariantApiController::class, 'editProdukVariant']);
@@ -100,6 +101,12 @@ Route::controller(OrderController::class)->prefix('/order')->group(function(){
     Route::get('/index', 'index');
     Route::get('/detail/{id}', 'detailOrder');
 });
+
+
+// report
+Route::get('/cetak/order-list',[ReportController::class, 'createReport']);
+Route::get('/cetak/detail-order/{id}',[ReportController::class, 'createReportDetail']);
+
 
 Route::get('/tanggal',function(){
     echo now()->format('Y-m-d');
