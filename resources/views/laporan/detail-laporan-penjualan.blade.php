@@ -16,13 +16,16 @@
         .container{
             width: 100%;
             float:left;
-            gap:1rem;
         }
         .card{
+            float:left;
             width: 250px;
             height:auto;
             border:1px solid #ddd;
             overflow:hidden;
+            margin-bottom:1rem;
+            margin-left:4rem;
+            margin-right:1rem;
         }
         .card .img-card-top{
             width:100%;
@@ -69,8 +72,9 @@
                 </table>
             </div>
         </div>
-        <div class="clear"></div>
         @endforeach
+        <div class="clear"></div>
+
     </div>
 </body>
 

@@ -53,6 +53,7 @@
                 <th>Tanggal transaksi</th>
                 <th>Nama Pengguna</th>
                 <th>Dibayar</th>
+                <th>Total</th>
                 <th>Detail</th>
             </tr>
         </thead>
@@ -63,8 +64,8 @@
                 <td>{{ $order->tanggal_transaksi }}</td>
                 <td>{{ $order->username }}</td>
                 <td>{{ $order->is_dibayar === 0 ? 'Belum' : 'Sudah dibayar' }}</td>
-                <td><a href="/laporan/order-detail/{{ $order->id }}">Detail
-                        Order</a>
+                <td>Rp {{ number_format($order->total_harga, 0,',','.') }}</td>
+                <td><a href="/laporan/order-detail/{{ $order->id }}" target="_blank">Detail</a>
                 </td>
             </tr>
             @endforeach
