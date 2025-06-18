@@ -15,10 +15,10 @@ let formLogout = document.getElementById("form-logout");
 
 let summaryValue = document.getElementsByClassName("summary-value")[0];
 let totalHarga = parseInt(Array.from(summaryValue.innerText)
-                      .filter((item) => item != "R" && item != "p" && item != ",")
+                      .filter((item) => item != "R" && item != "p" && item != ".")
                       .reduce((str, item) => str += item));
 
-                    
+console.log(totalHarga);                    
 function getCartTotalHarga() {
     // document.querySelectorAll('.cart-ireng').forEach(item => {
     //     const qty = parseInt(item.querySelector('.quantity-input').value);
@@ -246,7 +246,6 @@ async function initOrders(id)
         let responseServer = await response.json();
         console.log(data)
         if(!response.ok){
-            // await showAlertDanger("HTTP ERROR " + response.status);
             throw new Error("HTTP ERROR " + response.status);
         }
         if(response.status === 200){

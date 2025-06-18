@@ -105,7 +105,7 @@ Route::controller(OrderController::class)->prefix('/order')->group(function(){
 
 // report
 Route::get('/cetak/order-list',[ReportController::class, 'createReport']);
-Route::get('/cetak/detail-order/{id}',[ReportController::class, 'createReportDetail']);
+Route::get('/laporan/order-detail/{id}',[ReportController::class, 'createReportDetail']);
 
 
 Route::get('/tanggal',function(){

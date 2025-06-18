@@ -22,8 +22,21 @@ class ReportController extends Controller
         $pdf->writeHTML(view('laporan.laporan-penjualan',$data));
         $pdf->Output();
     }
+    
     public function createReportDetail(Request $request){
+        $id = $request->id;
+        $orderItems = DB::table('table_orders')
+            ->join('order_items', 'table_orders.id', '=', 'order_items.order_id')
+            ->join('produk_variants', 'order_items.variant_id', '=', 'produk_variants.id')
+            ->join('products', 'produk_variants.produk_id', '=', 'products.id')
+            ->select('table_orders.tanggal_transaksi', 'order_items.jumlah', 'order_items.total_harga', 'produk_variants.variant', 'products.nama', 'produk_variants.harga', 'produk_variants.foto')
+            ->where('order_items.order_id', '=', $id)
+            ->get();
+     
         $pdf = new Mpdf();
+        $data = [
+            'details' => $orderItems
+        ];
         $pdf->writeHTML(view('laporan.detail-laporan-penjualan',$data));
         $pdf->Output();
     }
