@@ -20,7 +20,7 @@ class ReportController extends Controller
             'orders' => $orders
         ];
         $pdf->writeHTML(view('laporan.laporan-penjualan',$data));
-        $pdf->Output();
+        $pdf->Output('laporan-penjualan.pdf','I');
     }
     
     public function createReportDetail(Request $request){
@@ -38,6 +38,6 @@ class ReportController extends Controller
             'details' => $orderItems
         ];
         $pdf->writeHTML(view('laporan.detail-laporan-penjualan',$data));
-        $pdf->Output();
+        $pdf->Output('detail-penjualan.pdf','I');
     }
 }

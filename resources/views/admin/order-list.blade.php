@@ -54,7 +54,7 @@
                                     </select>
                                 </div>
                                 <div class="col">
-                                     <a href="/cetak/order-list" class="btn btn-primary">Cetak</a>
+                                     <a href="/cetak/order-list" class="btn btn-primary" target="_blank">Cetak</a>
                                 </div>
                             </div>
                             <div class="table-responsive" id="konten">
