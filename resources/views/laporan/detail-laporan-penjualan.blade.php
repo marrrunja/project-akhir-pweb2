@@ -67,7 +67,7 @@
                     <tr>
                         <td>Harga</td>
                         <td>:</td>
-                        <td>{{ $detail->harga }}</td>
+                        <td>{{ number_format($detail->harga,0,',','.') }}</td>
                     </tr>
                     <tr>
                         <td>Jumlah</td>
@@ -77,7 +77,7 @@
                     <tr>
                         <td>Total</td>
                         <td>:</td>
-                        <td>{{ $detail->total_harga }}</td>
+                        <td>{{ number_format($detail->total_harga,0,',','.') }}</td>
                     </tr>
                 </table>
             </div>

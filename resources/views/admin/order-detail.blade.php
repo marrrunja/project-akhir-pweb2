@@ -34,26 +34,36 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <h1 class="text-center mb-3">Detail Order</h1>
                     <div class="row justify-content-center">
                         @foreach ($orderItems as $orderItem)
-                            <div class="col-12 col-xl-5 mb-4">
+                            <div class="col-10 col-md-6 col-xl-3 mb-4">
                                 <div class="card">
+                                    <img src="{{ asset('storage/image-variant/' . $orderItem->foto) }}"
+                                        class="card-img-top">
                                     <div class="card-body">
-                                        <h3 class="text-center">Detail Order</h3>
-                                        <img src="{{ asset('storage/image-variant/' . $orderItem->foto) }}"
-                                            class="img-fluid mb-3 mx-auto d-block img-thumbnail" width="200">
-
-                                        <h5 class="card-text text-center mb-3">Tanggal Transaksi:
-                                            {{ $orderItem->tanggal_transaksi }}
-                                        </h5>
-                                        <div class="card-subtitle text-body-secondary">Produk yang dibeli:
-                                            {{ $orderItem->nama }} Variant {{ $orderItem->variant }}
-                                        </div>
-
-
-                                        <div>Harga satuan: {{ $orderItem->harga }}</div>
-                                        <div class="card-text">Jumlah beli: {{ $orderItem->jumlah }}</div>
-                                        <div class="card-text">Harga total: {{ $orderItem->total_harga }}</div>
+                                        <table>
+                                            <tr>
+                                                <td style="font-weight:bold; font-size:1.2rem;">  {{ $orderItem->nama }} Variant {{ $orderItem->variant }}</td>
+                                            </tr>
+                                        </table>
+                                        <table>
+                                            <tr>
+                                                <td>Harga</td>
+                                                <td>:</td>
+                                                <td>{{ number_format($orderItem->harga,0,',','.') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jumlah</td>
+                                                <td>:</td>
+                                                <td>{{ $orderItem->jumlah }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total</td>
+                                                <td>:</td>
+                                                <td>{{ number_format($orderItem->total_harga, 0,',','.') }}</td>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
