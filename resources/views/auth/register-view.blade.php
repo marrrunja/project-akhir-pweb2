@@ -175,8 +175,8 @@
                                         </div>
                                         @enderror
                                 </div>
-                                <div>
-                                    <label class="form-group mb-3">Kecamatan</label>
+                                <div class="mb-3">
+                                    <label class="form-group">Kecamatan</label>
                                     <select name="kecamatan" id="kecamatan" class="form-control @error('kecamatan') is-invalid @enderror">
                                         <option value="">Pilih Kecamatan</option>
                                     </select>
@@ -186,8 +186,8 @@
                                         </div>
                                         @enderror
                                 </div>
-                                <div>
-                                    <label class="form-group mb-3">Desa</label>
+                                <div class="mb-3">
+                                    <label class="form-group">Desa</label>
                                     <select name="desa" id="desa" class="form-control @error('desa') is-invalid @enderror">
                                         <option value="">Pilih Desa</option>
                                     </select>
@@ -197,8 +197,8 @@
                                         </div>
                                         @enderror
                                 </div>
-                                <div>
-                                    <label class="form-group mb-3">Alamat</label>
+                                <div class="mb-3">
+                                    <label class="form-group">Alamat</label>
                                     <input type="text" name="alamat" placeholder="Masukkan Jalan/Alamat Spesifik"
                                         class="form-control @error('alamat') is-invalid @enderror">
                                        @error('alamat')
@@ -390,7 +390,6 @@
             class="bi bi-arrow-up-short"></i></a>
 
     <!-- Preloader -->
-    <div id="preloader"></div>
 </body>
 
 </html>
