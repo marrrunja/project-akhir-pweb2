@@ -83,7 +83,6 @@
         </footer>
     </div>
     <!-- /.container-fluid -->
-
 </div>
 @endsection
 

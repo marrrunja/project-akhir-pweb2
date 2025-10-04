@@ -75,6 +75,7 @@
             </div>
             @endif
             <div class="row gy-3 justify-content-center">
+                <!-- seharusnya ada atribut data-stock di bagian produk variant, untuk mencegah user melakukan pembelian melebihi stok, data-stock diambil dari stock produk variant, jadi kita tidak perlu refresh halaman lagi karena ada atribut ini, harusnya diperbarui -->
                 @foreach($variants as $variant)
                 <div class="col-10 col-md-6 col-xl-3">
                     <form method="post" action="{{ route('transaksi.order', $variant->id) }}">

@@ -120,24 +120,21 @@
 
         <!-- Register Section -->
         <section id="register" class="register section">
-
             <div class="container" data-aos="fade-up" data-aos-delay="100">
-
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
-
                         <div class="registration-form-wrapper" data-aos="zoom-in" data-aos-delay="200">
-
                             <div class="section-header mb-4 text-center">
                                 <h2>Buat Akun Anda</h2>
                                 <p>Daftar untuk belanja dan nikmati penawarannya</p>
                             </div>
-
-
-
+                            @if(Session::has('status'))
+                            <div class="alert alert-primary">
+                                {{ Session::get('status') }}
+                            </div>
+                            @endif
                             <form action="/register/index" method="POST">
                                 @csrf
-
                                 <div class="form-group mb-3">
                                     <label for="username">Username</label>
                                     <input type="text" class="form-control @error('username') is-invalid @enderror"
@@ -148,12 +145,12 @@
                                     </div>
                                     @enderror
                                 </div>
-
                                 <div class="form-group mb-3">
                                     <label for="password">Password</label>
                                     <div class="password-input">
-                                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password"
-                                              placeholder="At least 5 characters">
+                                        <input type="password"
+                                            class="form-control @error('password') is-invalid @enderror" name="password"
+                                            id="password" placeholder="At least 5 characters">
                                         @error('password')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -167,45 +164,47 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="email">E-Mail</label>
-                                    <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email"
-                                        placeholder="Contoh marr@gmail.com">
-                                       @error('email')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
+                                    <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                        name="email" id="email" placeholder="Contoh marr@gmail.com">
+                                    @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-group">Kecamatan</label>
-                                    <select name="kecamatan" id="kecamatan" class="form-control @error('kecamatan') is-invalid @enderror">
+                                    <select name="kecamatan" id="kecamatan"
+                                        class="form-control @error('kecamatan') is-invalid @enderror">
                                         <option value="">Pilih Kecamatan</option>
                                     </select>
-                                       @error('kecamatan')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
+                                    @error('kecamatan')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-group">Desa</label>
-                                    <select name="desa" id="desa" class="form-control @error('desa') is-invalid @enderror">
+                                    <select name="desa" id="desa"
+                                        class="form-control @error('desa') is-invalid @enderror">
                                         <option value="">Pilih Desa</option>
                                     </select>
-                                       @error('desa')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
+                                    @error('desa')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-group">Alamat</label>
                                     <input type="text" name="alamat" placeholder="Masukkan Jalan/Alamat Spesifik"
                                         class="form-control @error('alamat') is-invalid @enderror">
-                                       @error('alamat')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
+                                    @error('alamat')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                                 <!-- <div class="form-group mb-4">
                                         <div class="form-check">
@@ -235,18 +234,12 @@
                                     <p class="mb-0">Sudah memiliki akun sebelumnya? <a
                                             href="{{ url('/login/index') }}">Login</a></p>
                                 </div>
-
                             </form>
-
                         </div>
-
                     </div>
                 </div>
-
             </div>
-
         </section><!-- /Register Section -->
-
     </main>
 
     <footer id="footer" class="footer light-background">
@@ -274,7 +267,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="footer-widget">
                             <h4>Shop</h4>

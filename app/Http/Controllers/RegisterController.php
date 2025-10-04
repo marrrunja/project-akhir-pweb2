@@ -1,10 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Services\UserService;
 use Illuminate\Http\Request;
+use App\Services\UserService;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 
 class RegisterController extends Controller
 {
@@ -18,9 +19,9 @@ class RegisterController extends Controller
         return response()->view('auth.register-view');
     }
 
-    public function doRegister(Request $request):Response{
+    public function doRegister(Request $request):Response|RedirectResponse{
         $validatedData = $request->validate([
-            'username'  => ['required', 'max:20','min:10'],
+            'username'  => ['required', 'max:20','min:6'],
             'email' => ['required', 'email:rfc,dns'],
             'password'  => ['required', 'min:5'],
             'kecamatan' => ['required'],
@@ -43,12 +44,14 @@ class RegisterController extends Controller
             ];
 
             if ($this->userService->register($data, $error)) {
-                return response("Berhasil register");
+                $flashMessage = [
+                    'status' => 'Berhasil Register'
+                ];
+                return redirect()->back()->with($flashMessage);
             } else {
-                return response($error);
+                return redirect()->back()->with('status', $error);
             }
 
         }
-        return response("Gagal");
     }
 }

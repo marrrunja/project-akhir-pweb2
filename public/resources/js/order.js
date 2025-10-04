@@ -1,5 +1,4 @@
 import { showAlertDanger } from "./utility/alert.js";
-
 const token = document.querySelector('meta[name="_token"]').content;
 const appurl = document.querySelector("meta[name=_appurl]").content;
 const btnTambah = document.getElementsByClassName("btnTambah");
@@ -29,17 +28,16 @@ function showTextSuccess(i, message){
         pesan[i].classList.remove("text-success");
     }, 2000);
 }
+
 async function getTotalQuantityFromCart(id)
 {
     try{
         const response = await fetch('/cart/get-stok?id='+id);
         const data = await response.json();
 
-        if(!response.ok){
-            throw new Error("HTTP ERROR", response.status);
-        }
-        if(response.status === 200)
-            return [data.stok, data.jumlah];
+        if(!response.ok) throw new Error("HTTP ERROR", response.status);
+        
+        if(response.status === 200) return [data.stok, data.jumlah];
 
     }catch(error){
         await showAlertDanger(error);
@@ -78,7 +76,7 @@ for (let i = 0; i < btnCart.length; i++) {
         if (qty < 1) {
             showTextError(i, "Jumlah tidak boleh kurang dari 1");
             return;
-        };
+        }
         let [qtyCart,stokTersisa ] = await getTotalQuantityFromCart(btnCart[i].dataset.id);
 
         if(qty + qtyCart > stokTersisa){

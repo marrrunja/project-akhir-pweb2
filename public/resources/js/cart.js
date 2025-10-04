@@ -1,6 +1,4 @@
-import { showAlertSuccess } from "./utility/alert.js";
-import { showAlertDanger } from "./utility/alert.js";
-import { showConfirm } from "./utility/alert.js";
+import { showAlertSuccess, showConfirm, showAlertDanger } from "./utility/alert.js";
 
 const cartItem = document.getElementById("cart");
 const appurl = document.querySelector("meta[name=_appurl]").content;
@@ -20,12 +18,6 @@ let totalHarga = parseInt(Array.from(summaryValue.innerText)
 
 console.log(totalHarga);                    
 function getCartTotalHarga() {
-    // document.querySelectorAll('.cart-ireng').forEach(item => {
-    //     const qty = parseInt(item.querySelector('.quantity-input').value);
-    //     const priceText = item.querySelector('.current-price').textContent.replace(/[^\d]/g, '');
-    //     const harga = parseInt(priceText);
-    //     total += harga * qty;
-    // });
     return totalHarga;
 }
 

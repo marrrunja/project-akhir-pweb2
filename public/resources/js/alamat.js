@@ -2,7 +2,6 @@ const APIURL = 'https://www.emsifa.com/api-wilayah-indonesia/api/districts/1571.
 const kecamatan = document.getElementById("kecamatan");
 const desa = document.getElementById("desa");
 
-console.log(desa);
 async function getDataKota(){
     const data = await fetch(APIURL);
     const json = await data.json();

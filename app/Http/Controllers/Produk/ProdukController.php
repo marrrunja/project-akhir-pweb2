@@ -21,7 +21,6 @@ class ProdukController extends Controller
 {
     public function index(): Response
     {
-        //DB::raw('SUM(price) as total_sales')
         $produk = DB::table('products')
         ->join('kategoris', 'products.kategori_id', '=', 'kategoris.id')
         ->select('products.id as idProduk', 'products.nama', 'products.detail', 'products.foto', 'kategoris.kategori', 'kategoris.id')
@@ -33,7 +32,6 @@ class ProdukController extends Controller
     }
     public function dashboard(): Response
     {
-        //DB::raw('SUM(price) as total_sales')
         $produk = DB::table('products')
         ->join('kategoris', 'products.kategori_id', '=', 'kategoris.id')
         ->select('products.id as idProduk', 'products.nama', 'products.detail', 'products.foto', 'kategoris.kategori', 'kategoris.id')
@@ -61,6 +59,7 @@ class ProdukController extends Controller
     public function getProdukByKategoriId(Request $request)
     {
         $id = $request->kategori;
+        echo $id;
         
         $produk = DB::table('products')
         ->join('kategoris', 'products.kategori_id', '=', 'kategoris.id')

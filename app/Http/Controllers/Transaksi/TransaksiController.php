@@ -174,9 +174,9 @@ class TransaksiController extends Controller
     public function success(Request $request){
         $orderId = $request->order_id;
         $order = Order::where('order_id', $orderId)->first();
-
         if($order){
             if($order->is_dibayar != 1){
+                DB::beginTransaction();
                 try{
                     // update is dibayar menjadi satu ketika pembayaran sudah lunas
                     DB::statement("UPDATE table_orders SET is_dibayar = ? WHERE order_id = ?", [1, $orderId]);
@@ -206,6 +206,7 @@ class TransaksiController extends Controller
                     Log::info("Berhasil update produk dengan order id $orderId");
                 }catch(\Exception $e){
                     DB::rollback();
+                    Log::info("Transaksi dengan order id $orderId gagal");
                 }
             }
         }

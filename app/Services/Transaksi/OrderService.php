@@ -39,7 +39,6 @@ class OrderService
 			]);
 		}
 	}
-
 	private function initMidtrans(array|Collection $data,$username,$totalHarga, $orderId):array
 	{
 		$pembeli = Pembeli::where('username', '=',$username)->first();
@@ -75,6 +74,7 @@ class OrderService
             'enable_payments' => ['credit_card', 'bni_va', 'bca_va', 'gopay', 'alfamart', 'indomart'],
             'callbacks' => [
 		        'finish' => url(env('BASE_URL').'/transaksi/finish'),
+				'error' => url(env('BASE_URL').'/transaksi/error'),
 			],
         ];
         $url = 'https://app.sandbox.midtrans.com/snap/v1/transactions';
@@ -86,11 +86,9 @@ class OrderService
             'Authorization' => "Basic $auth"
         ])->post($url, $params);
         $response = json_decode($response->body(), true);
-		
         return $response;
 	}
-
-
+	
 	public function addOrder(array $data, ?string &$error = null, ?string &$linkBayar = null):bool
 	{
         if(count($data) === 0){

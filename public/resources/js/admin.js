@@ -73,7 +73,7 @@ async function showInputEditElement(target) {
     let button = `
         <button class="btn btn-primary btnUbah" type="submit">Ubah</button>
         <button type="button" class="btn btn-warning batal">Batal</button>`;
-
+ 
     sibling = 1;
     let tdButton = document.createElement('td');
     tdButton.classList.add("d-flex");
@@ -135,7 +135,6 @@ function makeInputAddVariantElement() {
 }
 
 function addProdukVariant(e) {
-    console.log("Ok")
     if (contentAddVariant === true) return;
     let apiData = appurl + "/variant/tambah/" + this.dataset.id;
     console.log(apiData);

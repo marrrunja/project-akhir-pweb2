@@ -47,7 +47,7 @@ class AdminServiceTest extends TestCase
         self::assertEquals("Username atau password salah", $error);
     }
     public function testLoginSuccess():void
-    {
+    { 
            $data = [
             'username' => 'muammar123',
             'password' => 'irfan123'

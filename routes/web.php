@@ -34,7 +34,6 @@ Route::controller(LoginController::class)->prefix('/login')->group(function(){
     Route::post('/logout', 'logout')->middleware(SessionHasNotMiddleware::class);
 });
 
-
 Route::controller(RegisterController::class)->prefix('/register')->group(function(){
     Route::get('/index', 'index')->middleware(SessionHasMiddleware::class);
     Route::post('/index', 'doRegister')->middleware(SessionHasMiddleware::class);

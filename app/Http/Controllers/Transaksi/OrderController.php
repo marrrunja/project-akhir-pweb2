@@ -15,7 +15,9 @@ class OrderController extends Controller
 {
     public function index(Request $request):Response
     {
-        $orders = Order::where('pembeli_id', '=', $request->session()->get('user_id'))->get();
+        $orders = Order::where('pembeli_id', '=', $request->session()->get('user_id'))
+                    ->orderBy('id', 'DESC')
+                    ->get();
         $data = [
             'orders' => $orders
         ];

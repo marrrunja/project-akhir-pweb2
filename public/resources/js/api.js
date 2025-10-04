@@ -24,6 +24,7 @@ async function showQuestionAlert(pesan) {
         confirmButtonText: "Yes"
     });
 }
+
 async function showAlertSuccess(pesan) {
     return await Swal.fire({
         title: "Sukses",
@@ -32,6 +33,7 @@ async function showAlertSuccess(pesan) {
         text: pesan,
     });
 }
+
 async function showAlertDanger(pesan) {
     return await Swal.fire({
         title: "Gagal",
@@ -98,7 +100,6 @@ async function getProdukByKategoriId(kategoriId) {
         const data = await fetch(appurl + "/produk/kategori?kategori=" + kategoriId);
         const response = await data.text();
         if (!data.ok) {
-            await showAlertDanger("HTTP ERROR" + data.status);
             throw new Error("HTTP ERROR " + data.status);
         }
         return response;
